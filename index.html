@@ -83,12 +83,12 @@ body.at-home main{padding-top:0}
 /* ---------- Hero ---------- */
 .hero{position:relative;min-height:100vh;min-height:100svh;display:grid;place-items:center;overflow:hidden;background:#000}
 .hero-media{position:absolute;inset:0}
-.hero-media::before{content:"";position:absolute;inset:0;z-index:1;background:radial-gradient(ellipse 70% 45% at 50% -5%,rgba(243,240,234,.13),transparent 70%)}
-.hero-media::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(0,0,0,.45) 0%,rgba(0,0,0,.25) 45%,rgba(0,0,0,.85) 100%)}
+.hero-media::before{content:"";position:absolute;inset:0;z-index:2;background:radial-gradient(ellipse 70% 45% at 50% -5%,rgba(243,240,234,.13),transparent 70%)}
+.hero-media::after{content:"";position:absolute;inset:0;z-index:2;background:linear-gradient(180deg,rgba(0,0,0,.45) 0%,rgba(0,0,0,.25) 45%,rgba(0,0,0,.85) 100%)}
 .hero-photo{position:absolute;inset:0;background-size:cover;background-position:center center;background-image:var(--hero-d);display:none}
 @media (max-width:700px){.hero-photo{background-image:var(--hero-m,var(--hero-d));background-position:center}}
 .hero.has-photo .hero-photo{display:block}
-.hero-video{position:absolute;inset:0;overflow:hidden;display:none}
+.hero-video{position:absolute;inset:0;overflow:hidden;display:none;z-index:1;background:#000}
 .hero.has-video .hero-video{display:block}
 .hero.has-video .hero-art{display:none}
 .hero-video video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center var(--vfocus,50%)}
@@ -210,6 +210,16 @@ h2.t{margin:0 0 16px;font-size:clamp(2rem,4.4vw,3.4rem);line-height:1.04;font-we
 .who{margin:12px 0 0;color:var(--muted);font-size:.95rem}
 .who strong{color:var(--white);font-weight:600}
 @media (max-width:520px){.duo{gap:8px}}
+.cycle-line{list-style:none;margin:36px 0 0;padding:0;position:relative}
+.cycle-line::before{content:"";position:absolute;left:11px;top:14px;bottom:14px;width:1px;background:linear-gradient(var(--gold),rgba(201,169,106,.15))}
+.cycle-line li{position:relative;padding:0 0 26px 44px;display:flex;flex-direction:column;gap:2px}
+.cycle-line li:last-child{padding-bottom:0}
+.cycle-line li::before{content:"";position:absolute;left:5px;top:6px;width:13px;height:13px;border-radius:50%;border:1.5px solid var(--gold);background:var(--black)}
+.cycle-line li.big::before{left:0;top:2px;width:23px;height:23px;background:var(--gold);border:0;box-shadow:0 0 0 6px rgba(201,169,106,.15)}
+.cycle-line b{font-size:1.15rem;font-weight:700;font-stretch:118%;font-variation-settings:"wdth" 118}
+.cycle-line li.big b{font-size:1.5rem;color:var(--gold-2)}
+.cycle-line span{color:var(--muted);font-size:.95rem}
+.cycle-line em{font-style:normal;color:var(--gold-2);font-size:.95rem;margin-top:2px}
 /* Final band */
 .band{padding:120px 0;background:radial-gradient(ellipse 60% 80% at 50% 120%,rgba(201,169,106,.16),transparent 70%)}
 .band h2{margin:0 0 18px;font-size:clamp(2.2rem,5.4vw,4.4rem);line-height:1;font-weight:760;text-transform:uppercase;font-stretch:125%;font-variation-settings:"wdth" 125;max-width:16ch}
@@ -610,7 +620,12 @@ footer a:hover{color:var(--gold-2)}
     <div class="wrap cycle">
       <div>
         <h2 class="t">Le principe</h2>
-        <figure class="ph r43" data-photo="abo" style="margin-top:28px"></figure>
+        <ol class="cycle-line" aria-label="Le cycle Signature puis Refresh">
+          <li class="big"><b>Signature</b><span>Remise à niveau complète</span><em>dès 149 €, une fois</em></li>
+          <li><b>Refresh</b><span>Entretien</span></li>
+          <li><b>Refresh</b><span>Entretien</span></li>
+          <li><b>Refresh</b><span>Entretien</span><em class="js-p-refresh-line">dès 79 € / passage</em></li>
+        </ol>
       </div>
       <div>
         <p><strong>Le Signature remet votre voiture à niveau.</strong> Habitacle en profondeur, shampooing des sièges, et l'extérieur si vous l'ajoutez.</p>
