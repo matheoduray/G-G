@@ -401,6 +401,25 @@ footer a:hover{color:var(--gold-2)}
 .stack .you b{font-size:2.8rem;color:var(--gold-2);font-weight:780;line-height:1.05;font-stretch:120%;font-variation-settings:"wdth" 120}
 @media (max-width:600px){.stack ul,.stack .sum,.stack .you{padding-left:18px;padding-right:18px}.stack .you .btn{width:100%}}
 .fine-note{margin:14px 0 0;color:var(--dim);font-size:.88rem}
+.lp-full{position:relative;overflow:hidden;min-height:calc(100vh - 86px);min-height:calc(100svh - 86px);display:flex;align-items:center;background:#000 var(--bg,none) center/cover no-repeat;border-bottom:0}
+.lp-full::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.94) 0%,rgba(0,0,0,.82) 38%,rgba(0,0,0,.45) 75%,rgba(0,0,0,.3) 100%),linear-gradient(180deg,rgba(0,0,0,.35) 0%,transparent 30%,transparent 70%,#000 100%)}
+.lp-full::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 50% 60% at 15% 40%,rgba(201,169,106,.12),transparent 70%);pointer-events:none}
+.lp-full > .wrap{position:relative;z-index:1;display:block;width:min(1200px,100% - 40px)}
+.lp-full > .wrap > div{max-width:640px}
+.lp-full h1{text-shadow:0 2px 30px rgba(0,0,0,.6)}
+@media (max-width:900px){.lp-full{min-height:0;align-items:flex-end;padding-top:24vh;background-size:auto 62%;background-position:62% 0}.lp-full::before{background:linear-gradient(180deg,rgba(0,0,0,.25) 0%,rgba(0,0,0,.7) 35%,rgba(0,0,0,.94) 60%,#000 100%)}}
+@media (max-width:980px){.lp-full{min-height:0}}
+.lp-was{margin:0 0 6px;color:var(--muted)}
+.lp-was span:first-child{color:var(--white);font-weight:600}
+.lp-was span:last-child,.compare span:last-child{color:var(--gold-2);font-weight:600}
+.stack .sum.save{border-top:1px solid var(--line);color:var(--gold-2);font-weight:600}
+.countdown{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;margin:0 0 26px}
+.cd-label{color:var(--muted);font-size:.92rem;letter-spacing:.04em}
+.cd-units{display:flex;gap:8px}
+.cd-units div{min-width:62px;padding:10px 8px 8px;border:1px solid rgba(201,169,106,.55);background:rgba(0,0,0,.55);text-align:center;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+.cd-units b{display:block;font-size:1.65rem;line-height:1;color:var(--gold-2);font-weight:760;font-variant-numeric:tabular-nums;font-stretch:115%;font-variation-settings:"wdth" 115}
+.cd-units small{display:block;margin-top:5px;color:var(--muted);font-size:.72rem;text-transform:uppercase;letter-spacing:.08em}
+@media (max-width:420px){.cd-units div{min-width:0;flex:1}.cd-units{width:100%}}
 .steps.s4{grid-template-columns:repeat(4,1fr);gap:36px}
 @media (max-width:960px){.steps.s4{grid-template-columns:1fr 1fr}}
 @media (max-width:600px){.steps.s4{grid-template-columns:1fr}}
@@ -816,7 +835,7 @@ footer a:hover{color:var(--gold-2)}
       <article class="feature">
         <figure class="ph" data-photo="pop"></figure>
         <div class="body">
-          <span class="badge">Offre d'hiver · un seul Pack par jour</span>
+          <span class="badge">Offre d'hiver · jusqu'au 31 octobre</span>
           <h2>Pack Hiver</h2>
           <p class="tagline">Votre voiture complète, polie et protégée par une céramique de 3 ans. En une journée, chez vous.</p>
           <ul class="ticks">
@@ -825,8 +844,12 @@ footer a:hover{color:var(--gold-2)}
             <li>Une passe de polissage</li>
             <li>Protection céramique, 3 ans de durée</li>
           </ul>
-          <p class="compare">Séparément, sans la céramique : <span class="js-stack-sum">508 €</span></p>
+          <p class="compare">Prestations séparées : <span class="js-hiver-valeur">750 €</span> · vous économisez <span class="js-hiver-eco">300 €</span></p>
           <p class="lp-price"><b class="js-offre-prix">450 €</b><span>céramique incluse</span></p>
+          <div class="countdown js-countdown" aria-live="off">
+            <span class="cd-label">L'offre se termine dans</span>
+            <div class="cd-units"><div><b class="js-cd-j">00</b><small>jours</small></div><div><b class="js-cd-h">00</b><small>heures</small></div><div><b class="js-cd-m">00</b><small>min</small></div><div><b class="js-cd-s">00</b><small>sec</small></div></div>
+          </div>
           <div class="lp-ctas">
             <a class="btn btn-gold js-wa-msg" data-msg="Bonjour, je suis intéressé par le Pack Hiver." data-cal="hiver" data-recap="Pack Hiver" href="#" target="_blank" rel="noopener">Réserver ma date</a>
             <a class="btn btn-line" href="#/pack-hiver" data-link>Tout le détail</a>
@@ -900,20 +923,24 @@ footer a:hover{color:var(--gold-2)}
 
 <!-- =================== PACK HIVER =================== -->
 <div class="page" data-page="/pack-hiver" data-title="Pack Hiver — intérieur, extérieur, polissage et céramique 3 ans | Gleam & Go">
-  <section class="lp-hero">
+  <section class="lp-hero lp-full" data-bg="pop">
     <div class="wrap">
       <div>
-        <p class="kicker">Offre d'hiver · un seul Pack par jour</p>
+        <p class="kicker">Offre d'hiver · jusqu'au 31 octobre · un seul Pack par jour</p>
         <h1>Votre voiture prête pour l'hiver. Et protégée pour les trois suivants.</h1>
         <p class="sub">Intérieur complet, extérieur, polissage et protection céramique 3 ans. Une journée, chez vous. L'eau, le sel et la boue glissent sur la carrosserie au lieu de s'y accrocher.</p>
+        <p class="lp-was">Prestations séparées : <span class="js-hiver-valeur">750 €</span> · vous économisez <span class="js-hiver-eco">300 €</span></p>
         <p class="lp-price"><b class="js-offre-prix">450 €</b><span>tout compris · 40 € d'acompte pour bloquer votre date</span></p>
+        <div class="countdown js-countdown" aria-live="off">
+            <span class="cd-label">L'offre se termine dans</span>
+            <div class="cd-units"><div><b class="js-cd-j">00</b><small>jours</small></div><div><b class="js-cd-h">00</b><small>heures</small></div><div><b class="js-cd-m">00</b><small>min</small></div><div><b class="js-cd-s">00</b><small>sec</small></div></div>
+          </div>
         <div class="lp-ctas">
           <a class="btn btn-gold js-wa-msg js-main-cta" data-msg="Bonjour, je suis intéressé par le Pack Hiver." data-cal="hiver" data-recap="Pack Hiver" href="#" target="_blank" rel="noopener">Réserver ma date</a>
           <a class="btn btn-line js-wa" href="#" target="_blank" rel="noopener">Poser une question</a>
         </div>
         <p class="lp-trust"><span class="stars">★★★★★</span> 5,0 · <span class="js-count2">avis Google</span> · <span class="js-clients">+ de 100</span> clients à Bruxelles</p>
       </div>
-      <figure class="ph r43" data-photo="pop"></figure>
     </div>
   </section>
 
@@ -932,18 +959,19 @@ footer a:hover{color:var(--gold-2)}
   <section class="sec" id="inclus">
     <div class="wrap">
       <h2 class="t">Tout ce qui est inclus</h2>
-      <p class="lead">Chaque prestation existe séparément chez nous. Le Pack les réunit en une journée, et ajoute la céramique.</p>
+      <p class="lead">Chaque prestation existe séparément chez nous. Le Pack les réunit en une journée, pour 300 € de moins.</p>
       <div class="stack">
         <ul>
           <li><span>Signature intérieur<small>Aspiration, shampooing sièges et tapis, vapeur, cuir, vitres</small></span><em class="js-p-signature">149 €</em></li>
           <li><span>Signature extérieur<small>Lavage, jantes et pneus, vitres, séchage, protection PW</small></span><em class="js-p-ext">59 €</em></li>
-          <li><span>Décontamination de la carrosserie<small>Goudron et particules ferreuses retirés avant polissage</small></span><em>incluse</em></li>
+          <li><span>Décontamination de la carrosserie<small>Goudron et particules ferreuses retirés avant polissage</small></span><em class="js-p-decon">50 €</em></li>
           <li><span>Polissage one-step<small>Micro-rayures, voile terne, traces de rouleaux</small></span><em class="js-p-polish">300 €</em></li>
-          <li><span>Protection céramique 3 ans<small>Couche dure et hydrophobe sur toute la carrosserie</small></span><em class="inc">incluse</em></li>
+          <li><span>Protection céramique 3 ans<small>Couche dure et hydrophobe sur toute la carrosserie</small></span><em class="js-p-cera">192 €</em></li>
         </ul>
-        <div class="sum"><span>Séparément, sans la céramique</span><span class="js-stack-sum">508 €</span></div>
+        <div class="sum"><span>Total des prestations séparées</span><span class="js-hiver-valeur">750 €</span></div>
+        <div class="sum save"><span>Vous économisez</span><span class="js-hiver-eco">300 €</span></div>
         <div class="you">
-          <div><span class="kicker" style="margin:0">Pack Hiver, céramique incluse</span><br><b class="js-offre-prix">450 €</b></div>
+          <div><span class="kicker" style="margin:0">Pack Hiver, jusqu'au 31 octobre</span><br><b class="js-offre-prix">450 €</b></div>
           <a class="btn btn-gold js-wa-msg" data-msg="Bonjour, je suis intéressé par le Pack Hiver." data-cal="hiver" data-recap="Pack Hiver" href="#" target="_blank" rel="noopener">Réserver ma date</a>
         </div>
       </div>
@@ -1366,6 +1394,10 @@ var CONFIG = {
     kicker: "Offre d'hiver",
     titre: "Pack Hiver",
     prix: 450,
+    fin: "2026-11-01T00:00:00+01:00",   // fin de l'offre (compte à rebours). Vide = pas de compte à rebours
+    /* Prix séparés des éléments en plus du Signature et du polissage (servent au calcul « séparément ») */
+    decontamination: 50,
+    ceramique: 192,
     lignes: [
       "Signature complet : intérieur et extérieur",
       "Décontamination de la carrosserie",
@@ -1594,6 +1626,31 @@ var CONFIG = {
   var extOpt = CONFIG.options.filter(function(o){ return o.id === "exterieur"; })[0] || {add:0};
   document.querySelectorAll(".js-p-ext").forEach(function(e){ e.textContent = eur(extOpt.add); });
   document.querySelectorAll(".js-stack-sum").forEach(function(e){ e.textContent = eur(CONFIG.signature + extOpt.add + CONFIG.polishOneStep); });
+  var OF = CONFIG.offre || {};
+  var valeur = CONFIG.signature + extOpt.add + CONFIG.polishOneStep + (OF.decontamination || 0) + (OF.ceramique || 0);
+  document.querySelectorAll(".js-p-decon").forEach(function(e){ e.textContent = eur(OF.decontamination || 0); });
+  document.querySelectorAll(".js-p-cera").forEach(function(e){ e.textContent = eur(OF.ceramique || 0); });
+  document.querySelectorAll(".js-hiver-valeur").forEach(function(e){ e.textContent = eur(valeur); });
+  document.querySelectorAll(".js-hiver-eco").forEach(function(e){ e.textContent = eur(valeur - OF.prix); });
+  document.querySelectorAll("[data-bg]").forEach(function(sec){
+    var src = PD[sec.getAttribute("data-bg")]; if (src) sec.style.setProperty("--bg", "url('" + src + "')");
+  });
+  (function(){
+    var boxes = document.querySelectorAll(".js-countdown"), end = OF.fin ? new Date(OF.fin).getTime() : NaN;
+    if (!boxes.length) return;
+    if (isNaN(end)) { boxes.forEach(function(b){ b.remove(); }); return; }
+    var pad = function(n){ return (n < 10 ? "0" : "") + n; };
+    function tick(){
+      var d = end - Date.now();
+      if (d <= 0) { boxes.forEach(function(b){ b.remove(); }); clearInterval(t); return; }
+      var j = Math.floor(d / 864e5), h = Math.floor(d / 36e5) % 24, m = Math.floor(d / 6e4) % 60, sec = Math.floor(d / 1e3) % 60;
+      boxes.forEach(function(b){
+        b.querySelector(".js-cd-j").textContent = pad(j); b.querySelector(".js-cd-h").textContent = pad(h);
+        b.querySelector(".js-cd-m").textContent = pad(m); b.querySelector(".js-cd-s").textContent = pad(sec);
+      });
+    }
+    var t = setInterval(tick, 1000); tick();
+  })();
   if (CONFIG.garantie && CONFIG.garantie.active) {
     document.querySelectorAll(".js-garantie-titre").forEach(function(e){ e.textContent = CONFIG.garantie.titre; });
     document.querySelectorAll(".js-garantie-texte").forEach(function(e){ e.textContent = CONFIG.garantie.texte; });
