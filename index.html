@@ -407,6 +407,14 @@ footer a:hover{color:var(--gold-2)}
 .lp-full > .wrap{position:relative;z-index:1;display:block;width:min(1200px,100% - 40px)}
 .lp-full > .wrap > div{max-width:640px}
 .lp-full h1{text-shadow:0 2px 30px rgba(0,0,0,.6)}
+.lp-full.has-vid > .wrap{display:grid;grid-template-columns:minmax(0,640px) auto;justify-content:space-between;align-items:center;gap:48px}
+.proof-vid{margin:0;width:min(330px,26vw);flex:none}
+.pv-frame{position:relative;aspect-ratio:9/16;overflow:hidden;border:1px solid var(--gold);background:#000;box-shadow:0 30px 80px rgba(0,0,0,.7),0 0 0 6px rgba(201,169,106,.08)}
+.pv-frame iframe{position:absolute;top:50%;left:50%;width:100%;height:118%;transform:translate(-50%,-50%);border:0;pointer-events:none}
+.proof-vid figcaption{display:flex;flex-direction:column;gap:2px;margin-top:12px;font-size:.88rem}
+.proof-vid figcaption b{color:var(--gold-2);font-weight:600}
+.proof-vid figcaption span{color:var(--muted)}
+@media (max-width:900px){.lp-full.has-vid > .wrap{grid-template-columns:1fr;gap:34px}.proof-vid{width:min(300px,78vw);justify-self:center}}
 @media (max-width:900px){.lp-full{min-height:0;align-items:flex-end;padding-top:24vh;background-size:auto 62%;background-position:62% 0}.lp-full::before{background:linear-gradient(180deg,rgba(0,0,0,.25) 0%,rgba(0,0,0,.7) 35%,rgba(0,0,0,.94) 60%,#000 100%)}}
 @media (max-width:980px){.lp-full{min-height:0}}
 .lp-was{margin:0 0 6px;color:var(--muted)}
@@ -941,6 +949,10 @@ footer a:hover{color:var(--gold-2)}
         </div>
         <p class="lp-trust"><span class="stars">★★★★★</span> 5,0 · <span class="js-count2">avis Google</span> · <span class="js-clients">+ de 100</span> clients à Bruxelles</p>
       </div>
+      <figure class="proof-vid js-proof-vid">
+        <div class="pv-frame"></div>
+        <figcaption><b class="js-proof-cap">Avant / après</b><span>Vidéo réelle, sans filtre</span></figcaption>
+      </figure>
     </div>
   </section>
 
@@ -1394,7 +1406,9 @@ var CONFIG = {
     kicker: "Offre d'hiver",
     titre: "Pack Hiver",
     prix: 450,
-    fin: "2026-11-01T00:00:00+01:00",   // fin de l'offre (compte à rebours). Vide = pas de compte à rebours
+    fin: "2026-11-01T00:00:00+01:00",
+    videoYouTube: "EekPmuMWj3E",          // vidéo preuve avant/après sur la page Pack Hiver (ID YouTube). Vide = pas de vidéo
+    videoLegende: "Avant / après · Mercedes",   // fin de l'offre (compte à rebours). Vide = pas de compte à rebours
     /* Prix séparés des éléments en plus du Signature et du polissage (servent au calcul « séparément ») */
     decontamination: 50,
     ceramique: 192,
@@ -1632,6 +1646,18 @@ var CONFIG = {
   document.querySelectorAll(".js-p-cera").forEach(function(e){ e.textContent = eur(OF.ceramique || 0); });
   document.querySelectorAll(".js-hiver-valeur").forEach(function(e){ e.textContent = eur(valeur); });
   document.querySelectorAll(".js-hiver-eco").forEach(function(e){ e.textContent = eur(valeur - OF.prix); });
+  /* Vidéo preuve Pack Hiver (YouTube, lecture auto sans son, en boucle) */
+  document.querySelectorAll(".js-proof-vid").forEach(function(fig){
+    var id = OF.videoYouTube;
+    if (!id) { fig.remove(); return; }
+    var sec = fig.closest(".lp-full"); if (sec) sec.classList.add("has-vid");
+    var cap = fig.querySelector(".js-proof-cap"); if (cap && OF.videoLegende) cap.textContent = OF.videoLegende;
+    var f = document.createElement("iframe");
+    f.src = "https://www.youtube-nocookie.com/embed/" + id + "?autoplay=1&mute=1&loop=1&playlist=" + id + "&controls=0&playsinline=1&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1";
+    f.title = "Avant / après : exemple réel"; f.allow = "autoplay; encrypted-media; picture-in-picture";
+    f.setAttribute("frameborder","0");
+    fig.querySelector(".pv-frame").appendChild(f);
+  });
   document.querySelectorAll("[data-bg]").forEach(function(sec){
     var src = PD[sec.getAttribute("data-bg")]; if (src) sec.style.setProperty("--bg", "url('" + src + "')");
   });
