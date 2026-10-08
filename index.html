@@ -72,9 +72,10 @@ body.at-home .top:not(.solid){background:linear-gradient(rgba(0,0,0,.55),rgba(0,
   .spacer-m{display:block}
   .logo .sub{display:none}
   .logo .wm{font-size:1.2rem}
-  .top.open{background:#000}
-  .top.open .mpanel{display:flex;flex-direction:column;gap:4px;padding:8px 0 24px}
-  .mpanel a.lnk{font-size:1.35rem;padding:12px 0;border-bottom:1px solid var(--line)}
+  .top.open{background:#000 !important;backdrop-filter:none !important;-webkit-backdrop-filter:none !important;bottom:0;z-index:70;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+  .top.open .mpanel{display:flex;flex-direction:column;gap:0;padding:6px 0 calc(28px + env(safe-area-inset-bottom,0px))}
+  .mpanel a.lnk{display:block;text-decoration:none;color:var(--white);font-size:1.15rem;padding:15px 2px;border-bottom:1px solid var(--line)}
+  .mpanel a.lnk:active{color:var(--gold-2)}
   .mpanel .btn{margin-top:16px}
 }
 main{padding-top:86px}
@@ -366,7 +367,7 @@ footer a{color:var(--white);text-decoration:none;margin-right:18px}
 footer a:hover{color:var(--gold-2)}
 @media (min-width:861px){footer{padding-bottom:44px}}
 .mbar{position:fixed;left:0;right:0;bottom:0;z-index:40;display:none;gap:8px;padding:10px 12px;padding-bottom:calc(10px + env(safe-area-inset-bottom,0px));background:rgba(0,0,0,.94);border-top:1px solid var(--line-2)}
-.mbar .btn{flex:1;min-height:50px}
+.mbar .btn{flex:1;min-height:50px;white-space:nowrap}
 @media (max-width:860px){.mbar{display:flex}}
 
 /* ---------- Landing pages ---------- */
@@ -411,11 +412,14 @@ footer a:hover{color:var(--gold-2)}
 .proof-vid{margin:0;width:min(330px,26vw);flex:none}
 .pv-frame{position:relative;aspect-ratio:9/16;overflow:hidden;border:1px solid var(--gold);background:#000;box-shadow:0 30px 80px rgba(0,0,0,.7),0 0 0 6px rgba(201,169,106,.08)}
 .pv-frame iframe{position:absolute;top:50%;left:50%;width:100%;height:118%;transform:translate(-50%,-50%);border:0;pointer-events:none}
+.proof-vid.tap .pv-frame iframe{pointer-events:auto;height:100%}
+.pv-frame video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
 .proof-vid figcaption{display:flex;flex-direction:column;gap:2px;margin-top:12px;font-size:.88rem}
 .proof-vid figcaption b{color:var(--gold-2);font-weight:600}
 .proof-vid figcaption span{color:var(--muted)}
 @media (max-width:900px){.lp-full.has-vid > .wrap{grid-template-columns:1fr;gap:34px}.proof-vid{width:min(300px,78vw);justify-self:center}}
-@media (max-width:900px){.lp-full{min-height:0;align-items:flex-end;padding-top:24vh;background-size:auto 62%;background-position:62% 0}.lp-full::before{background:linear-gradient(180deg,rgba(0,0,0,.25) 0%,rgba(0,0,0,.7) 35%,rgba(0,0,0,.94) 60%,#000 100%)}}
+@media (max-width:600px){.k-extra{display:none}.lp-hero .sub{font-size:1rem;margin-bottom:20px}.lp-hero h1{font-size:2rem}.countdown{margin-bottom:20px}}
+@media (max-width:900px){.lp-full{min-height:0;align-items:flex-end;padding-top:15vh;background-size:auto 55%;background-position:62% 0}.lp-full::before{background:linear-gradient(180deg,rgba(0,0,0,.25) 0%,rgba(0,0,0,.7) 35%,rgba(0,0,0,.94) 60%,#000 100%)}}
 @media (max-width:980px){.lp-full{min-height:0}}
 .lp-was{margin:0 0 6px;color:var(--muted)}
 .lp-was span:first-child{color:var(--white);font-weight:600}
@@ -934,7 +938,7 @@ footer a:hover{color:var(--gold-2)}
   <section class="lp-hero lp-full" data-bg="pop">
     <div class="wrap">
       <div>
-        <p class="kicker">Offre d'hiver · jusqu'au 31 octobre · un seul Pack par jour</p>
+        <p class="kicker">Offre d'hiver · jusqu'au 31 octobre<span class="k-extra"> · un seul Pack par jour</span></p>
         <h1>Votre voiture prête pour l'hiver. Et protégée pour les trois suivants.</h1>
         <p class="sub">Intérieur complet, extérieur, polissage et protection céramique 3 ans. Une journée, chez vous. L'eau, le sel et la boue glissent sur la carrosserie au lieu de s'y accrocher.</p>
         <p class="lp-was">Prestations séparées : <span class="js-hiver-valeur">750 €</span> · vous économisez <span class="js-hiver-eco">300 €</span></p>
@@ -1407,6 +1411,7 @@ var CONFIG = {
     titre: "Pack Hiver",
     prix: 450,
     fin: "2026-11-01T00:00:00+01:00",
+    videoMP4: "",                         // ex. "img/mercedes.mp4" : le plus fiable pour la lecture auto sur iPhone/Android
     videoYouTube: "EekPmuMWj3E",          // vidéo preuve avant/après sur la page Pack Hiver (ID YouTube). Vide = pas de vidéo
     videoLegende: "Avant / après · Mercedes",   // fin de l'offre (compte à rebours). Vide = pas de compte à rebours
     /* Prix séparés des éléments en plus du Signature et du polissage (servent au calcul « séparément ») */
@@ -1648,12 +1653,25 @@ var CONFIG = {
   document.querySelectorAll(".js-hiver-eco").forEach(function(e){ e.textContent = eur(valeur - OF.prix); });
   /* Vidéo preuve Pack Hiver (YouTube, lecture auto sans son, en boucle) */
   document.querySelectorAll(".js-proof-vid").forEach(function(fig){
-    var id = OF.videoYouTube;
-    if (!id) { fig.remove(); return; }
+    var id = OF.videoYouTube, mp4 = OF.videoMP4;
+    if (!id && !mp4) { fig.remove(); return; }
     var sec = fig.closest(".lp-full"); if (sec) sec.classList.add("has-vid");
     var cap = fig.querySelector(".js-proof-cap"); if (cap && OF.videoLegende) cap.textContent = OF.videoLegende;
+    if (mp4) {
+      var v = document.createElement("video");
+      v.src = mp4; v.muted = true; v.loop = true; v.autoplay = true; v.playsInline = true; v.preload = "auto";
+      v.setAttribute("muted",""); v.setAttribute("playsinline",""); v.setAttribute("webkit-playsinline","");
+      if (id) v.poster = "https://i.ytimg.com/vi/" + id + "/hqdefault.jpg";
+      v.addEventListener("click", function(){ v.paused ? v.play() : v.pause(); });
+      fig.querySelector(".pv-frame").appendChild(v);
+      var tryPlay = function(){ var pr = v.play(); if (pr && pr.catch) pr.catch(function(){}); };
+      tryPlay(); document.addEventListener("touchstart", tryPlay, { once: true, passive: true });
+      return;
+    }
+    var touch = window.matchMedia && matchMedia("(hover: none)").matches;
+    if (touch) fig.classList.add("tap");
     var f = document.createElement("iframe");
-    f.src = "https://www.youtube-nocookie.com/embed/" + id + "?autoplay=1&mute=1&loop=1&playlist=" + id + "&controls=0&playsinline=1&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1";
+    f.src = "https://www.youtube-nocookie.com/embed/" + id + "?autoplay=1&mute=1&loop=1&playlist=" + id + "&controls=" + (touch ? 1 : 0) + "&playsinline=1&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1";
     f.title = "Avant / après : exemple réel"; f.allow = "autoplay; encrypted-media; picture-in-picture";
     f.setAttribute("frameborder","0");
     fig.querySelector(".pv-frame").appendChild(f);
@@ -1754,6 +1772,9 @@ var CONFIG = {
   window.addEventListener("scroll", onScroll, {passive:true});
   burger.addEventListener("click", function(){
     var open = top.classList.toggle("open");
+    document.documentElement.style.overflow = open ? "hidden" : "";
+    if (!burger.dataset.ico) burger.dataset.ico = burger.innerHTML;
+    burger.innerHTML = open ? '<svg width="24" height="24" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="1.6"/></svg>' : burger.dataset.ico;
     burger.setAttribute("aria-expanded", open ? "true" : "false");
     burger.setAttribute("aria-label", open ? "Fermer le menu" : "Ouvrir le menu");
   });
@@ -1775,11 +1796,11 @@ var CONFIG = {
       if (!mb.dataset.defHref) { mb.dataset.defHref = mb.getAttribute("href"); mb.dataset.defText = mb.textContent; }
       var href = cur ? cur.getAttribute("href") : mb.dataset.defHref;
       mb.setAttribute("href", href);
-      mb.textContent = cur ? (cur.textContent.length > 18 ? "Réserver" : cur.textContent) : mb.dataset.defText;
+      mb.textContent = "Réserver";
       if (/^https?:/.test(href)) { mb.target = "_blank"; mb.rel = "noopener"; } else { mb.removeAttribute("target"); }
     }
     if (window.__fitHero) window.__fitHero();
-    top.classList.remove("open"); burger.setAttribute("aria-expanded","false");
+    top.classList.remove("open"); burger.setAttribute("aria-expanded","false"); document.documentElement.style.overflow = ""; if (burger.dataset.ico) burger.innerHTML = burger.dataset.ico;
     onScroll();
     if (anchor && document.getElementById(anchor)) document.getElementById(anchor).scrollIntoView();
     else window.scrollTo(0,0);
