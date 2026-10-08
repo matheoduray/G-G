@@ -369,6 +369,77 @@ footer a:hover{color:var(--gold-2)}
 .mbar .btn{flex:1;min-height:50px}
 @media (max-width:860px){.mbar{display:flex}}
 
+/* ---------- Landing pages ---------- */
+.lp-hero{padding:64px 0 80px;border-bottom:1px solid var(--line)}
+.lp-hero > .wrap{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center}
+.lp-hero .kicker,.kicker{margin:0 0 14px;color:var(--gold);font-size:.88rem;letter-spacing:.1em;text-transform:uppercase}
+.lp-hero h1{margin:0 0 18px;font-size:clamp(2.1rem,4.8vw,4rem);line-height:1;font-weight:780;letter-spacing:-.01em;font-stretch:120%;font-variation-settings:"wdth" 120;text-wrap:balance}
+.lp-hero .sub{margin:0 0 26px;color:rgba(243,240,234,.8);font-size:1.12rem;max-width:48ch}
+.lp-price{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin:0 0 26px}
+.lp-price b{font-size:clamp(2.4rem,4.6vw,3.3rem);line-height:1;color:var(--gold-2);font-weight:780;font-stretch:120%;font-variation-settings:"wdth" 120}
+.lp-price span{color:var(--muted)}
+.lp-price b span{color:inherit}
+.lp-ctas{display:flex;flex-wrap:wrap;gap:12px}
+.lp-ctas .btn{min-height:58px;padding:0 30px;font-size:1.05rem}
+.lp-trust{margin:20px 0 0;color:var(--muted);font-size:.95rem}
+@media (max-width:900px){.lp-hero{padding:34px 0 52px}.lp-hero > .wrap{grid-template-columns:1fr;gap:30px}.lp-ctas .btn{flex:1 1 100%}}
+.gains{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-2);border:1px solid var(--line-2)}
+.gains div{background:var(--black);padding:32px 28px}
+.gains b{display:block;font-size:1.2rem;font-weight:700;margin-bottom:10px;font-stretch:115%;font-variation-settings:"wdth" 115}
+.gains span{color:var(--muted)}
+@media (max-width:860px){.gains{grid-template-columns:1fr}}
+.stack{border:1px solid var(--gold);background:linear-gradient(160deg,rgba(201,169,106,.1),transparent 55%);max-width:780px}
+.stack ul{list-style:none;margin:0;padding:6px 28px}
+.stack li{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:16px 0;border-bottom:1px solid var(--line)}
+.stack li:last-child{border-bottom:0}
+.stack li span{display:flex;flex-direction:column;font-weight:600}
+.stack li small{color:var(--muted);font-size:.9rem;font-weight:400}
+.stack li em{font-style:normal;color:var(--muted);white-space:nowrap}
+.stack li em.inc{color:var(--gold-2);font-weight:600}
+.stack .sum{display:flex;justify-content:space-between;gap:16px;padding:18px 28px;border-top:1px solid var(--line-2);color:var(--muted)}
+.stack .you{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:18px;padding:24px 28px;background:rgba(201,169,106,.12)}
+.stack .you b{font-size:2.8rem;color:var(--gold-2);font-weight:780;line-height:1.05;font-stretch:120%;font-variation-settings:"wdth" 120}
+@media (max-width:600px){.stack ul,.stack .sum,.stack .you{padding-left:18px;padding-right:18px}.stack .you .btn{width:100%}}
+.fine-note{margin:14px 0 0;color:var(--dim);font-size:.88rem}
+.steps.s4{grid-template-columns:repeat(4,1fr);gap:36px}
+@media (max-width:960px){.steps.s4{grid-template-columns:1fr 1fr}}
+@media (max-width:600px){.steps.s4{grid-template-columns:1fr}}
+.promise{display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:start;border:1px solid var(--line-2);border-left:2px solid var(--gold);padding:30px;max-width:860px}
+.promise svg{color:var(--gold)}
+.promise h3{margin:0 0 6px;font-size:1.25rem;font-weight:700}
+.promise p{margin:0;color:var(--muted)}
+.feature{display:grid;grid-template-columns:1fr 1.05fr;border:1px solid var(--gold);overflow:hidden;background:linear-gradient(120deg,rgba(201,169,106,.1),var(--raise) 60%);box-shadow:0 30px 80px rgba(0,0,0,.5)}
+.feature > .ph{border:0;min-height:420px}
+.feature .body{padding:48px 44px}
+.feature h2{margin:0 0 10px;font-size:clamp(2.4rem,5vw,4rem);line-height:.95;font-weight:780;text-transform:uppercase;font-stretch:125%;font-variation-settings:"wdth" 125}
+.feature .tagline{margin:0 0 20px;color:rgba(243,240,234,.82);font-size:1.12rem;max-width:44ch}
+.feature .compare{margin:22px 0 4px;color:var(--muted)}
+.badge{display:inline-block;padding:6px 12px;border:1px solid var(--gold);color:var(--gold-2);font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:20px}
+.ticks{list-style:none;margin:0;padding:0}
+.ticks li{position:relative;padding:7px 0 7px 30px}
+.ticks li::before{content:"";position:absolute;left:2px;top:13px;width:12px;height:7px;border-left:2px solid var(--gold);border-bottom:2px solid var(--gold);transform:rotate(-45deg)}
+@media (max-width:900px){.feature{grid-template-columns:1fr}.feature > .ph{min-height:0;aspect-ratio:16/10}.feature .body{padding:28px 22px 32px}.feature .lp-ctas .btn{flex:1 1 100%}}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{display:flex;flex-direction:column;border:1px solid var(--line-2);text-decoration:none;background:var(--black);transition:border-color .2s,transform .2s}
+.card:hover{border-color:var(--gold);transform:translateY(-2px)}
+.card > .ph{aspect-ratio:4/3;border:0;min-height:0}
+.card .in{padding:26px 24px 28px;display:flex;flex-direction:column;flex:1}
+.card .for{margin:0 0 10px;color:var(--gold);font-size:.88rem;letter-spacing:.04em}
+.card h3{margin:0 0 8px;font-size:1.6rem;font-weight:720;font-stretch:120%;font-variation-settings:"wdth" 120}
+.card p{margin:0 0 18px;color:var(--muted)}
+.card .pr{flex:1;display:flex;align-items:flex-end;gap:6px;color:var(--muted);margin-bottom:18px}
+.card .pr b{font-size:1.8rem;line-height:1;color:var(--gold-2);font-weight:740;font-stretch:118%;font-variation-settings:"wdth" 118}
+.card .more{align-self:flex-start;font-weight:600;border-bottom:1px solid var(--gold);padding-bottom:2px}
+@media (max-width:900px){.cards{grid-template-columns:1fr}}
+@media (prefers-reduced-motion: reduce){.card{transition:none}.card:hover{transform:none}}
+.chooser{border-top:1px solid var(--line-2);max-width:980px}
+.chooser a{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center;padding:22px 4px;border-bottom:1px solid var(--line-2);text-decoration:none;transition:background .2s}
+.chooser a:hover{background:linear-gradient(90deg,transparent,rgba(201,169,106,.07),transparent)}
+.chooser a span{font-size:1.1rem}
+.chooser a b{color:var(--gold-2);white-space:nowrap;font-weight:650}
+@media (max-width:600px){.chooser a{grid-template-columns:1fr;gap:6px}}
+.cross{margin-top:56px}
+
 /* ---------- Réservation Calendly intégrée ---------- */
 .calbox{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;padding:16px}
 .calbox.on{display:flex}
@@ -385,8 +456,8 @@ footer a:hover{color:var(--gold-2)}
     <div class="bar">
       <nav class="nav-l" aria-label="Navigation principale">
         <a class="lnk" href="#/" data-link data-nav="/">Accueil</a>
-        <a class="lnk" href="#/tarifs" data-link data-nav="/tarifs">Tarifs</a>
-        <a class="lnk" href="#/abonnements" data-link data-nav="/abonnements">Abonnements</a>
+        <a class="lnk" href="#/offres" data-link data-nav="/offres">Nos offres</a>
+        <a class="lnk" href="#/pack-hiver" data-link data-nav="/pack-hiver" style="color:var(--gold-2)">Pack Hiver</a>
       </nav>
       <span aria-hidden="true" class="spacer-m"></span>
       <a class="logo" href="#/" data-link aria-label="Gleam & Go, accueil">
@@ -397,7 +468,7 @@ footer a:hover{color:var(--gold-2)}
       <div class="nav-r">
         <a class="lnk" href="#/qui-sommes-nous" data-link data-nav="/qui-sommes-nous">Qui sommes-nous</a>
         <a class="tel js-tel" href="#" aria-label="Appeler le 0478 48 83 34"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z" fill="currentColor"/></svg><span>0478 48 83 34</span></a>
-        <a class="btn btn-gold" href="#/tarifs" data-link>Réserver</a>
+        <a class="btn btn-gold" href="#/offres" data-link>Réserver</a>
       </div>
       <button class="burger" id="burger" aria-expanded="false" aria-controls="mpanel" aria-label="Ouvrir le menu">
         <svg width="24" height="24" viewBox="0 0 24 24"><path d="M3 7h18M3 12h18M3 17h18" stroke="currentColor" stroke-width="1.6"/></svg>
@@ -405,10 +476,13 @@ footer a:hover{color:var(--gold-2)}
     </div>
     <nav class="mpanel" id="mpanel" aria-label="Menu mobile">
       <a class="lnk" href="#/" data-link>Accueil</a>
-      <a class="lnk" href="#/tarifs" data-link>Tarifs</a>
-      <a class="lnk" href="#/abonnements" data-link>Abonnements</a>
+      <a class="lnk" href="#/offres" data-link>Nos offres</a>
+      <a class="lnk" href="#/pack-hiver" data-link style="color:var(--gold-2)">Pack Hiver</a>
+      <a class="lnk" href="#/signature" data-link>Signature</a>
+      <a class="lnk" href="#/polissage" data-link>Polissage</a>
+      <a class="lnk" href="#/refresh" data-link>Refresh (abonnement)</a>
       <a class="lnk" href="#/qui-sommes-nous" data-link>Qui sommes-nous</a>
-      <a class="btn btn-gold" href="#/tarifs" data-link>Composer mon nettoyage</a>
+      <a class="btn btn-gold" href="#/offres" data-link>Réserver</a>
       <a class="btn btn-line js-tel" href="#" style="margin-top:10px">Appeler le 0478 48 83 34</a>
     </nav>
   </div>
@@ -467,7 +541,7 @@ footer a:hover{color:var(--gold-2)}
       <h1 class="hero-title"><span class="big">Gleam &amp; Go</span></h1>
       <p class="sub">Qualité atelier, devant chez vous. On apporte l'eau, vous fournissez une prise.</p>
       <div class="hero-ctas">
-        <a class="btn btn-gold" href="#/tarifs" data-link>Composer mon nettoyage</a>
+        <a class="btn btn-gold" href="#/signature#composer" data-link>Composer mon nettoyage</a>
         <a class="btn btn-glass js-tel" href="#"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z" fill="currentColor"/></svg> 0478 48 83 34</a>
       </div>
       <p class="callline">Appelez-nous sans hésiter, 7j/7 de 9 h à 21 h, ou <a class="wa js-wa" href="#" target="_blank" rel="noopener">écrivez-nous sur WhatsApp</a>.</p>
@@ -490,21 +564,28 @@ footer a:hover{color:var(--gold-2)}
       <h2 class="t">Nos prestations</h2>
       <p class="lead">Chaque voiture commence par un Signature. Ensuite, on l'entretient.</p>
       <div class="rows">
-        <a class="row" href="#/tarifs" data-link>
+        <a class="row" href="#/pack-hiver" data-link>
+          <figure class="ph r43" data-photo="pop"></figure>
+          <h3>Pack Hiver</h3>
+          <p>Intérieur, extérieur, polissage et céramique 3 ans, en une journée. L'offre de la saison.</p>
+          <span class="pr"><b class="js-offre-prix">450 €</b></span>
+          <span class="go" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.4" fill="none"/></svg></span>
+        </a>
+        <a class="row" href="#/signature" data-link>
           <figure class="ph r43" data-photo="svc-signature"></figure>
           <h3>Signature</h3>
           <p>Le detailing complet de l'habitacle, shampooing des sièges compris. Extérieur en option.</p>
           <span class="pr">dès <b class="js-p-signature">149 €</b></span>
           <span class="go" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.4" fill="none"/></svg></span>
         </a>
-        <a class="row" href="#/abonnements" data-link>
+        <a class="row" href="#/refresh" data-link>
           <figure class="ph r43" data-photo="svc-refresh"></figure>
           <h3>Refresh</h3>
           <p>L'entretien récurrent qui garde votre voiture au niveau du Signature.</p>
           <span class="pr">dès <b class="js-p-refresh">79 €</b> / passage</span>
           <span class="go" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.4" fill="none"/></svg></span>
         </a>
-        <a class="row" href="#/tarifs#polissage" data-link>
+        <a class="row" href="#/polissage" data-link>
           <figure class="ph r43" data-photo="svc-polish"></figure>
           <h3>Polissage</h3>
           <p>Correction de peinture en une ou plusieurs étapes. Rayures légères, voile, micro-rayures.</p>
@@ -597,35 +678,46 @@ footer a:hover{color:var(--gold-2)}
     <div class="wrap">
       <h2>Votre voiture mérite mieux qu'un rouleau.</h2>
       <p>Composez votre Signature en trente secondes, prix affiché avant de réserver.</p>
-      <div class="ctas"><a class="btn btn-gold" href="#/tarifs" data-link>Composer mon nettoyage</a><a class="btn btn-line js-tel" href="#">Appeler le 0478 48 83 34</a><a class="btn btn-line js-wa" href="#" target="_blank" rel="noopener">WhatsApp</a></div>
+      <div class="ctas"><a class="btn btn-gold" href="#/signature#composer" data-link>Composer mon nettoyage</a><a class="btn btn-line js-tel" href="#">Appeler le 0478 48 83 34</a><a class="btn btn-line js-wa" href="#" target="_blank" rel="noopener">WhatsApp</a></div>
     </div>
   </section>
 </div>
 
-<!-- =================== TARIFS =================== -->
-<div class="page" data-page="/tarifs" data-title="Tarifs — Gleam & Go">
-  <header class="page-head">
+<!-- =================== SIGNATURE (ancien /tarifs) =================== -->
+<div class="page" data-page="/signature" data-title="Signature — detailing intérieur à domicile à Bruxelles dès 149 € | Gleam & Go">
+  <section class="lp-hero">
     <div class="wrap">
-      <h1>Tarifs</h1>
-      <p>Toutes nos prestations partent du Signature, l'habitacle en profondeur. Ajoutez l'extérieur et les options selon votre voiture : le prix s'ajuste en direct.</p>
-    </div>
-  </header>
-
-  <section class="sec" id="offre" style="padding-bottom:0">
-    <div class="wrap">
-      <div class="deal">
-        <div>
-          <p class="kicker js-offre-kicker"></p>
-          <h2 class="js-offre-titre"></h2>
-          <p class="price"><b class="js-offre-prix"></b><span>tout compris</span></p>
-          <a class="btn btn-gold js-offre-cta" href="#" target="_blank" rel="noopener">Réserver le Pack Hiver</a>
+      <div>
+        <p class="kicker">Signature · detailing intérieur</p>
+        <h1>Retrouvez l'intérieur de votre voiture comme au premier jour.</h1>
+        <p class="sub">Aspiration, shampooing des sièges et tapis, vapeur, cuir, vitres. Chez vous, en une demi-journée : on apporte l'eau, vous fournissez une prise.</p>
+        <p class="lp-price"><b>dès <span class="js-p-signature">149 €</span></b><span>prix exact affiché avant de réserver</span></p>
+        <div class="lp-ctas">
+          <a class="btn btn-gold js-main-cta" href="#/signature#composer" data-link>Composer mon Signature</a>
+          <a class="btn btn-line js-wa-msg" data-msg="Bonjour, voici une photo de ma voiture pour un Signature." href="#" target="_blank" rel="noopener">Envoyer une photo</a>
         </div>
-        <ul class="js-offre-lignes"></ul>
+        <p class="lp-trust"><span class="stars">★★★★★</span> 5,0 · <span class="js-count2">avis Google</span> · <span class="js-clients">+ de 100</span> clients à Bruxelles</p>
       </div>
+      <figure class="ph r43" data-photo="svc-signature"></figure>
     </div>
   </section>
 
   <section class="sec">
+    <div class="wrap">
+      <h2 class="t">Ce que ça change</h2>
+      <div class="gains">
+        <div><b>Des sièges vraiment propres</b><span>L'injecteur-extracteur pousse le shampooing dans le tissu et aspire la saleté avec. Elle sort du siège au lieu d'être étalée.</span></div>
+        <div><b>Une odeur neutre</b><span>La vapeur assainit l'habitacle, les tapis sont lavés en profondeur. Pas de parfum pour masquer : la cause est retirée.</span></div>
+        <div><b>Zéro déplacement</b><span>On vient chez vous, 7 jours sur 7. Vous n'avez pas besoin d'être là pendant le nettoyage.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="composer">
+    <div class="wrap">
+      <h2 class="t">Composez votre Signature</h2>
+      <p class="lead">Le prix s'ajuste en direct. 40 € d'acompte en ligne pour bloquer le créneau, le reste sur place.</p>
+    </div>
     <div class="wrap config">
       <form id="configurator" onsubmit="return false">
         <fieldset><legend>Taille du véhicule</legend><div class="choices" data-group="taille"></div></fieldset>
@@ -663,10 +755,288 @@ footer a:hover{color:var(--gold-2)}
     </div>
   </section>
 
-  <section class="sec" id="polissage">
+  <section class="sec">
     <div class="wrap">
-      <h2 class="t">Polissage</h2>
-      <p class="lead">Pour retirer micro-rayures, hologrammes et voile terne. Le nombre d'étapes dépend de l'état de votre vernis.</p>
+      <h2 class="t">Avant, après</h2>
+      <div class="strip">
+        <figure class="ph r45" data-photo="gal-6"></figure>
+        <figure class="ph r45" data-photo="gal-7"></figure>
+        <figure class="ph r45" data-photo="gal-8"></figure>
+      </div>
+      <p class="score"><b>5,0</b><span class="stars" aria-hidden="true">★★★★★</span><span class="js-count">sur Google</span><a class="js-reviews" href="#" target="_blank" rel="noopener">Lire tous les avis</a></p>
+      <div class="reviews js-revs" data-pick="0,2,5"></div>
+      <div class="deal cross">
+        <div>
+          <p class="kicker">L'hiver arrive</p>
+          <h2>Passez au Pack Hiver</h2>
+          <p class="price"><b class="js-offre-prix">450 €</b><span>tout compris</span></p>
+          <a class="btn btn-gold" href="#/pack-hiver" data-link>Voir le Pack Hiver</a>
+        </div>
+        <ul>
+          <li>Le Signature intérieur et extérieur</li>
+          <li>Décontamination et polissage de la carrosserie</li>
+          <li>Une céramique de 3 ans contre le sel et la boue</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <h2 class="t">Questions fréquentes</h2>
+      <div class="faq">
+        <details><summary>Dois-je être présent ?</summary><p>Non. Il suffit de nous laisser accès à la voiture et à une prise.</p></details>
+        <details><summary>De quoi avez-vous besoin sur place ?</summary><p>Uniquement d'une prise électrique. Nous apportons l'eau, les produits et 25 mètres de rallonge. Pas de prise ? On récupère la voiture contre dépôt d'une pièce d'identité.</p></details>
+        <details><summary>Le prix affiché est-il définitif ?</summary><p>Oui, si l'état de la voiture correspond à votre sélection. S'il diffère, on vous prévient avant de commencer.</p></details>
+        <details><summary>Et après ?</summary><p>Le Refresh garde la voiture à ce niveau, à rythme fixe, dès 79 € par passage. <a href="#/refresh" data-link>Voir les abonnements</a>.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap">
+      <h2>Votre voiture mérite mieux qu'un rouleau.</h2>
+      <p>Composez votre Signature en trente secondes, prix affiché avant de réserver.</p>
+      <div class="ctas"><a class="btn btn-gold" href="#/signature#composer" data-link>Composer mon Signature</a><a class="btn btn-line js-tel" href="#">Appeler le 0478 48 83 34</a></div>
+    </div>
+  </section>
+</div>
+
+<!-- =================== OFFRES =================== -->
+<div class="page" data-page="/offres" data-title="Nos offres — Gleam & Go, detailing à domicile à Bruxelles">
+  <header class="page-head">
+    <div class="wrap">
+      <h1>Nos offres</h1>
+      <p>Toutes nos prestations se font chez vous, avec notre eau et notre matériel. Le prix est affiché avant de réserver.</p>
+    </div>
+  </header>
+
+  <section class="sec" style="padding-bottom:70px">
+    <div class="wrap">
+      <article class="feature">
+        <figure class="ph" data-photo="pop"></figure>
+        <div class="body">
+          <span class="badge">Offre d'hiver · un seul Pack par jour</span>
+          <h2>Pack Hiver</h2>
+          <p class="tagline">Votre voiture complète, polie et protégée par une céramique de 3 ans. En une journée, chez vous.</p>
+          <ul class="ticks">
+            <li>Signature intérieur complet</li>
+            <li>Signature extérieur + décontamination</li>
+            <li>Une passe de polissage</li>
+            <li>Protection céramique, 3 ans de durée</li>
+          </ul>
+          <p class="compare">Séparément, sans la céramique : <span class="js-stack-sum">508 €</span></p>
+          <p class="lp-price"><b class="js-offre-prix">450 €</b><span>céramique incluse</span></p>
+          <div class="lp-ctas">
+            <a class="btn btn-gold js-wa-msg" data-msg="Bonjour, je suis intéressé par le Pack Hiver." data-cal="hiver" data-recap="Pack Hiver" href="#" target="_blank" rel="noopener">Réserver ma date</a>
+            <a class="btn btn-line" href="#/pack-hiver" data-link>Tout le détail</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <h2 class="t">Nos prestations</h2>
+      <p class="lead">Chaque voiture commence par un Signature. Ensuite, on la corrige, on la protège ou on l'entretient.</p>
+      <div class="cards">
+        <a class="card" href="#/signature" data-link>
+          <figure class="ph" data-photo="svc-signature"></figure>
+          <div class="in">
+            <p class="for">Habitacle sale, sièges tachés</p>
+            <h3>Signature</h3>
+            <p>Le detailing complet de l'habitacle, shampooing des sièges et tapis compris. Extérieur en option.</p>
+            <p class="pr">dès <b class="js-p-signature">149 €</b></p>
+            <span class="more">Voir le Signature</span>
+          </div>
+        </a>
+        <a class="card" href="#/polissage" data-link>
+          <figure class="ph" data-photo="svc-polish"></figure>
+          <div class="in">
+            <p class="for">Peinture terne, micro-rayures</p>
+            <h3>Polissage</h3>
+            <p>Correction de peinture à la polisseuse Rupes, décontamination incluse. One-step ou multi-steps.</p>
+            <p class="pr">dès <b class="js-p-polish">300 €</b></p>
+            <span class="more">Voir le polissage</span>
+          </div>
+        </a>
+        <a class="card" href="#/refresh" data-link>
+          <figure class="ph" data-photo="svc-refresh"></figure>
+          <div class="in">
+            <p class="for">Déjà client Signature</p>
+            <h3>Refresh</h3>
+            <p>L'entretien à rythme fixe qui garde votre voiture au niveau du Signature, sans y penser.</p>
+            <p class="pr">dès <b class="js-p-refresh">79 €</b> / passage</p>
+            <span class="more">Voir les abonnements</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <h2 class="t">Vous hésitez ?</h2>
+      <p class="lead">Partez de ce qui vous dérange aujourd'hui.</p>
+      <div class="chooser">
+        <a href="#/signature" data-link><span>L'intérieur est sale, ça sent le renfermé, les sièges sont tachés</span><b>Signature →</b></a>
+        <a href="#/polissage" data-link><span>La peinture est terne, pleine de traces de rouleaux et de micro-rayures</span><b>Polissage →</b></a>
+        <a href="#/pack-hiver" data-link><span>Vous voulez tout remettre à neuf et protéger la voiture pour l'hiver</span><b>Pack Hiver →</b></a>
+        <a href="#/refresh" data-link><span>La voiture est déjà propre et vous voulez qu'elle le reste</span><b>Refresh →</b></a>
+      </div>
+      <p class="callline">Toujours un doute ? Envoyez-nous une photo sur <a class="js-wa wa" href="#" target="_blank" rel="noopener">WhatsApp</a>, on vous dit quoi faire.</p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <h2 class="t">Ce qu'en disent nos clients</h2>
+      <p class="score"><b>5,0</b><span class="stars" aria-hidden="true">★★★★★</span><span class="js-count">sur Google</span><a class="js-reviews" href="#" target="_blank" rel="noopener">Lire tous les avis</a></p>
+      <div class="reviews js-revs" data-pick="0,2,3"></div>
+    </div>
+  </section>
+</div>
+
+<!-- =================== PACK HIVER =================== -->
+<div class="page" data-page="/pack-hiver" data-title="Pack Hiver — intérieur, extérieur, polissage et céramique 3 ans | Gleam & Go">
+  <section class="lp-hero">
+    <div class="wrap">
+      <div>
+        <p class="kicker">Offre d'hiver · un seul Pack par jour</p>
+        <h1>Votre voiture prête pour l'hiver. Et protégée pour les trois suivants.</h1>
+        <p class="sub">Intérieur complet, extérieur, polissage et protection céramique 3 ans. Une journée, chez vous. L'eau, le sel et la boue glissent sur la carrosserie au lieu de s'y accrocher.</p>
+        <p class="lp-price"><b class="js-offre-prix">450 €</b><span>tout compris · 40 € d'acompte pour bloquer votre date</span></p>
+        <div class="lp-ctas">
+          <a class="btn btn-gold js-wa-msg js-main-cta" data-msg="Bonjour, je suis intéressé par le Pack Hiver." data-cal="hiver" data-recap="Pack Hiver" href="#" target="_blank" rel="noopener">Réserver ma date</a>
+          <a class="btn btn-line js-wa" href="#" target="_blank" rel="noopener">Poser une question</a>
+        </div>
+        <p class="lp-trust"><span class="stars">★★★★★</span> 5,0 · <span class="js-count2">avis Google</span> · <span class="js-clients">+ de 100</span> clients à Bruxelles</p>
+      </div>
+      <figure class="ph r43" data-photo="pop"></figure>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <h2 class="t">Pourquoi avant l'hiver</h2>
+      <p class="lead">Le froid, le sel et l'humidité abîment une voiture plus vite que le reste de l'année.</p>
+      <div class="gains">
+        <div><b>Le sel s'accroche moins</b><span>Le sel de déneigement et la boue attaquent le vernis et les jantes. La céramique forme une couche dure et lisse : la saleté part au rinçage.</span></div>
+        <div><b>Un habitacle sain tout l'hiver</b><span>Sièges et tapis shampouinés, vitres intérieures dégraissées : moins d'humidité retenue, moins de buée, plus d'odeur de renfermé.</span></div>
+        <div><b>Des lavages plus rapides</b><span>Sur une surface céramique, l'eau perle et emporte la saleté. Un rinçage suffit souvent là où il fallait frotter.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="inclus">
+    <div class="wrap">
+      <h2 class="t">Tout ce qui est inclus</h2>
+      <p class="lead">Chaque prestation existe séparément chez nous. Le Pack les réunit en une journée, et ajoute la céramique.</p>
+      <div class="stack">
+        <ul>
+          <li><span>Signature intérieur<small>Aspiration, shampooing sièges et tapis, vapeur, cuir, vitres</small></span><em class="js-p-signature">149 €</em></li>
+          <li><span>Signature extérieur<small>Lavage, jantes et pneus, vitres, séchage, protection PW</small></span><em class="js-p-ext">59 €</em></li>
+          <li><span>Décontamination de la carrosserie<small>Goudron et particules ferreuses retirés avant polissage</small></span><em>incluse</em></li>
+          <li><span>Polissage one-step<small>Micro-rayures, voile terne, traces de rouleaux</small></span><em class="js-p-polish">300 €</em></li>
+          <li><span>Protection céramique 3 ans<small>Couche dure et hydrophobe sur toute la carrosserie</small></span><em class="inc">incluse</em></li>
+        </ul>
+        <div class="sum"><span>Séparément, sans la céramique</span><span class="js-stack-sum">508 €</span></div>
+        <div class="you">
+          <div><span class="kicker" style="margin:0">Pack Hiver, céramique incluse</span><br><b class="js-offre-prix">450 €</b></div>
+          <a class="btn btn-gold js-wa-msg" data-msg="Bonjour, je suis intéressé par le Pack Hiver." data-cal="hiver" data-recap="Pack Hiver" href="#" target="_blank" rel="noopener">Réserver ma date</a>
+        </div>
+      </div>
+      <p class="fine-note">Prix séparés indiqués au tarif de base d'une citadine.</p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <h2 class="t">Votre journée Pack Hiver</h2>
+      <p class="lead">Vous n'avez pas besoin d'être présent pendant le travail.</p>
+      <ol class="steps s4">
+        <li><h3>Vous réservez votre date</h3><p>40 € d'acompte en ligne, déduits du total. Report gratuit jusqu'à 48 h avant.</p></li>
+        <li><h3>On arrive équipés</h3><p>Eau, produits, polisseuses et 25 m de rallonge. Il nous faut une prise, et un abri si possible.</p></li>
+        <li><h3>On travaille la journée</h3><p>Intérieur, lavage, décontamination, polissage, puis pose de la céramique.</p></li>
+        <li><h3>Vous récupérez la voiture</h3><p>On vous montre le résultat et comment entretenir la céramique. Le solde se règle à la fin.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <div class="promise js-promise">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6l7-3z" stroke="currentColor" stroke-width="1.5"/><path d="M8.5 12l2.5 2.5 4.5-5" stroke="currentColor" stroke-width="1.5"/></svg>
+        <div><h3 class="js-garantie-titre">Pas de surprise</h3><p class="js-garantie-texte">Le prix est fixé avant de réserver. Si l'état réel de la voiture change quelque chose, on vous le dit avant de commencer, jamais après.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <h2 class="t">Ce qu'en disent nos clients</h2>
+      <p class="score"><b>5,0</b><span class="stars" aria-hidden="true">★★★★★</span><span class="js-count">sur Google</span><a class="js-reviews" href="#" target="_blank" rel="noopener">Lire tous les avis</a></p>
+      <div class="reviews js-revs" data-pick="0,3,1"></div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <h2 class="t">Questions fréquentes</h2>
+      <div class="faq">
+        <details><summary>Combien de temps tient la céramique ?</summary><p>Jusqu'à 3 ans, avec un entretien simple : lavage doux, pas de rouleaux de station. Le Refresh entretient la protection pour vous.</p></details>
+        <details><summary>Dois-je être présent ?</summary><p>Non. Laissez-nous l'accès à la voiture et à une prise, on vous prévient quand c'est terminé.</p></details>
+        <details><summary>Et s'il pleut ?</summary><p>La céramique a besoin de quelques heures au sec. Sans garage ni carport chez vous, on récupère la voiture contre dépôt d'une pièce d'identité, ou vous la déposez à Etterbeek.</p></details>
+        <details><summary>Pourquoi un seul Pack Hiver par jour ?</summary><p>Le polissage et la pose de la céramique prennent la journée. On ne bâcle pas une étape pour caser un autre client.</p></details>
+        <details><summary>Comment se passe le paiement ?</summary><p>40 € d'acompte en ligne pour bloquer la date, déduits du total. Le solde se règle sur place, à la fin. Facture sur demande.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap">
+      <h2>L'hiver arrive. Votre voiture est prête ?</h2>
+      <p>Choisissez votre date en ligne. 40 € d'acompte, le reste le jour J.</p>
+      <div class="ctas"><a class="btn btn-gold js-wa-msg" data-msg="Bonjour, je suis intéressé par le Pack Hiver." data-cal="hiver" data-recap="Pack Hiver" href="#" target="_blank" rel="noopener">Réserver ma date</a><a class="btn btn-line js-tel" href="#">Appeler le 0478 48 83 34</a></div>
+    </div>
+  </section>
+</div>
+
+<!-- =================== POLISSAGE =================== -->
+<div class="page" data-page="/polissage" data-title="Polissage de carrosserie à domicile à Bruxelles — Gleam & Go">
+  <section class="lp-hero">
+    <div class="wrap">
+      <div>
+        <p class="kicker">Polissage · correction de peinture</p>
+        <h1>Effacez les micro-rayures. Retrouvez une peinture profonde.</h1>
+        <p class="sub">Polisseuses Rupes, décontamination incluse. Le voile terne et les traces de rouleaux disparaissent en grande partie, la couleur reprend sa profondeur.</p>
+        <p class="lp-price"><b>dès <span class="js-p-polish">300 €</span></b><span>one-step · 4 à 5 heures</span></p>
+        <div class="lp-ctas">
+          <a class="btn btn-gold js-wa-msg js-main-cta" data-msg="Bonjour, je souhaite un polissage one-step." data-cal="polissage" data-recap="Polissage one-step" href="#" target="_blank" rel="noopener">Réserver un one-step</a>
+          <a class="btn btn-line js-wa-msg" data-msg="Bonjour, voici une photo de ma peinture pour un diagnostic polissage." href="#" target="_blank" rel="noopener">Envoyer une photo</a>
+        </div>
+        <p class="lp-trust"><span class="stars">★★★★★</span> 5,0 · <span class="js-count2">avis Google</span> · <span class="js-clients">+ de 100</span> clients à Bruxelles</p>
+      </div>
+      <figure class="ph r43" data-photo="svc-polish"></figure>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <h2 class="t">Ce que ça change</h2>
+      <div class="gains">
+        <div><b>La brillance revient</b><span>Le polissage retire une infime couche de vernis abîmé. La lumière se reflète à nouveau proprement : la couleur paraît plus profonde.</span></div>
+        <div><b>Une voiture qui présente mieux</b><span>Pour une revente, un leasing qui se termine ou simplement pour le plaisir : une carrosserie corrigée change la première impression.</span></div>
+        <div><b>La base d'une protection</b><span>Une céramique se pose sur une peinture saine. Polir avant, c'est enfermer de la brillance au lieu d'enfermer des rayures.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="formules">
+    <div class="wrap">
+      <h2 class="t">One-step ou multi-steps ?</h2>
+      <p class="lead">Le nombre d'étapes dépend de l'état de votre vernis. Dans le doute, envoyez une photo : on vous répond dans la journée.</p>
       <div class="offers">
         <article class="offer">
           <figure class="ph r169" data-photo="pol-one" style="margin:-40px -36px 30px"></figure>
@@ -696,23 +1066,80 @@ footer a:hover{color:var(--gold-2)}
     </div>
   </section>
 
+  <section class="sec">
+    <div class="wrap">
+      <div class="promise">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5.5M12 16.2v.3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        <div><h3>Ce que le polissage ne fait pas</h3><p>Une rayure qui accroche l'ongle a souvent traversé le vernis : le polissage l'atténue sans la faire disparaître. On vous le dit au diagnostic, avant de commencer, pour que vous sachiez exactement quoi attendre.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <h2 class="t">Ce qu'en disent nos clients</h2>
+      <p class="score"><b>5,0</b><span class="stars" aria-hidden="true">★★★★★</span><span class="js-count">sur Google</span><a class="js-reviews" href="#" target="_blank" rel="noopener">Lire tous les avis</a></p>
+      <div class="reviews js-revs" data-pick="3,1,4"></div>
+    </div>
+  </section>
+
+  <section class="sec" style="padding-top:0;border-top:0">
+    <div class="wrap">
+      <div class="deal">
+        <div>
+          <p class="kicker">Allez plus loin</p>
+          <h2>Polissage + céramique 3 ans = Pack Hiver</h2>
+          <p class="price"><b class="js-offre-prix">450 €</b><span>intérieur et extérieur compris</span></p>
+          <a class="btn btn-gold" href="#/pack-hiver" data-link>Voir le Pack Hiver</a>
+        </div>
+        <ul>
+          <li>Le polissage one-step, décontamination incluse</li>
+          <li>Une céramique de 3 ans posée sur la peinture corrigée</li>
+          <li>Le Signature complet, intérieur et extérieur</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <h2 class="t">Questions fréquentes</h2>
+      <div class="faq">
+        <details><summary>Le polissage se fait-il chez moi ?</summary><p>Oui, si l'accès le permet et qu'il ne pleut pas. Sinon, vous déposez la voiture à Etterbeek, ou on vient la chercher contre dépôt d'une pièce d'identité.</p></details>
+        <details><summary>Quelle différence entre one-step et multi-steps ?</summary><p>Le one-step fait un seul passage, correcteur et lustrant : il retire la majorité des micro-rayures. Le multi-steps enchaîne plusieurs passes, du plus abrasif au finish, pour les défauts plus marqués.</p></details>
+        <details><summary>Combien de temps dure le résultat ?</summary><p>La correction reste tant que le vernis n'est pas rayé à nouveau. Lavages doux et protection (céramique ou Refresh) la font durer.</p></details>
+        <details><summary>Le polissage abîme-t-il la peinture ?</summary><p>On retire seulement une infime partie du vernis, au plus juste, avec des polisseuses Rupes et des pads adaptés à votre peinture. C'est pour ça qu'on commence par un diagnostic.</p></details>
+      </div>
+    </div>
+  </section>
+
   <section class="band">
     <div class="wrap">
-      <h2>Déjà client Signature ?</h2>
-      <p>Le Refresh entretient votre voiture au même niveau, à rythme régulier.</p>
-      <div class="ctas"><a class="btn btn-gold" href="#/abonnements" data-link>Voir les abonnements</a></div>
+      <h2>Une peinture qui brille à nouveau.</h2>
+      <p>Réservez votre one-step en ligne, ou envoyez-nous une photo pour un diagnostic.</p>
+      <div class="ctas"><a class="btn btn-gold js-wa-msg" data-msg="Bonjour, je souhaite un polissage one-step." data-cal="polissage" data-recap="Polissage one-step" href="#" target="_blank" rel="noopener">Réserver un one-step</a><a class="btn btn-line js-wa" href="#" target="_blank" rel="noopener">WhatsApp</a></div>
     </div>
   </section>
 </div>
 
 <!-- =================== ABONNEMENTS =================== -->
-<div class="page" data-page="/abonnements" data-title="Abonnements Refresh — Gleam & Go">
-  <header class="page-head">
+<div class="page" data-page="/refresh" data-title="Refresh — abonnement d'entretien auto à domicile dès 79 € | Gleam & Go">
+  <section class="lp-hero">
     <div class="wrap">
-      <h1>Refresh</h1>
-      <p>L'entretien récurrent, dans la continuité du Signature. Votre voiture reste au niveau, sans y penser.</p>
+      <div>
+        <p class="kicker">Refresh · abonnement</p>
+        <h1>Votre voiture propre toute l'année, sans y penser.</h1>
+        <p class="sub">Après un premier Signature, on revient à rythme fixe : même jour, même créneau. La voiture est déjà protégée, chaque passage est plus rapide, donc moins cher.</p>
+        <p class="lp-price"><b>dès <span class="js-p-refresh">79 €</span></b><span>par passage · sans engagement de durée</span></p>
+        <div class="lp-ctas">
+          <a class="btn btn-gold js-main-cta" href="#/refresh#rythme" data-link>Choisir mon rythme</a>
+          <a class="btn btn-line" href="#/signature" data-link>Pas encore client ? Commencer</a>
+        </div>
+        <p class="lp-trust"><span class="stars">★★★★★</span> 5,0 · <span class="js-count2">avis Google</span> · <span class="js-clients">+ de 100</span> clients à Bruxelles</p>
+      </div>
+      <figure class="ph r43" data-photo="abo"></figure>
     </div>
-  </header>
+  </section>
 
   <section class="sec">
     <div class="wrap cycle">
@@ -733,7 +1160,7 @@ footer a:hover{color:var(--gold-2)}
     </div>
   </section>
 
-  <section class="sec">
+  <section class="sec" id="rythme">
     <div class="wrap">
       <h2 class="t">Choisissez votre rythme</h2>
       <p class="lead">Même jour, même créneau, sans avoir à réserver à chaque fois.</p>
@@ -755,7 +1182,7 @@ footer a:hover{color:var(--gold-2)}
     <div class="wrap">
       <h2>Pas encore de Signature ?</h2>
       <p>On commence par là. Ensuite, le Refresh prend le relais.</p>
-      <div class="ctas"><a class="btn btn-gold" href="#/tarifs" data-link>Composer mon Signature</a></div>
+      <div class="ctas"><a class="btn btn-gold" href="#/signature#composer" data-link>Composer mon Signature</a></div>
     </div>
   </section>
 </div>
@@ -803,7 +1230,7 @@ footer a:hover{color:var(--gold-2)}
   <section class="band">
     <div class="wrap">
       <h2>On s'occupe de votre voiture ?</h2>
-      <div class="ctas"><a class="btn btn-gold" href="#/tarifs" data-link>Composer mon nettoyage</a><a class="btn btn-line js-tel" href="#">Appeler le 0478 48 83 34</a><a class="btn btn-line js-wa" href="#" target="_blank" rel="noopener">WhatsApp</a></div>
+      <div class="ctas"><a class="btn btn-gold" href="#/signature#composer" data-link>Composer mon nettoyage</a><a class="btn btn-line js-tel" href="#">Appeler le 0478 48 83 34</a><a class="btn btn-line js-wa" href="#" target="_blank" rel="noopener">WhatsApp</a></div>
     </div>
   </section>
 </div>
@@ -814,7 +1241,7 @@ footer a:hover{color:var(--gold-2)}
   <div class="wrap">
     <div><strong style="color:var(--white)">Gleam &amp; Go</strong>, detailing automobile à domicile, Bruxelles.<br><a class="js-tel" href="#" style="margin:0">0478 48 83 34</a>, 7j/7 de 9 h à 21 h<br>N° d'entreprise (BCE) : BE 1031.632.216</div>
     <div>
-      <a href="#/tarifs" data-link>Tarifs</a><a href="#/abonnements" data-link>Abonnements</a><a href="#/qui-sommes-nous" data-link>Qui sommes-nous</a><a href="#/#faq" data-link>FAQ</a>
+      <a href="#/offres" data-link>Nos offres</a><a href="#/pack-hiver" data-link>Pack Hiver</a><a href="#/signature" data-link>Signature</a><a href="#/polissage" data-link>Polissage</a><a href="#/refresh" data-link>Refresh</a><a href="#/qui-sommes-nous" data-link>Qui sommes-nous</a><a href="#/#faq" data-link>FAQ</a>
       <a href="https://www.instagram.com/gleamandgo_be/" target="_blank" rel="noopener">Instagram</a><a class="js-reviews" href="#" target="_blank" rel="noopener">Avis Google</a>
     </div>
   </div>
@@ -836,7 +1263,7 @@ footer a:hover{color:var(--gold-2)}
 </div>
 
 <div class="mbar">
-  <a class="btn btn-gold" href="#/tarifs" data-link>Réserver</a>
+  <a class="btn btn-gold" href="#/offres" data-link>Réserver</a>
   <a class="btn btn-line js-tel" href="#"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z" fill="currentColor"/></svg> Appeler</a>
   <a class="btn btn-line js-wa" href="#" target="_blank" rel="noopener">WhatsApp</a>
 </div>
@@ -926,7 +1353,14 @@ var CONFIG = {
     "about-3":   { src:"", alt:"Polissage d'un capot à la polisseuse", tip:"Votre véhicule de service ou votre installation sur place" }
   },
 
-  /* Offre mise en avant (pop-up + page Tarifs). active:false la désactive partout. */
+  /* Garantie affichée sur la page Pack Hiver. active:false = on affiche « Pas de surprise » à la place. */
+  garantie: {
+    active: false,
+    titre: "Satisfait, ou on revient",
+    texte: "Un point ne vous convient pas ? Dites-le-nous dans les 7 jours : on revient le reprendre gratuitement."
+  },
+
+  /* Offre mise en avant (pop-up + pages Offres et Pack Hiver). active:false la désactive partout. */
   offre: {
     active: true,
     kicker: "Offre d'hiver",
@@ -1119,7 +1553,7 @@ var CONFIG = {
     var media = document.getElementById("popMedia");
     if (PD["pop"]) { var pi = document.createElement("img"); pi.src = PD["pop"]; pi.alt = ""; media.appendChild(pi); }
     else { media.remove(); document.querySelector(".pop-card").style.gridTemplateColumns = "1fr"; }
-    var cta = document.getElementById("popCta"); cta.href = book(msg); cta.textContent = "Réserver le " + o.titre;
+    var cta = document.getElementById("popCta"); cta.href = book(msg, "hiver", (o.titre || "Pack") + " — " + eur(o.prix)); cta.textContent = "Réserver le " + o.titre;
 
     var KEY = "gg_offre_vue";
     function vueRecemment(){
@@ -1147,6 +1581,23 @@ var CONFIG = {
     d.textContent = r.name; var n = d.innerHTML;
     return '<blockquote><span class="stars" aria-label="5 étoiles sur 5">★★★★★</span><p>' + t + '</p><cite>' + n + ', avis Google</cite></blockquote>';
   }).join("");
+
+  /* Pages offres : avis ciblés, empilement de valeur, garantie */
+  document.querySelectorAll(".js-revs").forEach(function(box){
+    var pick = (box.getAttribute("data-pick") || "0,1,2").split(",").map(Number);
+    box.innerHTML = pick.map(function(i){ return CONFIG.reviews[i]; }).filter(Boolean).map(function(r){
+      var d = document.createElement("div"); d.textContent = r.text; var t = d.innerHTML;
+      d.textContent = r.name; var n = d.innerHTML;
+      return '<blockquote><span class="stars" aria-label="5 étoiles sur 5">★★★★★</span><p>' + t + '</p><cite>' + n + ', avis Google</cite></blockquote>';
+    }).join("");
+  });
+  var extOpt = CONFIG.options.filter(function(o){ return o.id === "exterieur"; })[0] || {add:0};
+  document.querySelectorAll(".js-p-ext").forEach(function(e){ e.textContent = eur(extOpt.add); });
+  document.querySelectorAll(".js-stack-sum").forEach(function(e){ e.textContent = eur(CONFIG.signature + extOpt.add + CONFIG.polishOneStep); });
+  if (CONFIG.garantie && CONFIG.garantie.active) {
+    document.querySelectorAll(".js-garantie-titre").forEach(function(e){ e.textContent = CONFIG.garantie.titre; });
+    document.querySelectorAll(".js-garantie-texte").forEach(function(e){ e.textContent = CONFIG.garantie.texte; });
+  }
 
   /* Gouttes lumineuses sous la silhouette */
   var g = document.getElementById("drops"), s = 11, h = "";
@@ -1226,6 +1677,8 @@ var CONFIG = {
   function route(){
     var hash = location.hash.replace(/^#/, "") || "/";
     var parts = hash.split("#"), path = parts[0] || "/", anchor = parts[1];
+    var ALIAS = { "/tarifs": "/signature", "/abonnements": "/refresh", "/services": "/offres" };
+    if (ALIAS[path]) path = ALIAS[path];
     var found = false;
     pages.forEach(function(p){ var on = p.getAttribute("data-page") === path; p.classList.toggle("on", on); if (on) { found = true; document.title = p.getAttribute("data-title"); } });
     if (!found) { pages[0].classList.add("on"); path = "/"; }
@@ -1233,6 +1686,15 @@ var CONFIG = {
       if (a.getAttribute("data-nav") === path) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current");
     });
     document.body.classList.toggle("at-home", path === "/");
+    /* Barre mobile : le bouton principal reprend l'appel à l'action de la page */
+    var mb = document.querySelector(".mbar .btn-gold"), cur = document.querySelector(".page.on .js-main-cta");
+    if (mb) {
+      if (!mb.dataset.defHref) { mb.dataset.defHref = mb.getAttribute("href"); mb.dataset.defText = mb.textContent; }
+      var href = cur ? cur.getAttribute("href") : mb.dataset.defHref;
+      mb.setAttribute("href", href);
+      mb.textContent = cur ? (cur.textContent.length > 18 ? "Réserver" : cur.textContent) : mb.dataset.defText;
+      if (/^https?:/.test(href)) { mb.target = "_blank"; mb.rel = "noopener"; } else { mb.removeAttribute("target"); }
+    }
     if (window.__fitHero) window.__fitHero();
     top.classList.remove("open"); burger.setAttribute("aria-expanded","false");
     onScroll();
