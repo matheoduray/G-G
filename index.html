@@ -421,6 +421,14 @@ footer a:hover{color:var(--gold-2)}
 @media (max-width:600px){.k-extra{display:none}.lp-hero .sub{font-size:1rem;margin-bottom:20px}.lp-hero h1{font-size:2rem}.countdown{margin-bottom:20px}}
 @media (max-width:900px){.lp-full{min-height:0;align-items:flex-end;padding-top:15vh;background-size:auto 55%;background-position:62% 0}.lp-full::before{background:linear-gradient(180deg,rgba(0,0,0,.25) 0%,rgba(0,0,0,.7) 35%,rgba(0,0,0,.94) 60%,#000 100%)}}
 @media (max-width:980px){.lp-full{min-height:0}}
+.pricebox{display:flex;align-items:center;gap:18px;margin:0 0 24px}
+.pricebox > b{font-size:clamp(2.9rem,6vw,3.8rem);line-height:1;color:var(--gold-2);font-weight:780;font-stretch:120%;font-variation-settings:"wdth" 120;white-space:nowrap}
+.pricebox > span{display:flex;flex-direction:column;gap:3px;padding-left:18px;border-left:1px solid rgba(201,169,106,.5);color:var(--white);font-weight:600;line-height:1.3}
+.pricebox em{font-style:normal;font-weight:400;color:var(--muted);font-size:.9rem}
+.pricebox em span{color:var(--white)}
+.cta-note{margin:12px 0 0;color:var(--muted);font-size:.9rem}
+.feature .pricebox{margin-top:26px}
+.you-eco{display:block;margin-top:4px;color:var(--muted);font-size:.92rem}
 .lp-was{margin:0 0 6px;color:var(--muted)}
 .lp-was span:first-child{color:var(--white);font-weight:600}
 .lp-was span:last-child,.compare span:last-child{color:var(--gold-2);font-weight:600}
@@ -856,8 +864,7 @@ footer a:hover{color:var(--gold-2)}
             <li>Une passe de polissage</li>
             <li>Protection céramique, 3 ans de durée</li>
           </ul>
-          <p class="compare">Prestations séparées : <span class="js-hiver-valeur">750 €</span> · vous économisez <span class="js-hiver-eco">300 €</span></p>
-          <p class="lp-price"><b class="js-offre-prix">450 €</b><span>céramique incluse</span></p>
+          <div class="pricebox"><b class="js-offre-prix">450 €</b><span>tout compris<em><span class="js-hiver-valeur">750 €</span> en prestations séparées</em></span></div>
           <div class="countdown js-countdown" aria-live="off">
             <span class="cd-label">L'offre se termine dans</span>
             <div class="cd-units"><div><b class="js-cd-j">00</b><small>jours</small></div><div><b class="js-cd-h">00</b><small>heures</small></div><div><b class="js-cd-m">00</b><small>min</small></div><div><b class="js-cd-s">00</b><small>sec</small></div></div>
@@ -941,8 +948,7 @@ footer a:hover{color:var(--gold-2)}
         <p class="kicker">Offre d'hiver · jusqu'au 31 octobre<span class="k-extra"> · un seul Pack par jour</span></p>
         <h1>Votre voiture prête pour l'hiver. Et protégée pour les trois suivants.</h1>
         <p class="sub">Intérieur complet, extérieur, polissage et protection céramique 3 ans. Une journée, chez vous. L'eau, le sel et la boue glissent sur la carrosserie au lieu de s'y accrocher.</p>
-        <p class="lp-was">Prestations séparées : <span class="js-hiver-valeur">750 €</span> · vous économisez <span class="js-hiver-eco">300 €</span></p>
-        <p class="lp-price"><b class="js-offre-prix">450 €</b><span>tout compris · 40 € d'acompte pour bloquer votre date</span></p>
+        <div class="pricebox"><b class="js-offre-prix">450 €</b><span>tout compris<em><span class="js-hiver-valeur">750 €</span> en prestations séparées</em></span></div>
         <div class="countdown js-countdown" aria-live="off">
             <span class="cd-label">L'offre se termine dans</span>
             <div class="cd-units"><div><b class="js-cd-j">00</b><small>jours</small></div><div><b class="js-cd-h">00</b><small>heures</small></div><div><b class="js-cd-m">00</b><small>min</small></div><div><b class="js-cd-s">00</b><small>sec</small></div></div>
@@ -951,6 +957,7 @@ footer a:hover{color:var(--gold-2)}
           <a class="btn btn-gold js-wa-msg js-main-cta" data-msg="Bonjour, je suis intéressé par le Pack Hiver." data-cal="hiver" data-recap="Pack Hiver" href="#" target="_blank" rel="noopener">Réserver ma date</a>
           <a class="btn btn-line js-wa" href="#" target="_blank" rel="noopener">Poser une question</a>
         </div>
+        <p class="cta-note">40 € d'acompte pour bloquer votre date, déduits du total.</p>
         <p class="lp-trust"><span class="stars">★★★★★</span> 5,0 · <span class="js-count2">avis Google</span> · <span class="js-clients">+ de 100</span> clients à Bruxelles</p>
       </div>
       <figure class="proof-vid js-proof-vid">
@@ -985,9 +992,8 @@ footer a:hover{color:var(--gold-2)}
           <li><span>Protection céramique 3 ans<small>Couche dure et hydrophobe sur toute la carrosserie</small></span><em class="js-p-cera">192 €</em></li>
         </ul>
         <div class="sum"><span>Total des prestations séparées</span><span class="js-hiver-valeur">750 €</span></div>
-        <div class="sum save"><span>Vous économisez</span><span class="js-hiver-eco">300 €</span></div>
         <div class="you">
-          <div><span class="kicker" style="margin:0">Pack Hiver, jusqu'au 31 octobre</span><br><b class="js-offre-prix">450 €</b></div>
+          <div><span class="kicker" style="margin:0">Pack Hiver, jusqu'au 31 octobre</span><br><b class="js-offre-prix">450 €</b><small class="you-eco">soit <span class="js-hiver-eco">300 €</span> de moins</small></div>
           <a class="btn btn-gold js-wa-msg" data-msg="Bonjour, je suis intéressé par le Pack Hiver." data-cal="hiver" data-recap="Pack Hiver" href="#" target="_blank" rel="noopener">Réserver ma date</a>
         </div>
       </div>
@@ -1441,7 +1447,7 @@ var CONFIG = {
 
   /* Avis Google, copiés mot pour mot */
   rating: "5,0",
-  reviewCount: 21,              // À VÉRIFIER sur ta fiche
+  reviewCount: 22,              // à mettre à jour quand de nouveaux avis arrivent
   reviews: [
     { name:"Bernard W.",  text:"Ma voiture était une poubelle roulante, je la retrouve neuve, un énorme merci, je recommande à 100%" },
     { name:"Fouad A.",    text:"Nettoyage digne d’une Audi Q8 e-tron. Excellent travail les gars. Je recommande !!!🤩" },
