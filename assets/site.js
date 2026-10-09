@@ -30,13 +30,17 @@ var CONFIG = {
   polishOneStep: 300,
   polishMultiStep: "Sur devis", // mets un nombre (ex. 650) si tu as un prix de départ
 
-  exterieur: 59,                // Signature Extérieur seul (aussi le prix ajouté pour Intérieur + Extérieur)
+  exterieur: 59,                // Signature Extérieur seul
+  complet: 200,                 // Signature Intérieur + Extérieur (prix pack)
 
-  /* Formules du configurateur. base = prix de départ ; cal = clé dans CONFIG.cal ; poils = option poils disponible */
+  /* Formules du configurateur. cal = clé dans CONFIG.cal ; interieur:true = l'état et les poils s'appliquent */
   formules: [
-    { id:"interieur", label:"Signature Intérieur",  note:"Habitacle complet, sièges shampouinés", cal:"interieur", poils:true  },
-    { id:"exterieur", label:"Signature Extérieur",  note:"Carrosserie, jantes, vitres, protection PW", cal:"exterieur", poils:false },
-    { id:"complet",   label:"Intérieur + Extérieur", note:"La voiture entière, en une visite",   cal:"complet",   poils:true  }
+    { id:"interieur", label:"Intérieur",  note:"L'habitacle à fond", cal:"interieur", interieur:true,
+      inclus:["Aspiration complète, coffre compris","Shampooing des sièges et tapis","Vapeur, plastiques, cuir","Vitres intérieures"] },
+    { id:"exterieur", label:"Extérieur",  note:"La carrosserie à la main", cal:"exterieur", interieur:false,
+      inclus:["Prélavage mousse et lavage à la main","Jantes et pneus","Vitres et séchage sans traces","Protection hydrophobe Koch Chemie PW"] },
+    { id:"complet",   label:"Intérieur + Extérieur", note:"La voiture entière, en une visite", cal:"complet", interieur:true, tag:"Le plus complet",
+      inclus:["Tout le Signature Intérieur","Tout le Signature Extérieur"] }
   ],
   etat: [
     { id:"normal",    label:"Normal",    note:"Entretien courant", add:0  },
@@ -51,7 +55,7 @@ var CONFIG = {
     { id:"z15",  label:"Jusqu'à 15 km",  note:"Waterloo, Rhode, Zaventem", add:10 },
     { id:"z30",  label:"15 à 30 km",     note:"Wavre, Nivelles, Malines",  add:25 },
     { id:"z50",  label:"30 à 50 km",     note:"Louvain, Namur, Gand",      add:45 },
-    { id:"far",  label:"Plus de 50 km",  note:"Sur devis",                 add:null }
+    { id:"far",  label:"Plus de 50 km",  note:"Liège, la côte…",                 add:null }
   ],
   /* Photos : mets le chemin ou l'URL de chaque image. Vide = emplacement affiché avec sa consigne. */
   photos: {
@@ -167,7 +171,7 @@ var CONFIG = {
   var minRef = Math.min.apply(null, CONFIG.rythmes.map(function(r){ return r.price; }));
   document.querySelectorAll(".js-p-refresh").forEach(function(e){ e.textContent = eur(minRef); });
   document.querySelectorAll(".js-p-exterieur").forEach(function(e){ e.textContent = eur(CONFIG.exterieur); });
-  document.querySelectorAll(".js-p-complet").forEach(function(e){ e.textContent = eur(CONFIG.signature + CONFIG.exterieur); });
+  document.querySelectorAll(".js-p-complet").forEach(function(e){ e.textContent = eur(CONFIG.complet); });
   document.querySelectorAll(".js-p-polish").forEach(function(e){ e.textContent = eur(CONFIG.polishOneStep); });
   document.querySelectorAll(".js-p-multistep").forEach(function(e){ e.textContent = typeof CONFIG.polishMultiStep === "number" ? "dès " + eur(CONFIG.polishMultiStep) : CONFIG.polishMultiStep; });
 
@@ -404,20 +408,30 @@ var CONFIG = {
   }
 
   /* Configurateur */
-  function baseOf(f){ return f === "exterieur" ? CONFIG.exterieur : (f === "complet" ? CONFIG.signature + CONFIG.exterieur : CONFIG.signature); }
+  function baseOf(f){ return f === "exterieur" ? CONFIG.exterieur : (f === "complet" ? CONFIG.complet : CONFIG.signature); }
   CONFIG.formules.forEach(function(f){ f.add = baseOf(f.id); });
   var cfg = document.getElementById("configurator");
   var qf = (location.search.match(/[?&]f=([a-z]+)/) || [])[1];
   var startF = (qf && CONFIG.formules.some(function(f){ return f.id === qf; })) ? qf : ((cfg && cfg.getAttribute("data-formule")) || "interieur");
   var state = { formule:startF, etat:"normal", options:{}, zone:"bxl" };
+  var esc = function(t){ var d = document.createElement("div"); d.textContent = t; return d.innerHTML; };
   function build(group, list, multi){
     var box = document.querySelector('[data-group="'+group+'"]');
     box.innerHTML = list.map(function(o){
-      var price = group === "formule" ? eur(o.add) : (o.add === null ? "Sur devis" : (o.add === 0 ? "Inclus" : "+ " + eur(o.add)));
       var type = multi ? "checkbox" : "radio";
       var checked = (!multi && state[group] === o.id) ? " checked" : "";
+      var inner;
+      if (group === "formule") {
+        inner = (o.tag ? '<em class="tag">'+esc(o.tag)+'</em>' : '') +
+          '<b>'+esc(o.label)+'</b><span class="note">'+esc(o.note)+'</span>' +
+          '<span class="fp">'+eur(o.add)+'</span>' +
+          '<ul>'+o.inclus.map(function(i){ return '<li>'+esc(i)+'</li>'; }).join("")+'</ul>';
+      } else {
+        var price = o.add === null ? "Sur devis" : (o.add === 0 ? "Inclus" : "+ " + eur(o.add));
+        inner = '<b>'+esc(o.label)+'</b><span>'+esc(o.note)+'</span><span class="p">'+price+'</span>';
+      }
       return '<div class="choice" data-id="'+o.id+'"><input type="'+type+'" name="'+group+'" id="'+group+'-'+o.id+'" value="'+o.id+'"'+checked+'>' +
-             '<label for="'+group+'-'+o.id+'"><b>'+o.label+'</b><span>'+o.note+'<br>'+price+'</span></label></div>';
+             '<label for="'+group+'-'+o.id+'"><i class="tick" aria-hidden="true"></i>'+inner+'</label></div>';
     }).join("");
     box.addEventListener("change", function(e){
       if (multi) state.options[e.target.value] = e.target.checked; else state[group] = e.target.value;
@@ -426,34 +440,48 @@ var CONFIG = {
   }
   function find(list, id){ for (var i=0;i<list.length;i++) if (list[i].id===id) return list[i]; }
   function update(){
-    var f = find(CONFIG.formules, state.formule), e = find(CONFIG.etat, state.etat), z = find(CONFIG.zone, state.zone);
-    /* Poils d'animaux : sans objet pour l'extérieur seul */
-    var po = document.querySelector('#configurator [data-group="options"] [data-id="poils"]');
-    if (po) { po.hidden = !f.poils; if (!f.poils) { state.options.poils = false; po.querySelector("input").checked = false; } }
-    var optSet = document.getElementById("cfgOptions");
-    if (optSet) optSet.hidden = !CONFIG.options.some(function(o){ return o.id !== "poils" || f.poils; });
-    var lines = [["État : " + e.label, e.add]];
+    var f = find(CONFIG.formules, state.formule), z = find(CONFIG.zone, state.zone);
+    /* Extérieur seul : prix fixe, l'état et les poils ne s'appliquent pas */
+    var etatSet = document.getElementById("cfgEtat"), optSet = document.getElementById("cfgOptions");
+    if (etatSet) etatSet.hidden = !f.interieur;
+    if (optSet) optSet.hidden = !f.interieur;
+    if (!f.interieur) {
+      state.etat = "normal"; state.options = {};
+      cfg.querySelectorAll('[name="options"]').forEach(function(i){ i.checked = false; });
+      var n = document.getElementById("etat-normal"); if (n) n.checked = true;
+    }
+    var e = find(CONFIG.etat, state.etat);
+    var lines = [];
+    if (f.interieur) lines.push(["État : " + e.label, e.add]);
     CONFIG.options.forEach(function(o){ if (state.options[o.id]) lines.push([o.label, o.add]); });
     lines.push(["Zone : " + z.label, z.add]);
     var total = f.add, devis = false;
-    document.querySelectorAll(".js-cfg-titre").forEach(function(el){ el.textContent = f.label; });
+    document.querySelectorAll(".js-cfg-titre").forEach(function(el){ el.textContent = "Signature " + f.label; });
     document.querySelectorAll(".js-cfg-base").forEach(function(el){ el.textContent = eur(f.add); });
-    document.querySelectorAll("[data-show]").forEach(function(el){ el.hidden = el.getAttribute("data-show").split(" ").indexOf(f.id) < 0; });
+    document.querySelectorAll(".js-cfg-inclus").forEach(function(el){ el.innerHTML = f.inclus.map(function(i){ return "<li>"+esc(i)+"</li>"; }).join(""); });
     document.getElementById("lines").innerHTML = lines.map(function(l){
       if (l[1] === null) devis = true; else total += l[1];
       var v = l[1] === null ? "sur devis" : (l[1] === 0 ? "inclus" : "+ " + eur(l[1]));
-      return "<li><span>"+l[0]+"</span><span>"+v+"</span></li>";
+      return "<li><span>"+esc(l[0])+"</span><span>"+v+"</span></li>";
     }).join("");
-    document.getElementById("total").textContent = devis ? "Sur devis" : eur(total);
-    var recap = "- " + f.label + "\n" + lines.map(function(l){ return "- " + l[0]; }).join("\n") + "\nTotal estimé : " + (devis ? "sur devis" : eur(total));
+    var totalTxt = devis ? "Sur devis" : eur(total);
+    document.querySelectorAll(".js-cfg-total").forEach(function(el){ el.textContent = totalTxt; });
+    var recap = "- Signature " + f.label + "\n" + lines.map(function(l){ return "- " + l[0]; }).join("\n") + "\nTotal estimé : " + (devis ? "sur devis" : eur(total));
     var msg = "Bonjour, je voudrais réserver :\n" + recap;
-    var btn = document.getElementById("bookSignature");
-    btn.href = devis ? wa(msg) : book(msg, f.cal, recap);
-    btn.textContent = devis ? "Demander un devis" : "Réserver ce nettoyage";
+    var href = devis ? wa(msg) : book(msg, f.cal, recap), label = devis ? "Demander un devis" : "Réserver ce nettoyage";
+    document.querySelectorAll(".js-cfg-book").forEach(function(btn){ btn.href = href; btn.textContent = btn.classList.contains("short") ? (devis ? "Devis" : "Réserver") : label; });
   }
   if (cfg) {
     build("formule", CONFIG.formules); build("etat", CONFIG.etat); build("options", CONFIG.options, true); build("zone", CONFIG.zone);
     update();
+    /* Mobile : barre de total collée en bas tant que le configurateur est à l'écran */
+    var bar = document.getElementById("cfgBar"), zoneCfg = document.getElementById("composer"), sum = document.querySelector(".summary");
+    if (bar && zoneCfg && "IntersectionObserver" in window) {
+      var inCfg = false, sumVis = false;
+      var sync = function(){ document.body.classList.toggle("cfg-on", inCfg && !sumVis); };
+      new IntersectionObserver(function(es){ inCfg = es[0].isIntersecting; sync(); }).observe(zoneCfg);
+      if (sum) new IntersectionObserver(function(es){ sumVis = es[0].isIntersecting; sync(); }, { threshold: 0.3 }).observe(sum);
+    }
   }
 
   /* Abonnements */

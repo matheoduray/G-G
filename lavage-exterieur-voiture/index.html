@@ -97,46 +97,29 @@
   <section class="sec" id="composer">
     <div class="wrap">
       <h2 class="t">Réservez votre lavage</h2>
-      <p class="lead">Extérieur seul ou avec l'intérieur. Même prix quelle que soit la taille de la voiture : le prix s'ajuste en direct. 40 € d'acompte en ligne pour bloquer le créneau, le reste sur place.</p>
+      <p class="lead">Extérieur seul ou avec l'intérieur, prix affiché en direct, réservation en une minute.</p>
     </div>
     <div class="wrap config">
       <form id="configurator" data-formule="exterieur" onsubmit="return false">
-        <fieldset><legend>Formule</legend><div class="choices" data-group="formule"></div></fieldset>
-        <fieldset><legend>État du véhicule<small>Soyez honnête : l'état est vérifié à l'arrivée.</small></legend><div class="choices" data-group="etat"></div></fieldset>
-        <fieldset id="cfgOptions"><legend>Options</legend><div class="choices" data-group="options"></div></fieldset>
-        <fieldset><legend>Où se trouve la voiture ?</legend><div class="choices" data-group="zone"></div></fieldset>
-
-        <div data-show="interieur complet">
-        <h3 style="margin:10px 0 4px;font-size:1.15rem">Signature Intérieur</h3>
-        <ul class="includes">
-          <li>Aspiration complète, coffre compris</li>
-          <li>Shampooing des sièges et tapis</li>
-          <li>Nettoyage vapeur de l'habitacle</li>
-          <li>Plastiques et tableau de bord</li>
-          <li>Soin du cuir</li>
-          <li>Vitres intérieures</li>
-        </ul>
-        </div>
-        <div data-show="exterieur complet">
-        <h3 style="margin:30px 0 4px;font-size:1.15rem">Signature Extérieur</h3>
-        <ul class="includes">
-          <li>Prélavage et lavage carrosserie</li>
-          <li>Jantes et pneus</li>
-          <li>Vitres extérieures</li>
-          <li>Séchage sans traces</li>
-          <li>Protection hydrophobe Koch Chemie PW</li>
-        </ul>
-        </div>
+        <fieldset class="step"><legend>Choisissez votre formule<small>Même prix pour toutes les tailles de voiture.</small></legend><div class="choices formules" data-group="formule"></div></fieldset>
+        <fieldset class="step" id="cfgEtat"><legend>État de l'habitacle<small>Vérifié à l'arrivée : si l'état diffère, on vous prévient avant de commencer.</small></legend><div class="choices" data-group="etat"></div></fieldset>
+        <fieldset class="step" id="cfgOptions"><legend>Une option ?</legend><div class="choices" data-group="options"></div></fieldset>
+        <fieldset class="step"><legend>Où se trouve la voiture ?</legend><div class="choices" data-group="zone"></div></fieldset>
       </form>
 
       <aside class="summary" aria-live="polite">
-        <h3 class="js-cfg-titre">Votre Signature</h3>
-        <p class="base">Base : <span class="js-cfg-base">149 €</span></p>
+        <p class="kicker" style="margin:0 0 6px">Votre nettoyage</p>
+        <div class="sum-head"><h3 class="js-cfg-titre">Signature</h3><span class="js-cfg-base">149 €</span></div>
+        <ul class="sum-inc js-cfg-inclus"></ul>
         <ul id="lines"></ul>
-        <div class="total"><span>Total estimé</span><b id="total">149 €</b></div>
-        <a class="btn btn-gold" id="bookSignature" href="#" target="_blank" rel="noopener">Réserver ce nettoyage</a>
-        <p class="fine">Prix confirmé à l'arrivée. Si l'état réel diffère de votre sélection, on vous prévient avant de commencer.</p>
+        <div class="total"><span>Total</span><b class="js-cfg-total" id="total">149 €</b></div>
+        <a class="btn btn-gold js-cfg-book" id="bookSignature" href="#" target="_blank" rel="noopener">Réserver ce nettoyage</a>
+        <p class="fine">40 € d'acompte pour bloquer le créneau, le reste sur place. Paiement à la fin, facture sur demande.</p>
       </aside>
+    </div>
+    <div class="cfg-bar" id="cfgBar" aria-hidden="true">
+      <div><small class="js-cfg-titre">Signature</small><b class="js-cfg-total">149 €</b></div>
+      <a class="btn btn-gold js-cfg-book short" href="#" target="_blank" rel="noopener" tabindex="-1">Réserver</a>
     </div>
   </section>
 
@@ -173,7 +156,7 @@
         <details><summary>Dois-je être présent ?</summary><p>Non. Il suffit de nous laisser accès à la voiture et à une prise.</p></details>
         <details><summary>De quoi avez-vous besoin sur place ?</summary><p>Uniquement d'une prise électrique. Nous apportons l'eau, les produits et 25 mètres de rallonge. Pas de prise ? On récupère la voiture contre dépôt d'une pièce d'identité.</p></details>
         <details><summary>Le prix dépend-il de la taille de la voiture ?</summary><p>Non. Citadine, berline ou SUV : même prix. Seuls l'état de la voiture, les options et la distance le font varier.</p></details>
-        <details><summary>Et l'intérieur ?</summary><p>Ajoutez-le dans le configurateur : Intérieur + Extérieur, dès <span class="js-p-complet">208 €</span>. <a href="/nettoyage-interieur-voiture/">Voir le Signature Intérieur</a>.</p></details>
+        <details><summary>Et l'intérieur ?</summary><p>Choisissez la formule Intérieur + Extérieur : <span class="js-p-complet">200 €</span>. <a href="/nettoyage-interieur-voiture/">Voir le Signature Intérieur</a>.</p></details>
         <details><summary>Le prix affiché est-il définitif ?</summary><p>Oui, si l'état de la voiture correspond à votre sélection. S'il diffère, on vous prévient avant de commencer.</p></details>
         <details><summary>Et après ?</summary><p>Le Refresh garde la voiture à ce niveau, à rythme fixe, dès 79 € par passage. <a href="/abonnement-entretien-voiture/">Voir les abonnements</a>.</p></details>
       </div>

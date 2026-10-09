@@ -475,3 +475,63 @@ footer a:hover{color:var(--gold-2)}
 .cards.c2{grid-template-columns:repeat(2,1fr)}
 .cards.c1{grid-template-columns:1fr;max-width:calc((100% - 32px) / 3)}
 @media (max-width:900px){.cards.c2{grid-template-columns:1fr}.cards.c1{max-width:none}}
+
+/* ---------- Configurateur v2 ---------- */
+#configurator{counter-reset:step}
+.config .step{margin-bottom:44px}
+.config .step:not([hidden]){counter-increment:step}
+.config .step legend::before{content:counter(step,decimal-leading-zero);display:inline-block;min-width:2.1em;font-weight:760;color:var(--gold);font-stretch:120%;font-variation-settings:"wdth" 120}
+.config .step legend small{padding-left:calc(1.2rem * 2.1)}
+.formules{gap:16px}
+#cfgOptions .choices,[data-group="zone"]{grid-template-columns:repeat(3,1fr)}
+.config .step legend{font-size:1.2rem;margin-bottom:16px}
+.config .step legend small{margin-top:4px}
+.choice label{position:relative;padding:14px 44px 14px 16px;min-height:72px;background:var(--raise);transition:border-color .15s,background .15s,transform .15s}
+.choice label:hover{border-color:rgba(201,169,106,.55)}
+.choice label .p{margin-top:auto;padding-top:6px;color:var(--white);font-weight:600;font-size:.95rem}
+.choice .tick{position:absolute;top:14px;right:14px;width:18px;height:18px;border:1px solid var(--line-2);border-radius:50%;transition:background .15s,border-color .15s}
+.choice input[type=checkbox] + label .tick{border-radius:3px}
+.choice input:checked + label .tick{background:var(--gold);border-color:var(--gold);box-shadow:inset 0 0 0 3px var(--raise)}
+.choice input:checked + label{background:linear-gradient(160deg,rgba(201,169,106,.16),var(--raise) 70%)}
+.choice input:checked + label .p{color:var(--gold-2)}
+.formules{grid-template-columns:repeat(3,1fr)}
+.formules .choice label{padding:22px 20px 20px;min-height:100%;gap:0}
+.formules .choice label b{font-size:1.35rem;font-weight:720;line-height:1.15;font-stretch:118%;font-variation-settings:"wdth" 118;padding-right:20px}
+.formules .choice label .note{margin-top:4px;font-size:.9rem;color:var(--muted)}
+.formules .fp{display:block;margin:16px 0 14px;font-size:2.1rem;line-height:1;font-weight:760;color:var(--gold-2);font-stretch:120%;font-variation-settings:"wdth" 120}
+.formules ul{list-style:none;margin:0;padding:14px 0 0;border-top:1px solid var(--line);font-size:.86rem;color:var(--muted)}
+.formules li{position:relative;padding:3px 0 3px 18px}
+.formules li::before{content:"";position:absolute;left:0;top:.75em;width:9px;height:5px;border-left:1.5px solid var(--gold);border-bottom:1.5px solid var(--gold);transform:rotate(-45deg)}
+.formules .tag{position:absolute;top:-1px;left:20px;transform:translateY(-50%);background:var(--gold);color:#000;font-style:normal;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;border-radius:2px}
+.formules .choice input:checked + label .note{color:var(--white)}
+.sum-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.sum-head span{color:var(--muted);white-space:nowrap}
+.sum-inc{list-style:none;margin:12px 0 18px!important;padding:0;font-size:.9rem;color:var(--muted)}
+.summary .sum-inc li{border:0;padding:3px 0 3px 18px;position:relative;display:block}
+.summary .sum-inc li::before{content:"";position:absolute;left:0;top:.75em;width:9px;height:5px;border-left:1.5px solid var(--gold);border-bottom:1.5px solid var(--gold);transform:rotate(-45deg)}
+.summary .total b{transition:color .2s}
+.cfg-bar{display:none}
+@media (max-width:960px){
+  .formules{grid-template-columns:1fr}
+  .formules .choice label{display:grid;grid-template-columns:1fr auto;column-gap:16px;padding:18px 18px 16px}
+  .formules .choice label b{grid-column:1}
+  .formules .choice label .note{grid-column:1}
+  .formules .fp{grid-column:2;grid-row:1 / span 2;align-self:center;margin:0 26px 0 0;font-size:1.7rem}
+  .formules ul{grid-column:1 / -1;margin-top:12px;display:none}
+  .formules .choice input:checked + label ul{display:block}
+  .config .step legend small{padding-left:0}
+  .cfg-bar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:45;align-items:center;justify-content:space-between;gap:16px;padding:12px 20px calc(12px + env(safe-area-inset-bottom,0px));background:rgba(10,10,10,.96);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--gold-deep);transform:translateY(110%);transition:transform .25s}
+  .cfg-bar small{display:block;color:var(--muted);font-size:.8rem}
+  .cfg-bar b{font-size:1.5rem;line-height:1.1;color:var(--gold-2);font-weight:760}
+  body.cfg-on .cfg-bar{transform:none}
+  body.cfg-on .mbar{visibility:hidden}
+}
+@media (max-width:600px){
+  .choices:not(.formules),#cfgOptions .choices{grid-template-columns:1fr;gap:8px}
+  .choices:not(.formules) .choice label{display:grid;grid-template-columns:1fr auto;column-gap:12px;align-items:center;min-height:0;padding:13px 46px 13px 16px}
+  .choices:not(.formules) .choice label b{grid-column:1}
+  .choices:not(.formules) .choice label span:not(.p){grid-column:1;font-size:.85rem}
+  .choices:not(.formules) .choice label .p{grid-column:2;grid-row:1 / span 2;margin:0;padding:0}
+  .choice .tick{top:50%;margin-top:-9px}
+  .formules .choice .tick{top:18px;margin-top:0}
+}
