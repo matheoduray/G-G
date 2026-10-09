@@ -535,3 +535,115 @@ footer a:hover{color:var(--gold-2)}
   .choice .tick{top:50%;margin-top:-9px}
   .formules .choice .tick{top:18px;margin-top:0}
 }
+
+/* ======================================================================
+   Mouvement — transitions de page, apparitions au défilement, micro-interactions.
+   Tout est désactivé si le visiteur demande moins d'animations.
+   ====================================================================== */
+:root{--ease:cubic-bezier(.2,.65,.3,1);--ease-out:cubic-bezier(.16,1,.3,1)}
+@view-transition{navigation:auto}
+::view-transition-old(root){animation:vtOut .22s ease both}
+::view-transition-new(root){animation:vtIn .45s var(--ease-out) both}
+@keyframes vtOut{to{opacity:0}}
+@keyframes vtIn{from{opacity:0;transform:translateY(10px)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes softIn{from{opacity:.25;transform:translateY(4px)}to{opacity:1;transform:none}}
+@keyframes bump{0%{transform:scale(1)}40%{transform:scale(1.06)}100%{transform:scale(1)}}
+@keyframes drawLine{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+html{scroll-behavior:smooth}
+
+/* Entrées au chargement (sans attendre le JS, donc sans clignotement) */
+.hero-center > *{animation:fadeUp .9s var(--ease-out) both}
+.hero-center > :nth-child(1){animation-delay:.15s}
+.hero-center > :nth-child(2){animation-delay:.35s}
+.hero-center > :nth-child(3){animation-delay:.5s}
+.hero-center > :nth-child(4){animation-delay:.65s}
+.lp-hero > .wrap > div > *,.page-head .wrap > *{animation:fadeUp .8s var(--ease-out) both}
+.lp-hero > .wrap > div > :nth-child(2),.page-head .wrap > :nth-child(2){animation-delay:.08s}
+.lp-hero > .wrap > div > :nth-child(3),.page-head .wrap > :nth-child(3){animation-delay:.16s}
+.lp-hero > .wrap > div > :nth-child(4){animation-delay:.24s}
+.lp-hero > .wrap > div > :nth-child(5){animation-delay:.32s}
+.lp-hero > .wrap > div > :nth-child(6){animation-delay:.4s}
+.lp-hero > .wrap > .ph{animation:fadeIn 1.1s ease .2s both}
+.proof li{animation:fadeUp .7s var(--ease-out) both}
+.proof li:nth-child(2){animation-delay:.08s}.proof li:nth-child(3){animation-delay:.16s}.proof li:nth-child(4){animation-delay:.24s}
+
+/* Apparition au défilement (classes posées par le JS) */
+.rv{opacity:0;transform:translateY(26px);transition:opacity .85s var(--ease),transform .85s var(--ease)!important;transition-delay:var(--d,0ms)!important}
+.rv.rv-img{transform:none;clip-path:inset(0 0 12% 0)}
+.rv.rv-img{transition:opacity .9s var(--ease),clip-path 1.1s var(--ease-out)!important;transition-delay:var(--d,0ms)!important}
+.rv.in{opacity:1;transform:none;clip-path:inset(0 0 0 0)}
+.sec h2.t{position:relative}
+
+/* Photos : fondu à l'arrivée et léger zoom au survol */
+.ph img{opacity:0;transform:scale(1.04);transition:opacity .8s ease,transform 1.2s var(--ease-out)}
+.ph img.ok{opacity:1;transform:none}
+.card > .ph img,.row .ph img,.strip .ph img{transition:opacity .8s ease,transform .9s var(--ease-out)}
+.card:hover > .ph img,.row:hover .ph img{transform:scale(1.045)}
+.gallery .ph:hover img{transform:scale(1.04)}
+
+/* Boutons */
+.btn{transition:background .25s,border-color .25s,color .25s,transform .15s,box-shadow .3s}
+.btn:active{transform:scale(.975)}
+.btn-gold{position:relative;overflow:hidden;isolation:isolate}
+.btn-gold::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.5) 50%,transparent 65%);transform:translateX(-130%);transition:transform .8s var(--ease-out)}
+.btn-gold:hover::after{transform:translateX(130%)}
+.btn-gold:hover{box-shadow:0 10px 30px -10px rgba(201,169,106,.55)}
+
+/* Liens, lignes, cartes */
+.bar a.lnk{position:relative;border-bottom:0}
+.bar a.lnk::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--gold);transform:scaleX(0);transform-origin:right;transition:transform .35s var(--ease)}
+.bar a.lnk:hover::after,.bar a.lnk[aria-current]::after{transform:scaleX(1);transform-origin:left}
+.row .go{transition:border-color .25s,background .25s,transform .35s var(--ease)}
+.row .go svg{transition:transform .35s var(--ease)}
+.row:hover .go{background:rgba(201,169,106,.12)}
+.row:hover .go svg{transform:translateX(3px)}
+.card{transition:border-color .3s,transform .45s var(--ease-out),box-shadow .45s}
+.card:hover{transform:translateY(-4px);box-shadow:0 24px 50px -24px rgba(0,0,0,.9),0 0 0 1px rgba(201,169,106,.25)}
+.card .more{background:linear-gradient(var(--gold),var(--gold)) 0 100%/0 1px no-repeat;border-bottom-color:rgba(201,169,106,.4);transition:background-size .4s var(--ease)}
+.card:hover .more{background-size:100% 1px}
+.chooser a b,.chooser a span{transition:transform .35s var(--ease),color .25s}
+.chooser a:hover b{transform:translateX(4px)}
+.contact a{transition:background .3s,transform .4s var(--ease-out)}
+.contact a:hover{transform:translateY(-2px)}
+.reviews blockquote{transition:border-color .3s,transform .4s var(--ease-out)}
+.reviews blockquote:hover{transform:translateY(-3px)}
+
+/* FAQ : ouverture en douceur */
+.faq summary{transition:color .2s}
+.faq summary:hover{color:var(--gold-2)}
+.faq details[open] > :not(summary){animation:fadeUp .45s var(--ease-out) both}
+.faq summary::after{transition:transform .35s var(--ease)}
+
+/* Menu mobile */
+.top.open .mpanel > *{animation:fadeUp .5s var(--ease-out) both}
+.top.open .mpanel > :nth-child(2){animation-delay:.03s}.top.open .mpanel > :nth-child(3){animation-delay:.06s}
+.top.open .mpanel > :nth-child(4){animation-delay:.09s}.top.open .mpanel > :nth-child(5){animation-delay:.12s}
+.top.open .mpanel > :nth-child(6){animation-delay:.15s}.top.open .mpanel > :nth-child(7){animation-delay:.18s}
+.top.open .mpanel > :nth-child(8){animation-delay:.21s}.top.open .mpanel > :nth-child(n+9){animation-delay:.24s}
+
+/* Fenêtre de réservation */
+.calbox.on{animation:fadeIn .25s ease both}
+.calbox.on .in{animation:fadeUp .45s var(--ease-out) both}
+
+/* Configurateur */
+.choice label{transition:border-color .2s,background .3s,transform .2s var(--ease)}
+.choice label:active{transform:scale(.985)}
+.choice .tick{transition:background .2s,border-color .2s,box-shadow .25s var(--ease)}
+.formules .choice label{transition:border-color .25s,background .35s,transform .35s var(--ease-out),box-shadow .35s}
+.formules .choice label:hover{transform:translateY(-3px)}
+.formules .choice input:checked + label{box-shadow:0 20px 44px -26px rgba(201,169,106,.6)}
+.step.appear{animation:fadeUp .5s var(--ease-out) both}
+.summary #lines li,.summary .sum-inc li{animation:softIn .35s var(--ease-out) both}
+.summary .sum-inc li:nth-child(2){animation-delay:.04s}.summary .sum-inc li:nth-child(3){animation-delay:.08s}.summary .sum-inc li:nth-child(4){animation-delay:.12s}
+.js-cfg-total.bump{display:inline-block;animation:bump .4s var(--ease)}
+.cfg-bar{transition:transform .4s var(--ease-out)!important}
+
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  @view-transition{navigation:none}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;transition-duration:.01ms!important;transition-delay:0s!important}
+  .rv{opacity:1;transform:none;clip-path:none}
+  .ph img{opacity:1;transform:none}
+}

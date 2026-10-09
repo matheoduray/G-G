@@ -69,7 +69,7 @@ var CONFIG = {
     "gal-4":  { src:"", alt:"Porsche Panamera en prélavage mousse chez le client", tip:"Jante en gros plan, propre" },
     "gal-5":  { src:"", alt:"Audi e-tron en prélavage mousse, rue de Bruxelles", tip:"Gouttes d'eau qui perlent sur la carrosserie" },
     "gal-6":  { src:"", alt:"Habitacle BMW cuir bordeaux", tip:"Photo large : l'équipe au travail devant chez un client" },
-    "gal-7":  { src:"", alt:"Habitacle Audi e-tron", tip:"Tapis de sol avant/après côte à côte" },
+    "gal-7":  { src:"", alt:"Habitacle Audi e-tron", tip:"Tapis de sol propres, en détail" },
     "gal-8":  { src:"", alt:"Porsche 911 et tapis en cours de nettoyage", tip:"Tableau de bord et console, détail" },
     "gal-9":  { src:"", alt:"", tip:"Coffre vidé et aspiré" },
     "gal-10": { src:"", alt:"", tip:"Photo large : voiture finie de profil, de nuit" },
@@ -103,8 +103,8 @@ var CONFIG = {
     prix: 450,
     fin: "2026-11-01T00:00:00+01:00",
     videoMP4: "",                         // ex. "img/mercedes.mp4" : le plus fiable pour la lecture auto sur iPhone/Android
-    videoYouTube: "EekPmuMWj3E",          // vidéo preuve avant/après sur la page Pack Hiver (ID YouTube). Vide = pas de vidéo
-    videoLegende: "Avant / après · Mercedes",   // fin de l'offre (compte à rebours). Vide = pas de compte à rebours
+    videoYouTube: "EekPmuMWj3E",          // vidéo de résultat sur la page Pack Hiver (ID YouTube). Vide = pas de vidéo
+    videoLegende: "Résultat · Mercedes",   // fin de l'offre (compte à rebours). Vide = pas de compte à rebours
     /* Prix séparés des éléments en plus du Signature et du polissage (servent au calcul « séparément ») */
     decontamination: 50,
     ceramique: 192,
@@ -236,7 +236,10 @@ var CONFIG = {
     var src = ph.src || PD[key];
     if (src) {
       var img = document.createElement("img");
-      img.src = src; img.alt = ph.alt || ""; img.loading = "lazy";
+      img.alt = ph.alt || ""; img.loading = "lazy"; img.decoding = "async";
+      img.addEventListener("load", function(){ img.classList.add("ok"); });
+      img.addEventListener("error", function(){ img.classList.add("ok"); });
+      img.src = src; if (img.complete) img.classList.add("ok");
       f.appendChild(img); f.classList.add("has");
     } else {
       f.innerHTML = '<figcaption class="cap"><b>Photo à fournir</b>' + ph.tip + ' <i>(' + key + ')</i></figcaption>';
@@ -367,7 +370,7 @@ var CONFIG = {
     if (touch) fig.classList.add("tap");
     var f = document.createElement("iframe");
     f.src = "https://www.youtube-nocookie.com/embed/" + id + "?autoplay=1&mute=1&loop=1&playlist=" + id + "&controls=" + (touch ? 1 : 0) + "&playsinline=1&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1";
-    f.title = "Avant / après : exemple réel"; f.allow = "autoplay; encrypted-media; picture-in-picture";
+    f.title = "Résultat réel"; f.allow = "autoplay; encrypted-media; picture-in-picture";
     f.setAttribute("frameborder","0");
     fig.querySelector(".pv-frame").appendChild(f);
   });
@@ -439,12 +442,33 @@ var CONFIG = {
     });
   }
   function find(list, id){ for (var i=0;i<list.length;i++) if (list[i].id===id) return list[i]; }
+  var calm = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  /* Le total défile jusqu'au nouveau montant */
+  function tween(el, to){
+    if (to === null) { el.textContent = "Sur devis"; el.__v = null; return; }
+    var from = typeof el.__v === "number" ? el.__v : to;
+    el.__v = to;
+    if (calm || from === to) { el.textContent = eur(to); return; }
+    el.classList.remove("bump"); void el.offsetWidth; el.classList.add("bump");
+    var t0 = performance.now(), d = 450;
+    cancelAnimationFrame(el.__raf);
+    (function step(now){
+      var k = Math.min(1, (now - t0) / d), e = 1 - Math.pow(1 - k, 3);
+      el.textContent = eur(Math.round(from + (to - from) * e));
+      if (k < 1) el.__raf = requestAnimationFrame(step);
+    })(t0);
+  }
+  /* Une étape qui réapparaît glisse en place */
+  function show(el, on){
+    if (!el) return;
+    var was = el.hidden; el.hidden = !on;
+    if (on && was && !calm) { el.classList.remove("appear"); void el.offsetWidth; el.classList.add("appear"); }
+  }
   function update(){
     var f = find(CONFIG.formules, state.formule), z = find(CONFIG.zone, state.zone);
     /* Extérieur seul : prix fixe, l'état et les poils ne s'appliquent pas */
     var etatSet = document.getElementById("cfgEtat"), optSet = document.getElementById("cfgOptions");
-    if (etatSet) etatSet.hidden = !f.interieur;
-    if (optSet) optSet.hidden = !f.interieur;
+    show(etatSet, f.interieur); show(optSet, f.interieur);
     if (!f.interieur) {
       state.etat = "normal"; state.options = {};
       cfg.querySelectorAll('[name="options"]').forEach(function(i){ i.checked = false; });
@@ -464,8 +488,7 @@ var CONFIG = {
       var v = l[1] === null ? "sur devis" : (l[1] === 0 ? "inclus" : "+ " + eur(l[1]));
       return "<li><span>"+esc(l[0])+"</span><span>"+v+"</span></li>";
     }).join("");
-    var totalTxt = devis ? "Sur devis" : eur(total);
-    document.querySelectorAll(".js-cfg-total").forEach(function(el){ el.textContent = totalTxt; });
+    document.querySelectorAll(".js-cfg-total").forEach(function(el){ tween(el, devis ? null : total); });
     var recap = "- Signature " + f.label + "\n" + lines.map(function(l){ return "- " + l[0]; }).join("\n") + "\nTotal estimé : " + (devis ? "sur devis" : eur(total));
     var msg = "Bonjour, je voudrais réserver :\n" + recap;
     var href = devis ? wa(msg) : book(msg, f.cal, recap), label = devis ? "Demander un devis" : "Réserver ce nettoyage";
@@ -491,6 +514,50 @@ var CONFIG = {
       '<p class="price"><b>'+eur(f.price)+'</b> / passage</p>' +
       '<a class="btn '+(f.pick?"btn-gold":"btn-line")+'" href="'+book(msg)+'" target="_blank" rel="noopener">Démarrer ce rythme</a></article>';
   }).join("");
+
+  /* Apparitions au défilement : seulement ce qui est hors de l'écran au chargement (pas de clignotement) */
+  (function(){
+    if (!("IntersectionObserver" in window)) return;
+    if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    var SEL = [
+      ".sec h2.t", ".sec .lead", ".sec .score", ".row", ".cards > .card", ".gallery > .ph", ".strip > .ph",
+      ".steps > li", ".reviews > blockquote", ".faq > details", ".contact > a", ".gains > div", ".chooser > a",
+      ".feature", ".deal", ".band h2", ".band p", ".band .ctas", "#freq > article", ".reels > div",
+      ".config .step", ".summary", ".includes > li", ".lp-full .wrap > *", ".sec .callline", ".iglink"
+    ].join(",");
+    var vh = window.innerHeight, els = [];
+    document.querySelectorAll(SEL).forEach(function(el){
+      if (el.closest(".pop,.calbox,.mpanel,.hero")) return;
+      if (el.getBoundingClientRect().top < vh * 0.92) return;
+      els.push(el);
+    });
+    els.forEach(function(el){
+      var sibs = Array.prototype.filter.call(el.parentNode.children, function(c){ return els.indexOf(c) > -1; });
+      var i = sibs.indexOf(el);
+      el.style.setProperty("--d", Math.min(i, 6) * 70 + "ms");
+      el.classList.add("rv");
+      if (el.classList.contains("ph")) el.classList.add("rv-img");
+    });
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if (!e.isIntersecting) return;
+        reveal(e.target);
+      });
+    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
+    function sibsDelay(el){ return parseInt(el.style.getPropertyValue("--d"), 10) || 0; }
+    function reveal(el){
+      io.unobserve(el);
+      el.classList.add("in");
+      /* On rend la main aux transitions propres de l'élément (survol, etc.) */
+      setTimeout(function(){ el.classList.remove("rv", "rv-img", "in"); el.style.removeProperty("--d"); }, 1300 + Math.min(sibsDelay(el), 600));
+    }
+    els.forEach(function(el){ io.observe(el); });
+    /* Bas de page atteint : on révèle ce qui reste, pour ne jamais laisser un bloc invisible */
+    window.addEventListener("scroll", function(){
+      if (window.innerHeight + window.scrollY < document.documentElement.scrollHeight - 40) return;
+      document.querySelectorAll(".rv:not(.in)").forEach(reveal);
+    }, { passive: true });
+  })();
 
   /* Routeur (pages) */
   var pages = document.querySelectorAll(".page");
