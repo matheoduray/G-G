@@ -30,7 +30,7 @@ var CONFIG = {
   polishOneStep: 300,
   polishMultiStep: "Sur devis", // mets un nombre (ex. 650) si tu as un prix de départ
 
-  exterieur: 59,                // Signature Extérieur seul
+  exterieur: 69,                // Signature Extérieur seul
   complet: 200,                 // Signature Intérieur + Extérieur (prix pack)
 
   /* Formules du configurateur. cal = clé dans CONFIG.cal ; interieur:true = l'état et les poils s'appliquent */
@@ -39,7 +39,7 @@ var CONFIG = {
       inclus:["Aspiration complète, coffre compris","Shampooing des sièges et tapis","Vapeur, plastiques, cuir","Vitres intérieures"] },
     { id:"exterieur", label:"Extérieur",  note:"La carrosserie à la main", cal:"exterieur", interieur:false,
       inclus:["Prélavage mousse et lavage à la main","Jantes et pneus","Vitres et séchage sans traces","Protection hydrophobe Koch Chemie PW"] },
-    { id:"complet",   label:"Intérieur + Extérieur", note:"La voiture entière, en une visite", cal:"complet", interieur:true, tag:"Le plus complet",
+    { id:"complet",   label:"Prestige", note:"Intérieur + extérieur, la voiture entière", cal:"complet", interieur:true, tag:"Le plus complet",
       inclus:["Tout le Signature Intérieur","Tout le Signature Extérieur"] }
   ],
   etat: [
@@ -104,6 +104,7 @@ var CONFIG = {
     fin: "2026-11-01T00:00:00+01:00",
     videoMP4: "",                         // ex. "img/mercedes.mp4" : le plus fiable pour la lecture auto sur iPhone/Android
     videoYouTube: "EekPmuMWj3E",          // vidéo de résultat sur la page Pack Hiver (ID YouTube). Vide = pas de vidéo
+    videoExplication: "68Eubq_Yi34",      // vidéo qui explique le pack (pop-up + page Pack Hiver). Vide = pas de vidéo
     videoLegende: "Résultat · Mercedes",   // fin de l'offre (compte à rebours). Vide = pas de compte à rebours
     /* Prix séparés des éléments en plus du Signature et du polissage (servent au calcul « séparément ») */
     decontamination: 50,
@@ -116,6 +117,17 @@ var CONFIG = {
     ],
     delaiPopup: 8000,            // délai avant l'apparition du pop-up, en millisecondes
     rappelJours: 7               // on ne le remontre pas avant X jours au même visiteur
+  },
+
+  /* Protection céramique. Remplace "Sur devis" par un nombre quand tes prix sont fixés. */
+  ceramique: {
+    actif: true,
+    formules: [
+      { id:"c3", titre:"Céramique 3 ans", duree:"Posée en 1 journée", prix:"Sur devis", cal:"hiver",
+        lignes:["Décontamination complète de la carrosserie","Polissage une passe pour préparer le vernis","Pose du revêtement, séchage sur place","Protection annoncée : 3 ans"] },
+      { id:"c5", titre:"Céramique 5 ans", duree:"Posée en 2 journées", prix:"Sur devis", cal:"hiver", vedette:true,
+        lignes:["Décontamination complète de la carrosserie","Polissage plus poussé le premier jour","Pose en couches, avec durcissement entre chaque","Protection annoncée : 5 ans"] }
+    ]
   },
 
   instagram: "https://www.instagram.com/gleamandgo_be/",
@@ -281,6 +293,26 @@ var CONFIG = {
     }).join("");
   })();
 
+  /* Vignette vidéo : YouTube ne se charge qu'au clic */
+  function facadeVideo(hote, id, libelle, photo, apresClic){
+    if (!hote || !id) return false;
+    var b = document.createElement("button");
+    b.className = "vfacade"; b.type = "button";
+    b.setAttribute("aria-label", libelle);
+    var img = photo || "https://i.ytimg.com/vi/" + id + "/hqdefault.jpg";
+    b.innerHTML = '<img src="' + img + '" alt="" loading="lazy">' +
+      '<span class="play"><span class="disc"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5l12 7-12 7z" fill="currentColor"/></svg></span><span class="lbl">' + libelle + '</span></span>';
+    b.addEventListener("click", function(){
+      var w = document.createElement("div");
+      w.className = "vframe";
+      w.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0&modestbranding=1&playsinline=1" title="' + libelle + '" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>';
+      b.replaceWith(w);
+      if (apresClic) apresClic();
+    });
+    hote.appendChild(b);
+    return true;
+  }
+
   /* Offre mise en avant + pop-up */
   (function(){
     var o = CONFIG.offre || {}, pop = document.getElementById("pop");
@@ -299,9 +331,17 @@ var CONFIG = {
     document.getElementById("popTitle").textContent = o.titre;
     document.getElementById("popPrice").textContent = eur(o.prix);
     document.getElementById("popList").innerHTML = o.lignes.map(function(l){ return "<li>" + l + "</li>"; }).join("");
-    var media = document.getElementById("popMedia");
-    if (PD["pop"]) { var pi = document.createElement("img"); pi.src = PD["pop"]; pi.alt = ""; media.appendChild(pi); }
-    else { media.remove(); document.querySelector(".pop-card").style.gridTemplateColumns = "1fr"; }
+    var media = document.getElementById("popMedia"), carte = document.querySelector(".pop-card");
+    var libelle = "Voir le " + (o.titre || "pack") + " en vidéo";
+    if (!(o.videoExplication && facadeVideo(media, o.videoExplication, libelle, PD["pop"], function(){ carte.classList.add("watching"); }))) {
+      if (PD["pop"]) { var pi = document.createElement("img"); pi.src = PD["pop"]; pi.alt = ""; media.appendChild(pi); }
+      else { media.remove(); carte.style.gridTemplateColumns = "1fr"; }
+    }
+    document.querySelectorAll(".js-explain-vid").forEach(function(box){
+      if (!facadeVideo(box, o.videoExplication, "Le " + (o.titre || "pack") + " expliqué en vidéo", PD["pop"])) {
+        var sec = box.closest(".sec") || box; sec.remove();
+      }
+    });
     var cta = document.getElementById("popCta"); cta.href = book(msg, "hiver", (o.titre || "Pack") + " — " + eur(o.prix)); cta.textContent = "Réserver le " + o.titre;
 
     var KEY = "gg_offre_vue";
@@ -318,6 +358,21 @@ var CONFIG = {
     pop.addEventListener("click", function(e){ if (e.target === pop) ferme(); });
     document.addEventListener("keydown", function(e){ if (e.key === "Escape") ferme(); });
     if (!vueRecemment() && !document.querySelector('.page[data-page="/pack-hiver/"]')) setTimeout(function(){ pop.classList.add("on"); }, o.delaiPopup || 8000);
+  })();
+
+  /* Protection céramique */
+  (function(){
+    var box = document.getElementById("cera"), C = CONFIG.ceramique || {};
+    if (!box) return;
+    if (!C.actif || !C.formules) { box.remove(); return; }
+    box.innerHTML = C.formules.map(function(c){
+      var msg = "Bonjour, je suis intéressé par la " + c.titre.toLowerCase() + " (" + c.duree.toLowerCase() + ").";
+      var prix = typeof c.prix === "number" ? eur(c.prix) : c.prix;
+      return '<article class="' + (c.vedette ? "pick" : "") + '"><div class="tag">' + (c.vedette ? "Protection la plus longue" : "") + '</div>' +
+        '<h3>' + c.titre + '</h3><p class="duree">' + c.duree + '</p><p class="price"><b>' + prix + '</b></p>' +
+        '<ul>' + c.lignes.map(function(l){ return "<li>" + l + "</li>"; }).join("") + '</ul>' +
+        '<a class="btn ' + (c.vedette ? "btn-gold" : "btn-line") + '" href="' + book(msg, c.cal, c.titre) + '" target="_blank" rel="noopener">Demander un devis</a></article>';
+    }).join("");
   })();
 
   /* Avis */
