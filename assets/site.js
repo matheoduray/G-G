@@ -406,10 +406,11 @@ var CONFIG = {
   document.querySelectorAll(".js-hiver-eco").forEach(function(e){ e.textContent = eur(valeur - OF.prix); });
   /* Vidéo preuve Pack Hiver (YouTube, lecture auto sans son, en boucle) */
   document.querySelectorAll(".js-proof-vid").forEach(function(fig){
-    var id = OF.videoYouTube, mp4 = OF.videoMP4;
+    var explique = fig.getAttribute("data-vid") === "explication";
+    var id = explique ? OF.videoExplication : OF.videoYouTube, mp4 = explique ? "" : OF.videoMP4;
     if (!id && !mp4) { fig.remove(); return; }
-    var sec = fig.closest(".lp-full"); if (sec) sec.classList.add("has-vid");
-    var cap = fig.querySelector(".js-proof-cap"); if (cap && OF.videoLegende) cap.textContent = OF.videoLegende;
+    var sec = fig.closest(".lp-full"); if (sec) { sec.classList.add("has-vid"); if (explique) sec.classList.add("wide-vid"); }
+    var cap = fig.querySelector(".js-proof-cap"); if (cap && !explique && OF.videoLegende) cap.textContent = OF.videoLegende;
     if (mp4) {
       var v = document.createElement("video");
       v.src = mp4; v.muted = true; v.loop = true; v.autoplay = true; v.playsInline = true; v.preload = "auto";
@@ -422,10 +423,14 @@ var CONFIG = {
       return;
     }
     var touch = window.matchMedia && matchMedia("(hover: none)").matches;
-    if (touch) fig.classList.add("tap");
+    if (touch && !explique) fig.classList.add("tap");
     var f = document.createElement("iframe");
-    f.src = "https://www.youtube-nocookie.com/embed/" + id + "?autoplay=1&mute=1&loop=1&playlist=" + id + "&controls=" + (touch ? 1 : 0) + "&playsinline=1&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1";
-    f.title = "Résultat réel"; f.allow = "autoplay; encrypted-media; picture-in-picture";
+    /* La vidéo d'explication a une voix off : elle démarre en muet (règle des navigateurs)
+       et garde les commandes pour que le visiteur active le son. */
+    f.src = "https://www.youtube-nocookie.com/embed/" + id + "?autoplay=1&mute=1" +
+      (explique ? "&controls=1" : "&loop=1&playlist=" + id + "&controls=" + (touch ? 1 : 0)) +
+      "&playsinline=1&rel=0&modestbranding=1&iv_load_policy=3" + (explique ? "" : "&disablekb=1");
+    f.title = explique ? "Le Pack Hiver expliqué" : "Résultat réel"; f.allow = "autoplay; encrypted-media; picture-in-picture";
     f.setAttribute("frameborder","0");
     fig.querySelector(".pv-frame").appendChild(f);
   });

@@ -442,6 +442,15 @@ footer a:hover{color:var(--gold-2)}
 .proof-vid figcaption b{color:var(--gold-2);font-weight:600}
 .proof-vid figcaption span{color:var(--muted)}
 @media (max-width:900px){.lp-full.has-vid > .wrap{grid-template-columns:1fr;gap:34px}.proof-vid{width:min(300px,78vw);justify-self:center}}
+/* Vidéo horizontale (explication) */
+.proof-vid.wide{width:min(480px,40vw)}
+.proof-vid.wide .pv-frame{aspect-ratio:16/9}
+.proof-vid.wide .pv-frame iframe{height:100%;pointer-events:auto}
+.lp-full.has-vid.wide-vid > .wrap{grid-template-columns:minmax(0,600px) minmax(0,1fr)}
+@media (max-width:900px){.lp-full.has-vid.wide-vid > .wrap{grid-template-columns:1fr}.proof-vid.wide{width:min(560px,92vw)}}
+/* Vidéo placée dans une section ordinaire */
+.sec .proof-vid{width:min(330px,78vw);margin-inline:auto}
+.sec .proof-vid.wide{width:min(900px,100%)}
 @media (max-width:600px){.k-extra{display:none}.lp-hero .sub{font-size:1rem;margin-bottom:20px}.lp-hero h1{font-size:2rem}.countdown{margin-bottom:20px}}
 @media (max-width:900px){.lp-full{min-height:0;align-items:flex-end;padding-top:15vh;background-size:auto 55%;background-position:62% 0}.lp-full::before{background:linear-gradient(180deg,rgba(0,0,0,.25) 0%,rgba(0,0,0,.7) 35%,rgba(0,0,0,.94) 60%,#000 100%)}}
 @media (max-width:980px){.lp-full{min-height:0}}
