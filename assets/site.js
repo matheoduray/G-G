@@ -1,5 +1,5 @@
 /* Photos intégrées (générées) */
-var PHOTO_DATA = {"abo": "/img/abo.jpg", "about-1": "/img/about-1.jpg", "about-2": "/img/about-2.jpg", "about-3": "/img/about-3.jpg", "gal-1": "/img/gal-1.jpg", "gal-2": "/img/gal-2.jpg", "gal-3": "/img/gal-3.jpg", "gal-4": "/img/gal-4.jpg", "gal-5": "/img/gal-5.jpg", "gal-6": "/img/gal-6.jpg", "gal-7": "/img/gal-7.jpg", "gal-8": "/img/gal-8.jpg", "hero-m": "/img/hero-m.jpg", "hero": "/img/hero.jpg", "matheo": "/img/matheo.jpg", "pol-multi": "/img/pol-multi.jpg", "pol-one": "/img/pol-one.jpg", "pop": "/img/pop.jpg", "svc-polish": "/img/svc-polish.jpg", "svc-refresh": "/img/svc-refresh.jpg", "svc-signature": "/img/svc-signature.jpg", "yanis": "/img/yanis.jpg"};
+var PHOTO_DATA = {"abo": "/img/abo.jpg", "about-1": "/img/about-1.jpg", "about-2": "/img/about-2.jpg", "about-3": "/img/about-3.jpg", "gal-1": "/img/gal-1.jpg", "gal-2": "/img/gal-2.jpg", "gal-3": "/img/gal-3.jpg", "gal-4": "/img/gal-4.jpg", "gal-5": "/img/gal-5.jpg", "gal-6": "/img/gal-6.jpg", "gal-7": "/img/gal-7.jpg", "gal-8": "/img/gal-8.jpg", "hero-m": "/img/hero-m.jpg", "hero": "/img/hero.jpg", "matheo": "/img/matheo.jpg", "pol-multi": "/img/pol-multi.jpg", "pol-one": "/img/pol-one.jpg", "pop": "/img/pop.jpg", "svc-polish": "/img/svc-polish.jpg", "svc-refresh": "/img/svc-refresh.jpg", "svc-signature": "/img/svc-signature.jpg", "yanis": "/img/yanis.jpg", "off-interieur": "/img/off-interieur.jpg", "off-exterieur": "/img/off-exterieur.jpg", "off-prestige": "/img/off-prestige.jpg", "off-polissage": "/img/off-polissage.jpg", "off-ceramique": "/img/off-ceramique.jpg", "off-refresh": "/img/off-refresh.jpg", "off-hiver": "/img/off-hiver.jpg", "off-pack": "/img/off-pack.jpg"};
 
 
 /* ======================================================================
@@ -72,6 +72,14 @@ var CONFIG = {
     "svc-signature": { src:"", alt:"Habitacle BMW cuir rouge après nettoyage", tip:"Habitacle impeccable, sièges shampouinés, vue depuis la portière ouverte" },
     "svc-refresh":   { src:"", alt:"Habitacle Audi e-tron après entretien", tip:"Voiture propre garée devant une maison, lumière douce" },
     "svc-polish":    { src:"", alt:"Polissage d'un capot à la polisseuse", tip:"Polisseuse Rupes en action sur un capot, reflet visible" },
+    "off-interieur": { src:"", alt:"Habitacle BMW cuir bordeaux après un Signature Intérieur", tip:"Miniature page Offres" },
+    "off-exterieur": { src:"", alt:"Logo Porsche nettoyé au pinceau dans la mousse", tip:"Miniature page Offres" },
+    "off-prestige": { src:"", alt:"Porsche Panamera noir mat après un Prestige", tip:"Miniature page Offres" },
+    "off-polissage": { src:"", alt:"Polissage d'un capot à la polisseuse Rupes", tip:"Miniature page Offres" },
+    "off-ceramique": { src:"", alt:"Carrosserie BMW protégée, l'eau perle sur le vernis", tip:"Miniature page Offres" },
+    "off-refresh": { src:"", alt:"Habitacle entretenu lors d'un passage Refresh", tip:"Miniature page Offres" },
+    "off-hiver": { src:"", alt:"Maserati GranTurismo polie et protégée par le Pack Hiver", tip:"Miniature page Offres" },
+    "off-pack": { src:"", alt:"Maserati GranTurismo après le Pack Hiver", tip:"Miniature page Offres" },
     "gal-1":  { src:"", alt:"Porsche Panamera noir mat après nettoyage", tip:"La plus belle photo : voiture finie, reflets profonds" },
     "gal-2":  { src:"", alt:"Eau qui perle sur une BMW noire", tip:"Siège avant, avant shampooing" },
     "gal-3":  { src:"", alt:"Logo Porsche nettoyé au pinceau", tip:"Même siège, après shampooing" },
