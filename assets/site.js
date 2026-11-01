@@ -37,9 +37,9 @@ var CONFIG = {
   formules: [
     { id:"interieur", label:"Intérieur",  note:"L'habitacle à fond", cal:"interieur", interieur:true,
       inclus:["Aspiration complète, coffre compris","Shampooing des sièges et tapis","Vapeur, plastiques, cuir","Vitres intérieures"] },
-    { id:"exterieur", label:"Extérieur",  note:"La carrosserie à la main", cal:"exterieur", interieur:false,
+    { id:"exterieur", label:"Extérieur",  note:"La carrosserie à la main", cal:"exterieur", interieur:false, exterieur:true,
       inclus:["Prélavage mousse et lavage à la main","Jantes et pneus","Vitres et séchage sans traces","Protection hydrophobe Koch Chemie PW"] },
-    { id:"complet",   label:"Prestige", note:"Intérieur + extérieur, la voiture entière", cal:"complet", interieur:true, tag:"Le plus complet",
+    { id:"complet",   label:"Prestige", note:"Intérieur + extérieur, la voiture entière", cal:"complet", interieur:true, exterieur:true, tag:"Le plus complet",
       inclus:["Tout le Signature Intérieur","Tout le Signature Extérieur"] }
   ],
   etat: [
@@ -47,8 +47,17 @@ var CONFIG = {
     { id:"sale",      label:"Sale",      note:"Plusieurs mois sans nettoyage", add:25 },
     { id:"tres-sale", label:"Très sale", note:"Taches, boue, habitacle chargé", add:50 }
   ],
+  /* Taille du véhicule : s'applique à toutes les formules */
+  taille: [
+    { id:"standard", label:"Citadine, berline ou break", note:"Clio, Golf, Série 3, A4, break",  add:0  },
+    { id:"suv",      label:"SUV ou monospace",           note:"X5, Q7, Tiguan, Classe V, 7 places", add:30 }
+  ],
+  /* besoin : "interieur" = seulement si la formule touche l'habitacle ; "exterieur" = seulement si elle touche la carrosserie */
   options: [
-    { id:"poils",     label:"Poils d'animaux", note:"Retrait complet",             add:40 }
+    { id:"poils",  label:"Poils d'animaux",            note:"Retrait complet, brosse et aspiration",      add:40, besoin:"interieur" },
+    { id:"tapis",  label:"Imperméabilisation des tapis", note:"Anti-taches, appliqué après le shampooing", add:45, besoin:"interieur" },
+    { id:"glaco",  label:"Glaco sur les vitres",       note:"Hydrophobe : la pluie file sans essuie-glace", add:35, besoin:"exterieur" },
+    { id:"phares", label:"Rénovation des phares",      note:"Ponçage et polissage des optiques jaunies",  add:60, besoin:"exterieur" }
   ],
   zone: [
     { id:"bxl",  label:"Bruxelles",      note:"Les 19 communes",           add:0  },
@@ -100,20 +109,29 @@ var CONFIG = {
     active: true,
     kicker: "Offre d'hiver",
     titre: "Pack Hiver",
-    prix: 450,
-    fin: "2026-11-01T00:00:00+01:00",
+    prix: 399,
+    fin: "2026-11-22T23:59:59+01:00",
     videoMP4: "",                         // ex. "img/mercedes.mp4" : le plus fiable pour la lecture auto sur iPhone/Android
-    videoYouTube: "EekPmuMWj3E",          // vidéo de résultat sur la page Pack Hiver (ID YouTube). Vide = pas de vidéo
-    videoExplication: "68Eubq_Yi34",      // vidéo qui explique le pack (pop-up + page Pack Hiver). Vide = pas de vidéo
-    videoLegende: "Résultat · Mercedes",   // fin de l'offre (compte à rebours). Vide = pas de compte à rebours
-    /* Prix séparés des éléments en plus du Signature et du polissage (servent au calcul « séparément ») */
-    decontamination: 50,
-    ceramique: 192,
+    videoYouTube: "EekPmuMWj3E",          // vidéo de résultat (ID YouTube). Vide = pas de vidéo
+    videoExplication: "68Eubq_Yi34",      // vidéo qui explique le pack (hero + pop-up). Vide = pas de vidéo
+    videoLegende: "Résultat · Mercedes",
     lignes: [
-      "Signature complet : intérieur et extérieur",
-      "Décontamination de la carrosserie",
-      "Une passe de polissage",
-      "Protection céramique, 3 ans de durée"
+      "Décontamination complète de la carrosserie",
+      "Polissage one-step : micro-rayures et voile terne",
+      "Protection céramique 3 ans sur toute la carrosserie",
+      "Lavage de finition avant restitution"
+    ],
+    /* Ce que valent les prestations prises séparément (sert au calcul de l'économie) */
+    detail: [
+      ["Polissage one-step", "Micro-rayures, voile terne, décontamination incluse", 300],
+      ["Protection céramique 3 ans", "Couche dure et hydrophobe sur toute la carrosserie", 192]
+    ],
+    /* Suppléments proposés avec le pack */
+    upsells: [
+      { label: "Céramique 5 ans au lieu de 3 ans", note: "Correction plus poussée, pose en 2 journées", add: 150 },
+      { label: "Glaco sur les vitres",             note: "La pluie file sans essuie-glace dès 60 km/h", add: 35 },
+      { label: "Imperméabilisation des tapis",     note: "Anti-taches, après shampooing", add: 45 },
+      { label: "Rénovation des phares",            note: "Optiques jaunies poncées et polies", add: 60 }
     ],
     delaiPopup: 8000,            // délai avant l'apparition du pop-up, en millisecondes
     rappelJours: 7               // on ne le remontre pas avant X jours au même visiteur
@@ -125,7 +143,7 @@ var CONFIG = {
     formules: [
       { id:"c3", titre:"Céramique 3 ans", duree:"Posée en 1 journée", prix:"Sur devis", cal:"hiver",
         lignes:["Décontamination complète de la carrosserie","Polissage une passe pour préparer le vernis","Pose du revêtement, séchage sur place","Protection annoncée : 3 ans"] },
-      { id:"c5", titre:"Céramique 5 ans", duree:"Posée en 2 journées", prix:"Sur devis", cal:"hiver", vedette:true,
+      { id:"c5", titre:"Céramique 5 ans", duree:"Posée en 2 journées · + 150 € dans le Pack Hiver", prix:"Sur devis", cal:"hiver", vedette:true,
         lignes:["Décontamination complète de la carrosserie","Polissage plus poussé le premier jour","Pose en couches, avec durcissement entre chaque","Protection annoncée : 5 ans"] }
     ]
   },
@@ -171,6 +189,7 @@ var CONFIG = {
     if (!url) return wa(msg);
     return url + (url.indexOf("?") > -1 ? "&" : "?") + "a1=" + encodeURIComponent(recap || msg);
   };
+  var esc2 = function(t){ var d = document.createElement("div"); d.textContent = t == null ? "" : t; return d.innerHTML; };
   document.querySelectorAll(".js-tel").forEach(function(a){ a.href = "tel:" + CONFIG.phone; });
   document.querySelectorAll(".js-cal").forEach(function(a){ a.href = CONFIG.calendly || wa("Bonjour, je voudrais réserver un créneau."); });
   document.querySelectorAll(".js-clients").forEach(function(e){ e.textContent = CONFIG.clients; });
@@ -360,6 +379,26 @@ var CONFIG = {
     if (!vueRecemment() && !document.querySelector('.page[data-page="/pack-hiver/"]')) setTimeout(function(){ pop.classList.add("on"); }, o.delaiPopup || 8000);
   })();
 
+  /* Listes de tarifs réutilisables sur la page Offres (toujours synchronisées avec le configurateur) */
+  document.querySelectorAll(".js-tarif-liste").forEach(function(ul){
+    var quoi = ul.getAttribute("data-liste");
+    var src = quoi === "options" ? CONFIG.options
+            : quoi === "taille"  ? CONFIG.taille
+            : quoi === "etat"    ? CONFIG.etat
+            : quoi === "zone"    ? CONFIG.zone
+            : quoi === "formules"? CONFIG.formules : [];
+    ul.innerHTML = (src || []).map(function(o){
+      var v = typeof o.prix === "number" ? o.prix : (typeof o.add === "number" ? o.add : null);
+      var p = v === null ? "Sur devis" : (v === 0 ? "Inclus" : (quoi === "formules" ? eur(v) : "+ " + eur(v)));
+      var note = o.note || "";
+      if (quoi === "options" && o.besoin) {
+        note += note ? " · " : "";
+        note += o.besoin === "interieur" ? "avec Signature ou Prestige" : "avec Extérieur ou Prestige";
+      }
+      return "<li><span>" + esc2(o.label) + "<small>" + esc2(note) + "</small></span><em>" + p + "</em></li>";
+    }).join("");
+  });
+
   /* Protection céramique */
   (function(){
     var box = document.getElementById("cera"), C = CONFIG.ceramique || {};
@@ -395,13 +434,28 @@ var CONFIG = {
       return '<blockquote><span class="stars" aria-label="5 étoiles sur 5">★★★★★</span><p>' + t + '</p><cite>' + n + ', avis Google</cite></blockquote>';
     }).join("");
   });
-  var extOpt = { add: CONFIG.exterieur };
   document.querySelectorAll(".js-p-ext").forEach(function(e){ e.textContent = eur(CONFIG.exterieur); });
-  document.querySelectorAll(".js-stack-sum").forEach(function(e){ e.textContent = eur(CONFIG.signature + extOpt.add + CONFIG.polishOneStep); });
+  document.querySelectorAll(".js-stack-sum").forEach(function(e){ e.textContent = eur(CONFIG.signature + CONFIG.exterieur + CONFIG.polishOneStep); });
   var OF = CONFIG.offre || {};
-  var valeur = CONFIG.signature + extOpt.add + CONFIG.polishOneStep + (OF.decontamination || 0) + (OF.ceramique || 0);
-  document.querySelectorAll(".js-p-decon").forEach(function(e){ e.textContent = eur(OF.decontamination || 0); });
-  document.querySelectorAll(".js-p-cera").forEach(function(e){ e.textContent = eur(OF.ceramique || 0); });
+  var detail = OF.detail || [];
+  var valeur = detail.reduce(function(a, l){ return a + (l[2] || 0); }, 0);
+  /* Détail des prestations du pack, avec leur prix séparé */
+  document.querySelectorAll(".js-hiver-detail").forEach(function(ul){
+    ul.innerHTML = detail.map(function(l){
+      return "<li><span>" + esc2(l[0]) + "<small>" + esc2(l[1]) + "</small></span><em>" + eur(l[2]) + "</em></li>";
+    }).join("");
+  });
+  /* Suppléments possibles */
+  document.querySelectorAll(".js-upsells").forEach(function(ul){
+    ul.innerHTML = (OF.upsells || []).map(function(u){
+      return "<li><span>" + esc2(u.label) + "<small>" + esc2(u.note) + "</small></span><em>+ " + eur(u.add) + "</em></li>";
+    }).join("");
+  });
+  document.querySelectorAll(".js-offre-fin").forEach(function(e){
+    if (!OF.fin) return;
+    var d = new Date(OF.fin);
+    e.textContent = d.toLocaleDateString("fr-BE", { day: "numeric", month: "long" });
+  });
   document.querySelectorAll(".js-hiver-valeur").forEach(function(e){ e.textContent = eur(valeur); });
   document.querySelectorAll(".js-hiver-eco").forEach(function(e){ e.textContent = eur(valeur - OF.prix); });
   /* Vidéo preuve Pack Hiver (YouTube, lecture auto sans son, en boucle) */
@@ -476,10 +530,11 @@ var CONFIG = {
   var cfg = document.getElementById("configurator");
   var qf = (location.search.match(/[?&]f=([a-z]+)/) || [])[1];
   var startF = (qf && CONFIG.formules.some(function(f){ return f.id === qf; })) ? qf : ((cfg && cfg.getAttribute("data-formule")) || "interieur");
-  var state = { formule:startF, etat:"normal", options:{}, zone:"bxl" };
+  var state = { formule:startF, taille:"standard", etat:"normal", options:{}, zone:"bxl" };
   var esc = function(t){ var d = document.createElement("div"); d.textContent = t; return d.innerHTML; };
   function build(group, list, multi){
     var box = document.querySelector('[data-group="'+group+'"]');
+    if (!box) return;
     box.innerHTML = list.map(function(o){
       var type = multi ? "checkbox" : "radio";
       var checked = (!multi && state[group] === o.id) ? " checked" : "";
@@ -526,16 +581,30 @@ var CONFIG = {
   }
   function update(){
     var f = find(CONFIG.formules, state.formule), z = find(CONFIG.zone, state.zone);
-    /* Extérieur seul : prix fixe, l'état et les poils ne s'appliquent pas */
+    /* L'état de l'habitacle n'a de sens que si la formule touche l'intérieur */
     var etatSet = document.getElementById("cfgEtat"), optSet = document.getElementById("cfgOptions");
-    show(etatSet, f.interieur); show(optSet, f.interieur);
+    show(etatSet, f.interieur);
     if (!f.interieur) {
-      state.etat = "normal"; state.options = {};
-      cfg.querySelectorAll('[name="options"]').forEach(function(i){ i.checked = false; });
+      state.etat = "normal";
       var n = document.getElementById("etat-normal"); if (n) n.checked = true;
     }
+    /* Chaque option ne s'affiche que si la formule la rend possible */
+    var dispo = 0;
+    CONFIG.options.forEach(function(o){
+      var ok = o.besoin === "interieur" ? !!f.interieur : !!f.exterieur;
+      var el = optSet && optSet.querySelector('.choice[data-id="' + o.id + '"]');
+      if (el) el.hidden = !ok;
+      if (ok) dispo++;
+      else if (state.options[o.id]) {
+        state.options[o.id] = false;
+        var inp = document.getElementById("options-" + o.id); if (inp) inp.checked = false;
+      }
+    });
+    show(optSet, dispo > 0);
     var e = find(CONFIG.etat, state.etat);
+    var t = find(CONFIG.taille, state.taille);
     var lines = [];
+    if (t && t.add) lines.push(["Taille : " + t.label, t.add]);
     if (f.interieur) lines.push(["État : " + e.label, e.add]);
     CONFIG.options.forEach(function(o){ if (state.options[o.id]) lines.push([o.label, o.add]); });
     lines.push(["Zone : " + z.label, z.add]);
@@ -549,13 +618,15 @@ var CONFIG = {
       return "<li><span>"+esc(l[0])+"</span><span>"+v+"</span></li>";
     }).join("");
     document.querySelectorAll(".js-cfg-total").forEach(function(el){ tween(el, devis ? null : total); });
-    var recap = "- Signature " + f.label + "\n" + lines.map(function(l){ return "- " + l[0]; }).join("\n") + "\nTotal estimé : " + (devis ? "sur devis" : eur(total));
+    var recap = "- Signature " + f.label + "\n- Taille : " + (t ? t.label : "") + "\n" +
+      lines.filter(function(l){ return l[0].indexOf("Taille :") !== 0; }).map(function(l){ return "- " + l[0]; }).join("\n") +
+      "\nTotal estimé : " + (devis ? "sur devis" : eur(total));
     var msg = "Bonjour, je voudrais réserver :\n" + recap;
     var href = devis ? wa(msg) : book(msg, f.cal, recap), label = devis ? "Demander un devis" : "Réserver ce nettoyage";
     document.querySelectorAll(".js-cfg-book").forEach(function(btn){ btn.href = href; btn.textContent = btn.classList.contains("short") ? (devis ? "Devis" : "Réserver") : label; });
   }
   if (cfg) {
-    build("formule", CONFIG.formules); build("etat", CONFIG.etat); build("options", CONFIG.options, true); build("zone", CONFIG.zone);
+    build("formule", CONFIG.formules); build("taille", CONFIG.taille); build("etat", CONFIG.etat); build("options", CONFIG.options, true); build("zone", CONFIG.zone);
     update();
     /* Mobile : barre de total collée en bas tant que le configurateur est à l'écran */
     var bar = document.getElementById("cfgBar"), zoneCfg = document.getElementById("composer"), sum = document.querySelector(".summary");

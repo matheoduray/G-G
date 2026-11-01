@@ -487,6 +487,10 @@ footer a:hover{color:var(--gold-2)}
 .feature .tagline{margin:0 0 20px;color:rgba(243,240,234,.82);font-size:1.12rem;max-width:44ch}
 .feature .compare{margin:22px 0 4px;color:var(--muted)}
 .badge{display:inline-block;padding:6px 12px;border:1px solid var(--gold);color:var(--gold-2);font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:20px}
+.tarifs{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.tarifs h3{margin:0 0 6px;font-size:1.2rem;font-weight:680}
+.tarifs p{margin:0 0 16px;color:var(--muted);max-width:48ch}
+@media (max-width:860px){.tarifs{grid-template-columns:1fr;gap:34px}}
 .ticks{list-style:none;margin:0;padding:0}
 .ticks li{position:relative;padding:7px 0 7px 30px}
 .ticks li::before{content:"";position:absolute;left:2px;top:13px;width:12px;height:7px;border-left:2px solid var(--gold);border-bottom:2px solid var(--gold);transform:rotate(-45deg)}
