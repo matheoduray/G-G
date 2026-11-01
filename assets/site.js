@@ -13,7 +13,7 @@ var CONFIG = {
     complet:   "https://calendly.com/gleamandgo/signature-interieur-exterieur",
     exterieur: "https://calendly.com/gleamandgo/signature-exterieur",
     polissage: "https://calendly.com/gleamandgo/polissage-onestep",
-    hiver:     "https://calendly.com/gleamandgo/pack-hiver"
+    hiver:     "https://calendly.com/gleamandgo/pack-hiver"   // lien Calendly inchangé
   },
   phone: "+32478488334",
   /* Vidéo du hero. Priorité 1 : un fichier MP4 (le plus fiable). Priorité 2 : l'ID YouTube. */
@@ -78,8 +78,8 @@ var CONFIG = {
     "off-polissage": { src:"", alt:"Polissage d'un capot à la polisseuse Rupes", tip:"Miniature page Offres" },
     "off-ceramique": { src:"", alt:"Carrosserie BMW protégée, l'eau perle sur le vernis", tip:"Miniature page Offres" },
     "off-refresh": { src:"", alt:"Habitacle entretenu lors d'un passage Refresh", tip:"Miniature page Offres" },
-    "off-hiver": { src:"", alt:"Maserati GranTurismo polie et protégée par le Pack Hiver", tip:"Miniature page Offres" },
-    "off-pack": { src:"", alt:"Maserati GranTurismo après le Pack Hiver", tip:"Miniature page Offres" },
+    "off-hiver": { src:"", alt:"Maserati GranTurismo polie et protégée par le Pack Céramique", tip:"Miniature page Offres" },
+    "off-pack": { src:"", alt:"Maserati GranTurismo après le Pack Céramique", tip:"Miniature page Offres" },
     "gal-1":  { src:"", alt:"Porsche Panamera noir mat après nettoyage", tip:"La plus belle photo : voiture finie, reflets profonds" },
     "gal-2":  { src:"", alt:"Eau qui perle sur une BMW noire", tip:"Siège avant, avant shampooing" },
     "gal-3":  { src:"", alt:"Logo Porsche nettoyé au pinceau", tip:"Même siège, après shampooing" },
@@ -105,7 +105,7 @@ var CONFIG = {
     "about-3":   { src:"", alt:"Polissage d'un capot à la polisseuse", tip:"Votre véhicule de service ou votre installation sur place" }
   },
 
-  /* Garantie affichée sur la page Pack Hiver. active:false = on affiche « Pas de surprise » à la place. */
+  /* Garantie affichée sur la page Pack Céramique. active:false = on affiche « Pas de surprise » à la place. */
   garantie: {
     active: false,
     titre: "Satisfait, ou on revient",
@@ -116,12 +116,12 @@ var CONFIG = {
   offre: {
     active: true,
     kicker: "Offre d'hiver",
-    titre: "Pack Hiver",
+    titre: "Pack Céramique",
     prix: 399,
     fin: "2026-11-22T23:59:59+01:00",
     videoMP4: "",                         // ex. "img/mercedes.mp4" : le plus fiable pour la lecture auto sur iPhone/Android
-    videoYouTube: "EekPmuMWj3E",          // vidéo de résultat (ID YouTube). Vide = pas de vidéo
-    videoExplication: "68Eubq_Yi34",      // vidéo qui explique le pack (hero + pop-up). Vide = pas de vidéo
+    videoYouTube: "",                     // vidéo de résultat (ID YouTube). Vide = pas de vidéo. Ancienne : EekPmuMWj3E
+    videoExplication: "",                 // vidéo d'explication (ID YouTube). Vide = pas de vidéo. Ancienne : 68Eubq_Yi34
     videoLegende: "Résultat · Mercedes",
     lignes: [
       "Décontamination complète de la carrosserie",
@@ -359,16 +359,9 @@ var CONFIG = {
     document.getElementById("popPrice").textContent = eur(o.prix);
     document.getElementById("popList").innerHTML = o.lignes.map(function(l){ return "<li>" + l + "</li>"; }).join("");
     var media = document.getElementById("popMedia"), carte = document.querySelector(".pop-card");
-    var libelle = "Voir le " + (o.titre || "pack") + " en vidéo";
-    if (!(o.videoExplication && facadeVideo(media, o.videoExplication, libelle, PD["pop"], function(){ carte.classList.add("watching"); }))) {
-      if (PD["pop"]) { var pi = document.createElement("img"); pi.src = PD["pop"]; pi.alt = ""; media.appendChild(pi); }
-      else { media.remove(); carte.style.gridTemplateColumns = "1fr"; }
-    }
-    document.querySelectorAll(".js-explain-vid").forEach(function(box){
-      if (!facadeVideo(box, o.videoExplication, "Le " + (o.titre || "pack") + " expliqué en vidéo", PD["pop"])) {
-        var sec = box.closest(".sec") || box; sec.remove();
-      }
-    });
+    var visuel = PD["off-hiver"] || PD["pop"];
+    if (visuel) { var pi = document.createElement("img"); pi.src = visuel; pi.alt = ""; media.appendChild(pi); }
+    else { media.remove(); carte.style.gridTemplateColumns = "1fr"; }
     var cta = document.getElementById("popCta"); cta.href = book(msg, "hiver", (o.titre || "Pack") + " — " + eur(o.prix)); cta.textContent = "Réserver le " + o.titre;
 
     var KEY = "gg_offre_vue";
@@ -384,7 +377,7 @@ var CONFIG = {
     cta.addEventListener("click", ferme);
     pop.addEventListener("click", function(e){ if (e.target === pop) ferme(); });
     document.addEventListener("keydown", function(e){ if (e.key === "Escape") ferme(); });
-    if (!vueRecemment() && !document.querySelector('.page[data-page="/pack-hiver/"]')) setTimeout(function(){ pop.classList.add("on"); }, o.delaiPopup || 8000);
+    if (!vueRecemment() && !document.querySelector('.page[data-page="/pack-ceramique/"]')) setTimeout(function(){ pop.classList.add("on"); }, o.delaiPopup || 8000);
   })();
 
   /* Listes de tarifs réutilisables sur la page Offres (toujours synchronisées avec le configurateur) */
@@ -492,7 +485,7 @@ var CONFIG = {
     f.src = "https://www.youtube-nocookie.com/embed/" + id + "?autoplay=1&mute=1" +
       (explique ? "&controls=1" : "&loop=1&playlist=" + id + "&controls=" + (touch ? 1 : 0)) +
       "&playsinline=1&rel=0&modestbranding=1&iv_load_policy=3" + (explique ? "" : "&disablekb=1");
-    f.title = explique ? "Le Pack Hiver expliqué" : "Résultat réel"; f.allow = "autoplay; encrypted-media; picture-in-picture";
+    f.title = explique ? "Le Pack Céramique expliqué" : "Résultat réel"; f.allow = "autoplay; encrypted-media; picture-in-picture";
     f.setAttribute("frameborder","0");
     fig.querySelector(".pv-frame").appendChild(f);
   });
@@ -712,7 +705,7 @@ var CONFIG = {
     burger.setAttribute("aria-label", open ? "Fermer le menu" : "Ouvrir le menu");
   });
   /* Anciennes adresses en #/… (pubs, Calendly, partages) : redirection vers les vraies pages */
-  var OLD = {"/": "/", "/offres": "/offres/", "/services": "/offres/", "/pack-hiver": "/pack-hiver/", "/signature": "/nettoyage-interieur-voiture/", "/tarifs": "/nettoyage-interieur-voiture/", "/polissage": "/polissage-voiture/", "/refresh": "/abonnement-entretien-voiture/", "/abonnements": "/abonnement-entretien-voiture/", "/qui-sommes-nous": "/qui-sommes-nous/"};
+  var OLD = {"/": "/", "/offres": "/offres/", "/services": "/offres/", "/pack-hiver": "/pack-ceramique/", "/pack-ceramique": "/pack-ceramique/", "/signature": "/nettoyage-interieur-voiture/", "/tarifs": "/nettoyage-interieur-voiture/", "/polissage": "/polissage-voiture/", "/refresh": "/abonnement-entretien-voiture/", "/abonnements": "/abonnement-entretien-voiture/", "/qui-sommes-nous": "/qui-sommes-nous/"};
   function route(){
     var hash = location.hash || "";
     if (hash.indexOf("#/") === 0) {
