@@ -1,7 +1,8 @@
-"""Étalonnage des miniatures — ambiance atelier.
+"""Miniatures de la page Offres.
 
-Noir profond, lumière chaude venue du haut, couleurs réelles conservées.
-Pas de bichromie : le cuir reste rouge, le pad de polissage reste bleu.
+Recadrage au format des cartes, sans retouche de couleur : les photos
+sortent telles qu'elles ont été prises. grade() reste disponible plus bas
+si un jour on veut réessayer un étalonnage, mais il n'est plus appelé.
 Lancer depuis la racine du dépôt : python3 tools-miniatures.py
 """
 import numpy as np
@@ -101,5 +102,5 @@ if __name__ == "__main__":
         im = crop_ratio(Image.open(SRC + src + ".jpg"), ratio, cx, cy, zoom)
         larg = 900 if ratio > 1 else 760
         im = im.resize((larg, int(round(im.height * larg / im.width))), Image.LANCZOS)
-        grade(im, cible=cible, **extra).save(OUT + nom + ".jpg", quality=85, optimize=True, progressive=True)
+        im.save(OUT + nom + ".jpg", quality=88, optimize=True, progressive=True)
         print(nom, Image.open(OUT + nom + ".jpg").size)

@@ -492,10 +492,28 @@ footer a:hover{color:var(--gold-2)}
 .feature .tagline{margin:0 0 20px;color:rgba(243,240,234,.82);font-size:1.12rem;max-width:44ch}
 .feature .compare{margin:22px 0 4px;color:var(--muted)}
 .badge{display:inline-block;padding:6px 12px;border:1px solid var(--gold);color:var(--gold-2);font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:20px}
-.tarifs{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
-.tarifs h3{margin:0 0 6px;font-size:1.2rem;font-weight:680}
-.tarifs p{margin:0 0 16px;color:var(--muted);max-width:48ch}
-@media (max-width:860px){.tarifs{grid-template-columns:1fr;gap:34px}}
+/* Accordéon d'options */
+.acc{border:1px solid var(--line-2);border-radius:3px;overflow:hidden;max-width:860px}
+.acc details + details{border-top:1px solid var(--line-2)}
+.acc summary{display:flex;align-items:baseline;gap:16px;padding:22px 52px 22px 26px;cursor:pointer;list-style:none;position:relative;transition:background .2s}
+.acc summary::-webkit-details-marker{display:none}
+.acc summary:hover{background:var(--raise)}
+.acc summary .t1{font-size:1.15rem;font-weight:660}
+.acc summary .t2{margin-left:auto;color:var(--muted);font-size:.92rem;white-space:nowrap}
+.acc summary::after{content:"";position:absolute;right:24px;top:50%;width:9px;height:9px;margin-top:-7px;border-right:1.5px solid var(--gold);border-bottom:1.5px solid var(--gold);transform:rotate(45deg);transition:transform .2s}
+.acc details[open] summary{background:var(--raise)}
+.acc details[open] summary::after{transform:rotate(-135deg);margin-top:-2px}
+.acc .in{padding:4px 26px 26px}
+.acc .in .h{margin:0 0 16px;color:var(--muted);max-width:60ch}
+.acc .stack{border:0;background:none;max-width:none}
+.acc .stack ul{padding:0}
+.acc .stack li{padding:14px 0}
+.acc .stack li em{color:var(--gold-2);font-style:normal;font-weight:650;white-space:nowrap}
+@media (max-width:620px){
+  .acc summary{flex-wrap:wrap;gap:4px 16px;padding:20px 46px 20px 18px}
+  .acc summary .t2{margin-left:0;width:100%}
+  .acc .in{padding:4px 18px 22px}
+}
 .ticks{list-style:none;margin:0;padding:0}
 .ticks li{position:relative;padding:7px 0 7px 30px}
 .ticks li::before{content:"";position:absolute;left:2px;top:13px;width:12px;height:7px;border-left:2px solid var(--gold);border-bottom:2px solid var(--gold);transform:rotate(-45deg)}

@@ -78,8 +78,8 @@ var CONFIG = {
     "off-polissage": { src:"", alt:"Polissage d'un capot à la polisseuse Rupes", tip:"Miniature page Offres" },
     "off-ceramique": { src:"", alt:"Carrosserie BMW protégée, l'eau perle sur le vernis", tip:"Miniature page Offres" },
     "off-refresh": { src:"", alt:"Habitacle entretenu lors d'un passage Refresh", tip:"Miniature page Offres" },
-    "off-hiver": { src:"", alt:"Maserati GranTurismo polie et protégée par le Pack Céramique", tip:"Miniature page Offres" },
-    "off-pack": { src:"", alt:"Maserati GranTurismo après le Pack Céramique", tip:"Miniature page Offres" },
+    "off-hiver": { src:"", alt:"Maserati GranTurismo polie et protégée par le Pack November", tip:"Miniature page Offres" },
+    "off-pack": { src:"", alt:"Maserati GranTurismo après le Pack November", tip:"Miniature page Offres" },
     "gal-1":  { src:"", alt:"Porsche Panamera noir mat après nettoyage", tip:"La plus belle photo : voiture finie, reflets profonds" },
     "gal-2":  { src:"", alt:"Eau qui perle sur une BMW noire", tip:"Siège avant, avant shampooing" },
     "gal-3":  { src:"", alt:"Logo Porsche nettoyé au pinceau", tip:"Même siège, après shampooing" },
@@ -105,7 +105,7 @@ var CONFIG = {
     "about-3":   { src:"", alt:"Polissage d'un capot à la polisseuse", tip:"Votre véhicule de service ou votre installation sur place" }
   },
 
-  /* Garantie affichée sur la page Pack Céramique. active:false = on affiche « Pas de surprise » à la place. */
+  /* Garantie affichée sur la page Pack November. active:false = on affiche « Pas de surprise » à la place. */
   garantie: {
     active: false,
     titre: "Satisfait, ou on revient",
@@ -116,7 +116,7 @@ var CONFIG = {
   offre: {
     active: true,
     kicker: "Offre d'hiver",
-    titre: "Pack Céramique",
+    titre: "Pack November",
     prix: 399,
     fin: "2026-11-22T23:59:59+01:00",
     videoMP4: "",                         // ex. "img/mercedes.mp4" : le plus fiable pour la lecture auto sur iPhone/Android
@@ -132,7 +132,7 @@ var CONFIG = {
     /* Ce que valent les prestations prises séparément (sert au calcul de l'économie) */
     detail: [
       ["Polissage one-step", "Micro-rayures, voile terne, décontamination incluse", 300],
-      ["Protection céramique 3 ans", "Couche dure et hydrophobe sur toute la carrosserie", 192]
+      ["Protection céramique 3 ans", "Couche dure et hydrophobe sur toute la carrosserie", 199]
     ],
     /* Suppléments proposés avec le pack */
     upsells: [
@@ -149,9 +149,9 @@ var CONFIG = {
   ceramique: {
     actif: true,
     formules: [
-      { id:"c3", titre:"Céramique 3 ans", duree:"Posée en 1 journée", prix:"Sur devis", cal:"hiver",
+      { id:"c3", titre:"Céramique 3 ans", duree:"Posée en 1 journée · polissage de préparation en plus", prix:199, cal:"hiver",
         lignes:["Décontamination complète de la carrosserie","Polissage une passe pour préparer le vernis","Pose du revêtement, séchage sur place","Protection annoncée : 3 ans"] },
-      { id:"c5", titre:"Céramique 5 ans", duree:"Posée en 2 journées · + 150 € dans le Pack Hiver", prix:"Sur devis", cal:"hiver", vedette:true,
+      { id:"c5", titre:"Céramique 5 ans", duree:"Posée en 2 journées · polissage de préparation en plus", prix:349, cal:"hiver", vedette:true,
         lignes:["Décontamination complète de la carrosserie","Polissage plus poussé le premier jour","Pose en couches, avec durcissement entre chaque","Protection annoncée : 5 ans"] }
     ]
   },
@@ -377,7 +377,7 @@ var CONFIG = {
     cta.addEventListener("click", ferme);
     pop.addEventListener("click", function(e){ if (e.target === pop) ferme(); });
     document.addEventListener("keydown", function(e){ if (e.key === "Escape") ferme(); });
-    if (!vueRecemment() && !document.querySelector('.page[data-page="/pack-ceramique/"]')) setTimeout(function(){ pop.classList.add("on"); }, o.delaiPopup || 8000);
+    if (!vueRecemment() && !document.querySelector('.page[data-page="/pack-november/"]')) setTimeout(function(){ pop.classList.add("on"); }, o.delaiPopup || 8000);
   })();
 
   /* Listes de tarifs réutilisables sur la page Offres (toujours synchronisées avec le configurateur) */
@@ -485,7 +485,7 @@ var CONFIG = {
     f.src = "https://www.youtube-nocookie.com/embed/" + id + "?autoplay=1&mute=1" +
       (explique ? "&controls=1" : "&loop=1&playlist=" + id + "&controls=" + (touch ? 1 : 0)) +
       "&playsinline=1&rel=0&modestbranding=1&iv_load_policy=3" + (explique ? "" : "&disablekb=1");
-    f.title = explique ? "Le Pack Céramique expliqué" : "Résultat réel"; f.allow = "autoplay; encrypted-media; picture-in-picture";
+    f.title = explique ? "Le Pack November expliqué" : "Résultat réel"; f.allow = "autoplay; encrypted-media; picture-in-picture";
     f.setAttribute("frameborder","0");
     fig.querySelector(".pv-frame").appendChild(f);
   });
@@ -705,7 +705,7 @@ var CONFIG = {
     burger.setAttribute("aria-label", open ? "Fermer le menu" : "Ouvrir le menu");
   });
   /* Anciennes adresses en #/… (pubs, Calendly, partages) : redirection vers les vraies pages */
-  var OLD = {"/": "/", "/offres": "/offres/", "/services": "/offres/", "/pack-hiver": "/pack-ceramique/", "/pack-ceramique": "/pack-ceramique/", "/signature": "/nettoyage-interieur-voiture/", "/tarifs": "/nettoyage-interieur-voiture/", "/polissage": "/polissage-voiture/", "/refresh": "/abonnement-entretien-voiture/", "/abonnements": "/abonnement-entretien-voiture/", "/qui-sommes-nous": "/qui-sommes-nous/"};
+  var OLD = {"/": "/", "/offres": "/offres/", "/services": "/offres/", "/pack-hiver": "/pack-november/", "/pack-ceramique": "/pack-november/", "/pack-november": "/pack-november/", "/signature": "/nettoyage-interieur-voiture/", "/tarifs": "/nettoyage-interieur-voiture/", "/polissage": "/polissage-voiture/", "/refresh": "/abonnement-entretien-voiture/", "/abonnements": "/abonnement-entretien-voiture/", "/qui-sommes-nous": "/qui-sommes-nous/"};
   function route(){
     var hash = location.hash || "";
     if (hash.indexOf("#/") === 0) {
