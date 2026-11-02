@@ -132,11 +132,11 @@ var CONFIG = {
     /* Ce que valent les prestations prises séparément (sert au calcul de l'économie) */
     detail: [
       ["Polissage one-step", "Micro-rayures, voile terne, décontamination incluse", 300],
-      ["Protection céramique 3 ans", "Couche dure et hydrophobe sur toute la carrosserie", 199]
+      ["Protection céramique 3 ans", "Posée sur la peinture corrigée, en complément du polissage", 199]
     ],
     /* Suppléments proposés avec le pack */
     upsells: [
-      { label: "Céramique 5 ans au lieu de 3 ans", note: "Correction plus poussée, pose en 2 journées", add: 150 },
+      { label: "Céramique 5 ans au lieu de 3 ans", note: "Correction plus poussée, pose en 2 journées", add: 200 },
       { label: "Glaco sur les vitres",             note: "La pluie file sans essuie-glace dès 60 km/h", add: 35 },
       { label: "Imperméabilisation des tapis",     note: "Anti-taches, après shampooing", add: 45 },
       { label: "Rénovation des phares",            note: "Optiques jaunies poncées et polies", add: 60 }
@@ -149,9 +149,9 @@ var CONFIG = {
   ceramique: {
     actif: true,
     formules: [
-      { id:"c3", titre:"Céramique 3 ans", duree:"Posée en 1 journée · polissage de préparation en plus", prix:199, cal:"hiver",
+      { id:"c3", titre:"Céramique 3 ans", duree:"Posée en 1 journée · polissage de préparation compris", prix:499, cal:"hiver",
         lignes:["Décontamination complète de la carrosserie","Polissage une passe pour préparer le vernis","Pose du revêtement, séchage sur place","Protection annoncée : 3 ans"] },
-      { id:"c5", titre:"Céramique 5 ans", duree:"Posée en 2 journées · polissage de préparation en plus", prix:349, cal:"hiver", vedette:true,
+      { id:"c5", titre:"Céramique 5 ans", duree:"Posée en 2 journées · polissage de préparation compris", prix:699, cal:"hiver", vedette:true,
         lignes:["Décontamination complète de la carrosserie","Polissage plus poussé le premier jour","Pose en couches, avec durcissement entre chaque","Protection annoncée : 5 ans"] }
     ]
   },
@@ -411,7 +411,7 @@ var CONFIG = {
       return '<article class="' + (c.vedette ? "pick" : "") + '"><div class="tag">' + (c.vedette ? "Protection la plus longue" : "") + '</div>' +
         '<h3>' + c.titre + '</h3><p class="duree">' + c.duree + '</p><p class="price"><b>' + prix + '</b></p>' +
         '<ul>' + c.lignes.map(function(l){ return "<li>" + l + "</li>"; }).join("") + '</ul>' +
-        '<a class="btn ' + (c.vedette ? "btn-gold" : "btn-line") + '" href="' + book(msg, c.cal, c.titre) + '" target="_blank" rel="noopener">Demander un devis</a></article>';
+        '<a class="btn ' + (c.vedette ? "btn-gold" : "btn-line") + '" href="' + book(msg, c.cal, c.titre) + '" target="_blank" rel="noopener">' + (typeof c.prix === "number" ? "Réserver la " + c.titre.toLowerCase() : "Demander un devis") + '</a></article>';
     }).join("");
   })();
 
