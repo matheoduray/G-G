@@ -70,6 +70,9 @@ HEADER = '''<header class="top" id="top">
       <a class="lnk" href="/polissage-voiture/">Polissage</a>
       <a class="lnk" href="/protection-ceramique-voiture/">Protection céramique</a>
       <a class="lnk" href="/abonnement-entretien-voiture/">Refresh (abonnement)</a>
+      <a class="lnk" href="/cartes-cadeaux/">Cartes cadeaux</a>
+      <a class="lnk" href="/restitution-leasing/">Restitution leasing</a>
+      <a class="lnk" href="/professionnels/">Professionnels</a>
       <a class="lnk" href="/qui-sommes-nous/">Qui sommes-nous</a>
       <a class="btn btn-gold" href="%(reserver)s">Réserver</a>
       <a class="btn btn-line js-tel" href="%(tel)s" style="margin-top:10px">Appeler le 0478 48 83 34</a>
@@ -81,7 +84,7 @@ FOOTER = '''<footer>
   <div class="wrap">
     <div><strong style="color:var(--white)">Gleam &amp; Go</strong>, detailing automobile à domicile, Bruxelles.<br><a class="js-tel" href="%(tel)s" style="margin:0">0478 48 83 34</a>, 7j/7 de 9 h à 21 h<br><a class="js-email" href="mailto:%(email)s" style="margin:0">%(email)s</a><br>N° d'entreprise (BCE) : BE 1031.632.216</div>
     <div>
-      <a href="/offres/">Nos offres</a><a href="/black-friday/" class="js-camp-menu js-camp-seul">Black Friday</a><a href="/pack-hiver/">Pack Hiver</a><a href="/nettoyage-interieur-voiture/">Signature Intérieur</a><a href="/lavage-exterieur-voiture/">Signature Extérieur</a><a href="/polissage-voiture/">Polissage</a><a href="/protection-ceramique-voiture/">Protection céramique</a><a href="/abonnement-entretien-voiture/">Refresh</a><a href="/qui-sommes-nous/">Qui sommes-nous</a><a href="/#faq">FAQ</a>
+      <a href="/offres/">Nos offres</a><a href="/black-friday/" class="js-camp-menu js-camp-seul">Black Friday</a><a href="/pack-hiver/">Pack Hiver</a><a href="/nettoyage-interieur-voiture/">Signature Intérieur</a><a href="/lavage-exterieur-voiture/">Signature Extérieur</a><a href="/polissage-voiture/">Polissage</a><a href="/protection-ceramique-voiture/">Protection céramique</a><a href="/abonnement-entretien-voiture/">Refresh</a><a href="/cartes-cadeaux/">Cartes cadeaux</a><a href="/restitution-leasing/">Restitution leasing</a><a href="/professionnels/">Professionnels</a><a href="/qui-sommes-nous/">Qui sommes-nous</a><a href="/#faq">FAQ</a>
       <a href="%(insta)s" target="_blank" rel="noopener">Instagram</a><a class="js-reviews" href="%(avis)s" target="_blank" rel="noopener">Avis Google</a>
     </div>
     <div class="legal">

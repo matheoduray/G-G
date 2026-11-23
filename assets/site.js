@@ -35,7 +35,36 @@ var CONFIG = {
                     msg:"Bonjour, je voudrais la carte Black Friday de 400 € (500 € de prestations)." },
     "pack-hiver": { nom:"Pack Hiver", prix:200, type:"prestation", stripe:"",
                     msg:"Bonjour, je voudrais réserver le Pack Hiver à 200 € tout compris." },
-    "test-1":     { nom:"Test de paiement", prix:1, type:"test", stripe:"", msg:"" }
+    "test-1":     { nom:"Test de paiement", prix:1, type:"test", stripe:"", msg:"" },
+    /* Décembre : cartes cadeaux de Noël (sans bonus) */
+    "noel-signature":  { nom:"Carte cadeau Signature Intérieur", prix:149, type:"carte", stripe:"",
+                         msg:"Bonjour, je voudrais offrir une carte cadeau Signature Intérieur (149 €)." },
+    "noel-pack-hiver": { nom:"Carte cadeau Pack Hiver", prix:200, type:"carte", stripe:"",
+                         msg:"Bonjour, je voudrais offrir une carte cadeau Pack Hiver (200 €)." },
+    "noel-ceramique":  { nom:"Carte cadeau Pack Céramique", prix:399, type:"carte", stripe:"",
+                         msg:"Bonjour, je voudrais offrir une carte cadeau Pack Céramique (399 €)." },
+    "noel-libre":      { nom:"Carte cadeau, montant libre", prix:50, type:"carte", stripe:"",       // prix = minimum ; le vrai montant est dans Stripe
+                         msg:"Bonjour, je voudrais offrir une carte cadeau d'un montant de ... €." },
+    /* Restitution de leasing */
+    "restitution-249": { nom:"Restitution Essentielle", prix:249, type:"prestation", stripe:"",
+                         msg:"Bonjour, je rends ma voiture de société le ... : je voudrais la Restitution Essentielle (249 €)." },
+    "restitution-499": { nom:"Restitution + Polissage", prix:499, type:"prestation", stripe:"",
+                         msg:"Bonjour, je rends ma voiture de société le ... : je voudrais la Restitution + Polissage (499 €)." },
+    /* Journée Gleam & Go en résidence (tarif résident) */
+    "journee-pack-hiver": { nom:"Journée résidence : Pack Hiver", prix:180, type:"prestation", stripe:"",
+                            msg:"Bonjour, je voudrais un Pack Hiver (180 €) pendant la Journée Gleam & Go de ma résidence." },
+    "journee-signature":  { nom:"Journée résidence : Signature Intérieur", prix:135, type:"prestation", stripe:"",
+                            msg:"Bonjour, je voudrais un Signature Intérieur (135 €) pendant la Journée Gleam & Go de ma résidence." }
+  },
+
+  /* Journée Gleam & Go dans une résidence : une journée à la fois. Vide = « prochaine date bientôt ».
+     calendly = lien d'un événement Calendly avec paiement Stripe (6 créneaux ce jour-là). */
+  journee: {
+    residence: "",                 // ex. "Résidence Les Érables"
+    adresse: "",                   // ex. "Avenue de Tervueren 200, 1150 Woluwe-Saint-Pierre"
+    date: "",                      // ex. "2026-12-12" (AAAA-MM-JJ)
+    creneaux: ["9 h", "10 h 30", "12 h", "13 h 30", "15 h", "16 h 30"],
+    calendly: ""                   // ex. "https://calendly.com/gleamandgo/journee-residence"
   },
 
   /* Campagnes : bandeau, lien du menu et pop-up changent seuls selon la date.
@@ -47,6 +76,15 @@ var CONFIG = {
       popup:{ kicker:"Black Friday · jusqu'au 30/11 à 23 h 59", titre:"+25 % offerts sur nos cartes",
               lignes:["Vous payez 100 €, vous recevez 125 €","Vous payez 200 €, vous recevez 250 €","Vous payez 400 €, vous recevez 500 €"],
               note:"Pour vous ou à offrir. Carte en PDF sous 2 h, valable 2 ans.", cta:"Voir les cartes", photo:"pop", delai:7000 } },
+    { id:"noel", du:"2026-12-01T00:00:00+01:00", au:"2026-12-24T12:00:00+01:00",
+      bandeau:"<b>Cartes cadeaux</b> reçues en 2 h, jusqu'au 24/12 midi · Pack Hiver 200 €",
+      lien:"/cartes-cadeaux/", menu:"Cartes cadeaux",
+      popup:{ kicker:"Noël · jusqu'au 24/12 à midi", titre:"Le cadeau qu'on ne s'offre jamais soi-même",
+              lignes:["Signature Intérieur 149 €, Pack Hiver 200 €, Pack Céramique 399 €","Ou le montant de votre choix, dès 50 €","Reçue en PDF sous 2 h, valable 2 ans"],
+              note:"Version imprimée dans une enveloppe noire sur demande.", cta:"Offrir une carte", photo:"pop", delai:7000 } },
+    { id:"apres-fetes", du:"2026-12-26T00:00:00+01:00", au:"2026-12-31T23:59:59+01:00",
+      bandeau:"<b>Après les fêtes</b> : sel, boue, miettes. Créneaux de janvier ouverts",
+      lien:"/pack-hiver/", menu:"Pack Hiver", popup:null },
     { id:"hiver", du:"2026-12-01T00:00:00+01:00", au:"2027-01-31T23:59:59+01:00",
       bandeau:"<b>Pack Hiver</b> : 200 € tout compris, Kit Hiver offert",
       lien:"/pack-hiver/", menu:"Pack Hiver",
@@ -1011,6 +1049,35 @@ var CONFIG = {
     "/offres/": { nom: "Nos offres", categorie: "offres" }
   };
   if (VUES[GG.page]) GG.suivre("vue", VUES[GG.page]);
+})();
+
+
+/* Journée Gleam & Go en résidence : date, lieu et créneaux viennent de CONFIG.journee */
+(function(){
+  var box = document.getElementById("journee");
+  if (!box) return;
+  var J = CONFIG.journee || {}, now = (window.GG && GG.now) || Date.now();
+  var fin = J.date ? Date.parse(J.date + "T23:59:59+01:00") : NaN;
+  if (!J.date || isNaN(fin) || fin < now) {
+    box.querySelector(".js-j-kicker").textContent = "Journée Gleam & Go · prochaine date bientôt";
+    return;
+  }
+  var d = new Date(J.date + "T12:00:00+01:00");
+  var jour = d.toLocaleDateString("fr-BE", { weekday: "long", day: "numeric", month: "long" });
+  box.querySelector(".js-j-kicker").textContent = "Journée Gleam & Go · " + jour;
+  box.querySelector(".js-j-titre").textContent = (J.residence || "Votre résidence") + " : votre voiture nettoyée dans le parking";
+  if (J.adresse) box.querySelector(".js-j-sous").textContent = J.adresse + ". Vous réservez votre créneau, on s'occupe du reste. Méthode sans rinçage, pas d'eau au sol.";
+  var sec = document.getElementById("jour-creneaux"), grille = sec && sec.querySelector(".js-j-creneaux");
+  if (!grille) return;
+  sec.hidden = false;
+  var wa = function(m){ return "https://wa.me/" + CONFIG.whatsapp + "?text=" + encodeURIComponent(m); };
+  grille.innerHTML = (J.creneaux || []).map(function(h){
+    var msg = "Bonjour, je réserve le créneau de " + h + " le " + jour + " pour la Journée Gleam & Go (" + (J.residence || "résidence") + ").";
+    var href = J.calendly ? J.calendly + (J.calendly.indexOf("?") > -1 ? "&" : "?") + "a1=" + encodeURIComponent(h + " · " + (J.residence || "")) : wa(msg);
+    var t = document.createElement("div"); t.textContent = h;
+    return '<article class="bf-card"><p class="bf-paye">Créneau</p><p class="bf-vaut"><b>' + t.innerHTML + '</b></p>' +
+      '<a class="btn btn-line" href="' + href + '"' + (J.calendly ? '' : ' target="_blank" rel="noopener"') + '>Réserver ce créneau</a></article>';
+  }).join("");
 })();
 
 
