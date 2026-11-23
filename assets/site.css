@@ -109,7 +109,7 @@ body.at-home main{padding-top:var(--bh)}
 .hero-title .tag::before,.hero-title .tag::after{content:"";display:inline-block;width:36px;height:1px;background:var(--gold);vertical-align:middle;margin:0 14px}
 @media (max-width:600px){.hero-title .tag::before,.hero-title .tag::after{display:none}}
 @media (prefers-reduced-motion: reduce){.hero-title .big{animation:none;background-position:30% 0}}
-.hero-center .sub{margin:0 auto 38px;color:rgba(243,240,234,.78);font-size:clamp(1.05rem,1.6vw,1.25rem);max-width:44ch}
+.hero-center .sub{margin:0 auto 18px;color:rgba(243,240,234,.78);font-size:clamp(1.05rem,1.6vw,1.25rem);max-width:44ch}
 .hero-ctas{display:flex;flex-wrap:wrap;justify-content:center;gap:16px}
 .hero-ctas .btn{min-height:62px;padding:0 40px;font-size:1.12rem;min-width:260px}
 .trust{margin:26px 0 0;color:var(--muted);font-size:.95rem}
@@ -829,3 +829,9 @@ footer .wrap > div:first-child a{text-decoration:underline;text-decoration-color
 @media (max-width:1100px){.bf-cards.c4{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:900px){.bf-cards.c2,.bf-cards.c3{grid-template-columns:1fr}}
 @media (max-width:600px){.bf-cards.c4{grid-template-columns:1fr}}
+/* Preuve sociale dans le hero de l'accueil, juste avant les boutons */
+.hero-proof{margin:0 auto 30px;font-size:.95rem;color:rgba(243,240,234,.86);max-width:72ch;text-wrap:balance}
+.hero-proof a{color:inherit;text-decoration:none}
+.hero-proof .stars{color:var(--gold-2);letter-spacing:.1em;margin-right:4px}
+@media (max-width:600px){.hero-proof{font-size:.86rem;margin-bottom:24px}}
+.hero-center > :nth-child(5){animation-delay:.8s}
