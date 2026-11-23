@@ -16,6 +16,53 @@ var CONFIG = {
     hiver:     "https://calendly.com/gleamandgo/pack-hiver"   // lien Calendly inchangé
   },
   phone: "+32478488334",
+  email: "matheoduray@gmail.com",          // adresse affichée sur le site (pied de page, mentions légales, rétractation)
+  waTexte: "Bonjour Gleam & Go, je voudrais un créneau",   // message WhatsApp par défaut
+
+  /* ====================================================================
+     PAIEMENTS STRIPE : colle ici chaque Payment Link (https://buy.stripe.com/...).
+     Vide = le bouton ouvre WhatsApp avec un message prêt.
+     Dans Stripe, pour chaque lien : Après le paiement > Rediriger vers
+     https://gleamandgo.be/merci/?produit=CLE&session_id={CHECKOUT_SESSION_ID}
+     (CLE = carte-100, carte-200, carte-400, pack-hiver ou test-1)
+     ==================================================================== */
+  produits: {
+    "carte-100":  { nom:"Carte Gleam & Go 100 € + bonus 25 €",  prix:100, type:"carte",  stripe:"",
+                    msg:"Bonjour, je voudrais la carte Black Friday de 100 € (125 € de prestations)." },
+    "carte-200":  { nom:"Carte Gleam & Go 200 € + bonus 50 €",  prix:200, type:"carte",  stripe:"",
+                    msg:"Bonjour, je voudrais la carte Black Friday de 200 € (250 € de prestations)." },
+    "carte-400":  { nom:"Carte Gleam & Go 400 € + bonus 100 €", prix:400, type:"carte",  stripe:"",
+                    msg:"Bonjour, je voudrais la carte Black Friday de 400 € (500 € de prestations)." },
+    "pack-hiver": { nom:"Pack Hiver", prix:200, type:"prestation", stripe:"",
+                    msg:"Bonjour, je voudrais réserver le Pack Hiver à 200 € tout compris." },
+    "test-1":     { nom:"Test de paiement", prix:1, type:"test", stripe:"", msg:"" }
+  },
+
+  /* Campagnes : bandeau, lien du menu et pop-up changent seuls selon la date.
+     La première dont la période contient aujourd'hui gagne. */
+  campagnes: [
+    { id:"bf", du:"2026-11-23T00:00:00+01:00", au:"2026-11-30T23:59:59+01:00",
+      bandeau:"<b>Black Friday</b> : +25 % offerts sur nos cartes, jusqu'au 30/11 à 23 h 59",
+      lien:"/black-friday/", menu:"Black Friday",
+      popup:{ kicker:"Black Friday · jusqu'au 30/11 à 23 h 59", titre:"+25 % offerts sur nos cartes",
+              lignes:["Vous payez 100 €, vous recevez 125 €","Vous payez 200 €, vous recevez 250 €","Vous payez 400 €, vous recevez 500 €"],
+              note:"Pour vous ou à offrir. Carte en PDF sous 2 h, valable 2 ans.", cta:"Voir les cartes", photo:"pop", delai:7000 } },
+    { id:"hiver", du:"2026-12-01T00:00:00+01:00", au:"2027-01-31T23:59:59+01:00",
+      bandeau:"<b>Pack Hiver</b> : 200 € tout compris, Kit Hiver offert",
+      lien:"/pack-hiver/", menu:"Pack Hiver",
+      popup:{ kicker:"Offre d'hiver", titre:"Pack Hiver, 200 € tout compris",
+              lignes:["Intérieur et extérieur complets","Kit Hiver offert (valeur 49 €)","Déplacement offert jusqu'à 15 km"],
+              note:"Prestations jusqu'au 31 janvier. Seul supplément possible : poils d'animaux + 40 €.", cta:"Voir le Pack Hiver", photo:"off-hiver", delai:9000 } }
+  ],
+
+  /* Mesure (pubs). Vide = rien ne se charge et la bannière cookies ne s'affiche pas.
+     Rien ne se charge avant que le visiteur clique « Accepter ». */
+  mesure: {
+    metaPixel: "",        // ex. "1234567890123456"
+    ga4: "",              // ex. "G-XXXXXXXXXX"
+    googleAds: "",        // ex. "AW-1234567890"
+    adsLabels: { whatsapp:"", telephone:"", achat:"" }   // étiquettes de conversion Google Ads
+  },
   /* Vidéo du hero. Priorité 1 : un fichier MP4 (le plus fiable). Priorité 2 : l'ID YouTube. */
   heroVideo: "",                // ex. "hero.mp4" — remplace la photo du hero par une vidéo
   heroYouTube: "",              // ID YouTube (vide = pas de vidéo, on garde la photo)
@@ -47,13 +94,12 @@ var CONFIG = {
     { id:"sale",      label:"Sale",      note:"Plusieurs mois sans nettoyage", add:25 },
     { id:"tres-sale", label:"Très sale", note:"Taches, boue, habitacle chargé", add:50 }
   ],
-  /* Taille du véhicule : s'applique à toutes les formules */
-  taille: [
-    { id:"standard", label:"Citadine, berline ou break", note:"Clio, Golf, Série 3, A4, break",  add:0  },
-    { id:"suv",      label:"SUV ou monospace",           note:"X5, Q7, Tiguan, Classe V, 7 places", add:30 }
-  ],
-  /* besoin : "interieur" = seulement si la formule touche l'habitacle ; "exterieur" = seulement si elle touche la carrosserie */
+  /* Taille du véhicule : plus de supplément (même prix pour toutes les voitures). Laisser vide. */
+  taille: [],
+  /* besoin : "interieur" = seulement si la formule touche l'habitacle ; "exterieur" = seulement si elle touche la carrosserie ; absent = toujours proposé.
+     inclut : options déjà comprises dedans (elles disparaissent quand celle-ci est cochée) */
   options: [
+    { id:"kithiver", label:"Kit Hiver", note:"Vitres dégraissées et anti-buée, vitres extérieures hydrophobes, joints traités contre le gel, tapis désalés", add:49, inclut:["glaco"] },
     { id:"poils",  label:"Poils d'animaux",            note:"Retrait complet, brosse et aspiration",      add:40, besoin:"interieur" },
     { id:"tapis",  label:"Imperméabilisation des tapis", note:"Anti-taches, appliqué après le shampooing", add:45, besoin:"interieur" },
     { id:"glaco",  label:"Glaco sur les vitres",       note:"Hydrophobe : la pluie file sans essuie-glace", add:35, besoin:"exterieur" },
@@ -78,8 +124,8 @@ var CONFIG = {
     "off-polissage": { src:"", alt:"Polissage d'un capot à la polisseuse Rupes", tip:"Miniature page Offres" },
     "off-ceramique": { src:"", alt:"Carrosserie BMW protégée, l'eau perle sur le vernis", tip:"Miniature page Offres" },
     "off-refresh": { src:"", alt:"Habitacle entretenu lors d'un passage Refresh", tip:"Miniature page Offres" },
-    "off-hiver": { src:"", alt:"Maserati GranTurismo polie et protégée par le Pack November", tip:"Miniature page Offres" },
-    "off-pack": { src:"", alt:"Maserati GranTurismo après le Pack November", tip:"Miniature page Offres" },
+    "off-hiver": { src:"", alt:"Maserati GranTurismo après polissage et protection céramique", tip:"Miniature page Offres" },
+    "off-pack": { src:"", alt:"Maserati GranTurismo polie, carrosserie protégée", tip:"Miniature page Offres" },
     "gal-1":  { src:"", alt:"Porsche Panamera noir mat après nettoyage", tip:"La plus belle photo : voiture finie, reflets profonds" },
     "gal-2":  { src:"", alt:"Eau qui perle sur une BMW noire", tip:"Siège avant, avant shampooing" },
     "gal-3":  { src:"", alt:"Logo Porsche nettoyé au pinceau", tip:"Même siège, après shampooing" },
@@ -105,44 +151,25 @@ var CONFIG = {
     "about-3":   { src:"", alt:"Polissage d'un capot à la polisseuse", tip:"Votre véhicule de service ou votre installation sur place" }
   },
 
-  /* Garantie affichée sur la page Pack November. active:false = on affiche « Pas de surprise » à la place. */
+  /* Garantie affichée sur les pages d'offre. active:false = on affiche « Pas de surprise » à la place. */
   garantie: {
     active: false,
     titre: "Satisfait, ou on revient",
     texte: "Un point ne vous convient pas ? Dites-le-nous dans les 7 jours : on revient le reprendre gratuitement."
   },
 
-  /* Offre mise en avant (pop-up + pages Offres et Pack Hiver). active:false la désactive partout. */
+  /* Offre de saison (page Pack Hiver, page Offres, blocs « Allez plus loin »). */
   offre: {
     active: true,
     kicker: "Offre d'hiver",
-    titre: "Pack November",
-    prix: 399,
-    fin: "2026-11-22T23:59:59+01:00",
-    videoMP4: "",                         // ex. "img/mercedes.mp4" : le plus fiable pour la lecture auto sur iPhone/Android
-    videoYouTube: "",                     // vidéo de résultat (ID YouTube). Vide = pas de vidéo. Ancienne : EekPmuMWj3E
-    videoExplication: "",                 // vidéo d'explication (ID YouTube). Vide = pas de vidéo. Ancienne : 68Eubq_Yi34
-    videoLegende: "Résultat · Mercedes",
+    titre: "Pack Hiver",
+    prix: 200,
     lignes: [
-      "Décontamination complète de la carrosserie",
-      "Polissage one-step : micro-rayures et voile terne",
-      "Protection céramique 3 ans sur toute la carrosserie",
-      "Lavage de finition avant restitution"
-    ],
-    /* Ce que valent les prestations prises séparément (sert au calcul de l'économie) */
-    detail: [
-      ["Polissage one-step", "Micro-rayures, voile terne, décontamination incluse", 300],
-      ["Protection céramique 3 ans", "Posée sur la peinture corrigée, en complément du polissage", 199]
-    ],
-    /* Suppléments proposés avec le pack */
-    upsells: [
-      { label: "Céramique 5 ans au lieu de 3 ans", note: "Correction plus poussée, pose en 2 journées", add: 200 },
-      { label: "Glaco sur les vitres",             note: "La pluie file sans essuie-glace dès 60 km/h", add: 35 },
-      { label: "Imperméabilisation des tapis",     note: "Anti-taches, après shampooing", add: 45 },
-      { label: "Rénovation des phares",            note: "Optiques jaunies poncées et polies", add: 60 }
-    ],
-    delaiPopup: 8000,            // délai avant l'apparition du pop-up, en millisecondes
-    rappelJours: 7               // on ne le remontre pas avant X jours au même visiteur
+      "Signature Intérieur : aspiration, shampooing des sièges et tapis, vapeur, plastiques, cuir",
+      "Signature Extérieur : lavage à la main, jantes, protection hydrophobe",
+      "Kit Hiver offert (valeur 49 €)",
+      "Déplacement offert jusqu'à 15 km"
+    ]
   },
 
   /* Protection céramique. Remplace "Sur devis" par un nombre quand tes prix sont fixés. */
@@ -168,16 +195,15 @@ var CONFIG = {
     "https://www.instagram.com/p/Da4fVWntrw5/"
   ],
 
-  /* Avis Google, copiés mot pour mot */
+  /* Avis Google, copiés mot pour mot, avec le mois de publication sur la fiche */
   rating: "5,0",
-  reviewCount: 22,              // à mettre à jour quand de nouveaux avis arrivent
+  reviewCount: "+ de 25",       // nombre d'avis affiché : mets le chiffre exact de ta fiche (ex. 31)
   reviews: [
-    { name:"Bernard W.",  text:"Ma voiture était une poubelle roulante, je la retrouve neuve, un énorme merci, je recommande à 100%" },
-    { name:"Fouad A.",    text:"Nettoyage digne d’une Audi Q8 e-tron. Excellent travail les gars. Je recommande !!!🤩" },
-    { name:"cypsi 25",    text:"Super service ! Très pratique de pouvoir faire laver sa voiture directement à domicile, avec un résultat impeccable. Je recommande sans hésiter !" },
-    { name:"Tiana D.",    text:"Nettoyage en profondeur réalisé de manière méticuleuse, tout était parfait, aucun dégât 👍" },
-    { name:"Stephanie G.",text:"Travail nickel et soigné! Chouette projet porté par des petits jeunes… Je recommande." },
-    { name:"Sarah T.",    text:"Service hors pair ! Satisfaite car ils offrent un service impeccable, je recommande à 100% Et tout ça avec le sourire ^^" }
+    { name:"Bernard W.",  date:"août 2026", text:"Ma voiture était une poubelle roulante, je la retrouve neuve, un énorme merci, je recommande à 100%" },
+    { name:"Fouad A.",    date:"août 2026", text:"Nettoyage digne d’une Audi Q8 e-tron. Excellent travail les gars. Je recommande !!!🤩" },
+    { name:"Stephanie G.",date:"août 2026", text:"Travail nickel et soigné! Chouette projet porté par des petits jeunes… Je recommande." },
+    { name:"Sarah T.",    date:"août 2026", text:"Service hors pair ! Satisfaite car ils offrent un service impeccable, je recommande à 100% Et tout ça avec le sourire ^^" },
+    { name:"cypsi 25",    date:"août 2026", text:"Super service ! Très pratique de pouvoir faire laver sa voiture directement à domicile, avec un résultat impeccable. Je recommande sans hésiter !" }
   ],
 
   rythmes: [
@@ -189,7 +215,9 @@ var CONFIG = {
 /* ====================================================================== */
 
 (function(){
-  var eur = function(n){ return n + " €"; };
+  var eur = function(n){ return n + "\u00a0€"; };
+  /* Typographie française : espaces insécables avant €, %, h, km et avant : ; ! ? */
+  var nb = function(t){ return String(t == null ? "" : t).replace(/(\d) (€|%|km|h\b)/g, "$1\u00a0$2").replace(/h (\d\d)\b/g, "h\u00a0$1").replace(/ ([:;!?])/g, "\u00a0$1"); };
   var wa = function(msg){ return "https://wa.me/" + CONFIG.whatsapp + "?text=" + encodeURIComponent(msg); };
   /* key = type de RDV dans CONFIG.cal ; recap = texte pré-rempli dans la question 1 de Calendly */
   var book = function(msg, key, recap){
@@ -198,12 +226,57 @@ var CONFIG = {
     return url + (url.indexOf("?") > -1 ? "&" : "?") + "a1=" + encodeURIComponent(recap || msg);
   };
   var esc2 = function(t){ var d = document.createElement("div"); d.textContent = t == null ? "" : t; return d.innerHTML; };
+  var GG = window.GG = window.GG || {};
+  /* Date du jour. ?apercu=2026-12-01T10:00 permet de voir le site tel qu'il sera à une autre date. */
+  var NOW = (function(){
+    var q = (location.search.match(/[?&]apercu=([^&]+)/) || [])[1];
+    var t = q ? Date.parse(decodeURIComponent(q)) : NaN;
+    return isNaN(t) ? Date.now() : t;
+  })();
+  GG.now = NOW;
+  var PAGE = (document.querySelector(".page") || document.body).getAttribute("data-page") || location.pathname;
+  GG.page = PAGE;
+  var CAMP = (CONFIG.campagnes || []).filter(function(c){ return NOW >= Date.parse(c.du) && NOW <= Date.parse(c.au); })[0] || null;
+  GG.campagne = CAMP;
   document.querySelectorAll(".js-tel").forEach(function(a){ a.href = "tel:" + CONFIG.phone; });
-  document.querySelectorAll(".js-cal").forEach(function(a){ a.href = CONFIG.calendly || wa("Bonjour, je voudrais réserver un créneau."); });
+  document.querySelectorAll(".js-cal").forEach(function(a){ a.href = CONFIG.calendly || wa(CONFIG.waTexte); });
   document.querySelectorAll(".js-clients").forEach(function(e){ e.textContent = CONFIG.clients; });
+  document.querySelectorAll(".js-email").forEach(function(a){ a.href = "mailto:" + CONFIG.email; if (!a.children.length) a.textContent = CONFIG.email; });
+  document.querySelectorAll(".js-email-ligne").forEach(function(e){
+    if (CONFIG.email) e.innerHTML = '<a href="mailto:' + esc2(CONFIG.email) + '" style="margin:0">' + esc2(CONFIG.email) + '</a><br>';
+  });
+
+  /* Éléments datés : data-jusqua = retiré après cette date ; data-des = affiché à partir de cette date */
+  document.querySelectorAll("[data-jusqua]").forEach(function(el){ if (NOW > Date.parse(el.getAttribute("data-jusqua"))) el.remove(); });
+  document.querySelectorAll("[data-des]").forEach(function(el){ if (NOW >= Date.parse(el.getAttribute("data-des"))) el.hidden = false; else el.remove(); });
+
+  /* Bandeau et lien du menu : suivent la campagne du moment */
+  (function(){
+    var b = document.getElementById("bandeau");
+    if (b) {
+      if (CAMP && CAMP.bandeau) {
+        b.hidden = false; b.href = CAMP.lien;
+        var t = b.querySelector(".js-bandeau-texte"); if (t) t.innerHTML = nb(CAMP.bandeau);
+        if (PAGE === CAMP.lien) b.setAttribute("aria-current", "page");
+      } else { b.hidden = true; }
+      if (!(window.CSS && CSS.supports && CSS.supports("selector(:has(*))")) && !b.hidden) {
+        document.documentElement.style.setProperty("--bh", (matchMedia("(max-width:620px)").matches ? 44 : 38) + "px");
+      }
+    }
+    document.querySelectorAll(".js-camp-menu").forEach(function(a){
+      if (!CAMP) { a.remove(); return; }
+      a.textContent = CAMP.menu; a.href = CAMP.lien;
+      if (a.hasAttribute("data-nav")) a.setAttribute("data-nav", CAMP.lien);
+      /* Dans les listes où la page existe déjà (menu mobile, pied de page), pas de doublon */
+      if (a.classList.contains("js-camp-seul")) {
+        var doublon = Array.prototype.some.call(a.parentNode.querySelectorAll("a"), function(x){ return x !== a && x.getAttribute("href") === CAMP.lien; });
+        if (doublon) a.remove();
+      }
+    });
+  })();
 
   /* Liens génériques */
-  document.querySelectorAll(".js-wa").forEach(function(a){ a.href = wa("Bonjour, j'ai une question sur vos prestations."); });
+  document.querySelectorAll(".js-wa").forEach(function(a){ a.href = wa(a.getAttribute("data-msg") || CONFIG.waTexte); });
   document.querySelectorAll(".js-wa-msg").forEach(function(a){ a.href = book(a.getAttribute("data-msg"), a.getAttribute("data-cal"), a.getAttribute("data-recap")); });
   document.querySelectorAll(".js-reviews").forEach(function(a){ a.href = CONFIG.googleReviews; });
   document.querySelectorAll(".js-p-signature").forEach(function(e){ e.textContent = eur(CONFIG.signature); });
@@ -314,10 +387,23 @@ var CONFIG = {
       vs.forEach(function(v){ io.observe(v); });
       return;
     }
-    box.innerHTML = urls.map(function(u){
-      var clean = u.split("?")[0].replace(/\/$/, "");
-      return '<div><iframe src="' + clean + '/embed" loading="lazy" scrolling="no" allowtransparency="true" title="Vidéo Instagram"></iframe></div>';
+    /* Les lecteurs Instagram sont lourds et déposent des cookies Meta : ils ne se chargent qu'au clic */
+    var posters = ["gal-4", "gal-8", "gal-5"];
+    box.innerHTML = urls.map(function(u, i){
+      var clean = u.split("?")[0].replace(/\/$/, ""), img = PD[posters[i % posters.length]];
+      return '<div><button type="button" class="reel-facade" data-src="' + clean + '/embed" aria-label="Lire la vidéo Instagram ' + (i + 1) + '">' +
+        (img ? '<img src="' + img + '" alt="" loading="lazy" decoding="async">' : '') +
+        '<span class="play"><span class="disc"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5l12 7-12 7z" fill="currentColor"/></svg></span>' +
+        '<span class="lbl">Voir la vidéo</span><small>Lecteur Instagram</small></span></button></div>';
     }).join("");
+    box.addEventListener("click", function(e){
+      var b = e.target.closest && e.target.closest(".reel-facade");
+      if (!b) return;
+      var f = document.createElement("iframe");
+      f.src = b.getAttribute("data-src"); f.setAttribute("scrolling", "no"); f.setAttribute("allowtransparency", "true");
+      f.title = "Vidéo Instagram"; f.allow = "autoplay; encrypted-media";
+      b.replaceWith(f);
+    });
   })();
 
   /* Vignette vidéo : YouTube ne se charge qu'au clic */
@@ -340,44 +426,82 @@ var CONFIG = {
     return true;
   }
 
-  /* Offre mise en avant + pop-up */
+  /* Offre de saison : textes réutilisés sur plusieurs pages */
   (function(){
-    var o = CONFIG.offre || {}, pop = document.getElementById("pop");
-    var msg = "Bonjour, je suis intéressé par le " + (o.titre || "pack") + " à " + eur(o.prix) + ".";
-    if (!o.active) {
-      pop.remove();
-      var d = document.getElementById("offre"); if (d) d.remove();
-      return;
-    }
+    var o = CONFIG.offre || {};
+    if (!o.active) { document.querySelectorAll(".js-offre-bloc").forEach(function(e){ e.remove(); }); return; }
     document.querySelectorAll(".js-offre-kicker").forEach(function(e){ e.textContent = o.kicker; });
     document.querySelectorAll(".js-offre-titre").forEach(function(e){ e.textContent = o.titre; });
     document.querySelectorAll(".js-offre-prix").forEach(function(e){ e.textContent = eur(o.prix); });
-    document.querySelectorAll(".js-offre-lignes").forEach(function(e){ e.innerHTML = o.lignes.map(function(l){ return "<li>" + l + "</li>"; }).join(""); });
-    document.querySelectorAll(".js-offre-cta").forEach(function(a){ a.href = book(msg, "hiver", (o.titre || "Pack") + " — " + eur(o.prix)); a.textContent = "Réserver le " + o.titre; });
-    document.getElementById("popKicker").textContent = o.kicker;
-    document.getElementById("popTitle").textContent = o.titre;
-    document.getElementById("popPrice").textContent = eur(o.prix);
-    document.getElementById("popList").innerHTML = o.lignes.map(function(l){ return "<li>" + l + "</li>"; }).join("");
-    var media = document.getElementById("popMedia"), carte = document.querySelector(".pop-card");
-    var visuel = PD["off-hiver"] || PD["pop"];
-    if (visuel) { var pi = document.createElement("img"); pi.src = visuel; pi.alt = ""; media.appendChild(pi); }
-    else { media.remove(); carte.style.gridTemplateColumns = "1fr"; }
-    var cta = document.getElementById("popCta"); cta.href = book(msg, "hiver", (o.titre || "Pack") + " — " + eur(o.prix)); cta.textContent = "Réserver le " + o.titre;
+    document.querySelectorAll(".js-offre-lignes").forEach(function(e){ e.innerHTML = o.lignes.map(function(l){ return "<li>" + esc2(nb(l)) + "</li>"; }).join(""); });
+  })();
 
-    var KEY = "gg_offre_vue";
-    function vueRecemment(){
-      try { var t = localStorage.getItem(KEY); return t && (Date.now() - parseInt(t, 10)) < (o.rappelJours || 7) * 864e5; } catch (e) { return false; }
-    }
+  /* Paiement : chaque bouton .js-pay[data-produit] mène au lien Stripe du produit, sinon à WhatsApp */
+  var UTM = (function(){
+    var out = [];
+    (location.search.slice(1) || "").split("&").forEach(function(kv){
+      var k = kv.split("=")[0];
+      if (/^utm_(source|medium|campaign|term|content)$/.test(k)) out.push(kv);
+    });
+    if (!out.length) { try { var m = JSON.parse(localStorage.getItem("gg_utm") || "null"); if (m && Date.now() - m.t < 30 * 864e5) out = m.q; } catch (e) {} }
+    return out;
+  })();
+  GG.utm = UTM;
+  function lienPaiement(cle){
+    var p = CONFIG.produits && CONFIG.produits[cle];
+    if (!p) return null;
+    if (p.stripe) return p.stripe + (UTM.length ? (p.stripe.indexOf("?") > -1 ? "&" : "?") + UTM.join("&") : "");
+    return wa(p.msg || CONFIG.waTexte);
+  }
+  GG.lienPaiement = lienPaiement;
+  document.querySelectorAll(".js-pay[data-produit]").forEach(function(a){
+    var cle = a.getAttribute("data-produit"), p = CONFIG.produits && CONFIG.produits[cle], href = lienPaiement(cle);
+    if (!href) return;
+    a.href = href;
+    if (p.stripe) { a.removeAttribute("target"); a.setAttribute("data-stripe", "1"); }
+    else { a.target = "_blank"; a.rel = "noopener"; }
+  });
+
+  /* Pop-up de la campagne : une seule fois par visiteur, jamais sur la page de l'offre, les pages légales ou la page merci */
+  (function(){
+    var pop = document.getElementById("pop");
+    if (!pop) return;
+    var c = CAMP, P = c && c.popup;
+    var calmes = ["/black-friday/", "/pack-hiver/", "/merci/", "/mentions-legales/", "/cgv/", "/confidentialite/", "/retractation/"];
+    if (!P || calmes.indexOf(PAGE) > -1 || PAGE === c.lien || !document.querySelector(".page")) { pop.remove(); return; }
+    var KEY = "gg_pop_" + c.id, deja = true;
+    try { deja = !!localStorage.getItem(KEY); } catch (e) { deja = true; }   // sans mémoire possible, on ne dérange pas
+    if (deja) { pop.remove(); return; }
+    document.getElementById("popKicker").textContent = nb(P.kicker);
+    document.getElementById("popTitle").textContent = nb(P.titre);
+    document.getElementById("popList").innerHTML = (P.lignes || []).map(function(l){ return "<li>" + esc2(nb(l)) + "</li>"; }).join("");
+    var note = document.getElementById("popNote"); if (note) note.textContent = nb(P.note);
+    var media = document.getElementById("popMedia"), carte = pop.querySelector(".pop-card");
+    var visuel = PD[P.photo] || PD["pop"];
+    if (visuel && media) { var pi = document.createElement("img"); pi.src = visuel; pi.alt = ""; pi.decoding = "async"; media.appendChild(pi); }
+    else if (media) { media.remove(); carte.style.gridTemplateColumns = "1fr"; }
+    var cta = document.getElementById("popCta"); cta.href = c.lien; cta.textContent = P.cta || "Voir l'offre";
+    var avant = null;
     function ferme(){
+      if (!pop.classList.contains("on")) return;
       pop.classList.remove("on");
-      try { localStorage.setItem(KEY, String(Date.now())); } catch (e) {}
+      if (avant && avant.focus) avant.focus();
+    }
+    function montre(){
+      var ck = document.getElementById("ck");
+      if (ck && !ck.hidden) { setTimeout(montre, 2500); return; }      // d'abord la question des cookies
+      if (document.getElementById("calbox") && document.getElementById("calbox").classList.contains("on")) return;
+      try { localStorage.setItem(KEY, String(Date.now())); } catch (e) { return; }
+      avant = document.activeElement;
+      pop.classList.add("on");
+      var x = document.getElementById("popClose"); if (x) x.focus({ preventScroll: true });
     }
     document.getElementById("popClose").addEventListener("click", ferme);
     document.getElementById("popLater").addEventListener("click", ferme);
     cta.addEventListener("click", ferme);
     pop.addEventListener("click", function(e){ if (e.target === pop) ferme(); });
     document.addEventListener("keydown", function(e){ if (e.key === "Escape") ferme(); });
-    if (!vueRecemment() && !document.querySelector('.page[data-page="/pack-november/"]')) setTimeout(function(){ pop.classList.add("on"); }, o.delaiPopup || 8000);
+    setTimeout(montre, P.delai || 7000);
   })();
 
   /* Listes de tarifs réutilisables sur la page Offres (toujours synchronisées avec le configurateur) */
@@ -420,94 +544,38 @@ var CONFIG = {
   document.querySelectorAll(".js-count").forEach(function(e){ e.textContent = CONFIG.reviewCount + " avis sur Google"; });
   document.querySelectorAll(".js-count2").forEach(function(e){ e.textContent = CONFIG.reviewCount + " avis Google"; });
   document.querySelectorAll(".js-rating").forEach(function(e){ e.textContent = CONFIG.rating + " ★"; });
-  (document.getElementById("reviews") || {}).innerHTML = CONFIG.reviews.map(function(r){
-    var d = document.createElement("div"); d.textContent = r.text; var t = d.innerHTML;
-    d.textContent = r.name; var n = d.innerHTML;
-    return '<blockquote><span class="stars" aria-label="5 étoiles sur 5">★★★★★</span><p>' + t + '</p><cite>' + n + ', avis Google</cite></blockquote>';
-  }).join("");
+  function avisHTML(r){
+    return '<blockquote><span class="stars" aria-label="5 étoiles sur 5">★★★★★</span><p>' + esc2(nb(r.text)) + '</p><cite>' + esc2(r.name) +
+      (r.date ? ' · ' + esc2(r.date) : '') + ' · avis Google</cite></blockquote>';
+  }
+  /* Accueil : les avis signés d'un prénom */
+  (document.getElementById("reviews") || {}).innerHTML = CONFIG.reviews.filter(function(r){ return /^[A-ZÀ-Ý]/.test(r.name); }).slice(0, 4).map(avisHTML).join("");
 
-  /* Pages offres : avis ciblés, empilement de valeur, garantie */
+  /* Pages offres : avis ciblés (data-pick = numéros dans CONFIG.reviews, à partir de 0) */
   document.querySelectorAll(".js-revs").forEach(function(box){
     var pick = (box.getAttribute("data-pick") || "0,1,2").split(",").map(Number);
-    box.innerHTML = pick.map(function(i){ return CONFIG.reviews[i]; }).filter(Boolean).map(function(r){
-      var d = document.createElement("div"); d.textContent = r.text; var t = d.innerHTML;
-      d.textContent = r.name; var n = d.innerHTML;
-      return '<blockquote><span class="stars" aria-label="5 étoiles sur 5">★★★★★</span><p>' + t + '</p><cite>' + n + ', avis Google</cite></blockquote>';
-    }).join("");
+    box.innerHTML = pick.map(function(i){ return CONFIG.reviews[i]; }).filter(Boolean).map(avisHTML).join("");
   });
   document.querySelectorAll(".js-p-ext").forEach(function(e){ e.textContent = eur(CONFIG.exterieur); });
-  document.querySelectorAll(".js-stack-sum").forEach(function(e){ e.textContent = eur(CONFIG.signature + CONFIG.exterieur + CONFIG.polishOneStep); });
   var OF = CONFIG.offre || {};
-  var detail = OF.detail || [];
-  var valeur = detail.reduce(function(a, l){ return a + (l[2] || 0); }, 0);
-  /* Détail des prestations du pack, avec leur prix séparé */
-  document.querySelectorAll(".js-hiver-detail").forEach(function(ul){
-    ul.innerHTML = detail.map(function(l){
-      return "<li><span>" + esc2(l[0]) + "<small>" + esc2(l[1]) + "</small></span><em>" + eur(l[2]) + "</em></li>";
-    }).join("");
-  });
-  /* Suppléments possibles */
-  document.querySelectorAll(".js-upsells").forEach(function(ul){
-    ul.innerHTML = (OF.upsells || []).map(function(u){
-      return "<li><span>" + esc2(u.label) + "<small>" + esc2(u.note) + "</small></span><em>+ " + eur(u.add) + "</em></li>";
-    }).join("");
-  });
-  document.querySelectorAll(".js-offre-fin").forEach(function(e){
-    if (!OF.fin) return;
-    var d = new Date(OF.fin);
-    e.textContent = d.toLocaleDateString("fr-BE", { day: "numeric", month: "long" });
-  });
-  document.querySelectorAll(".js-hiver-valeur").forEach(function(e){ e.textContent = eur(valeur); });
-  document.querySelectorAll(".js-hiver-eco").forEach(function(e){ e.textContent = eur(valeur - OF.prix); });
-  /* Vidéo preuve Pack Hiver (YouTube, lecture auto sans son, en boucle) */
-  document.querySelectorAll(".js-proof-vid").forEach(function(fig){
-    var explique = fig.getAttribute("data-vid") === "explication";
-    var id = explique ? OF.videoExplication : OF.videoYouTube, mp4 = explique ? "" : OF.videoMP4;
-    if (!id && !mp4) { fig.remove(); return; }
-    var sec = fig.closest(".lp-full"); if (sec) { sec.classList.add("has-vid"); if (explique) sec.classList.add("wide-vid"); }
-    var cap = fig.querySelector(".js-proof-cap"); if (cap && !explique && OF.videoLegende) cap.textContent = OF.videoLegende;
-    if (mp4) {
-      var v = document.createElement("video");
-      v.src = mp4; v.muted = true; v.loop = true; v.autoplay = true; v.playsInline = true; v.preload = "auto";
-      v.setAttribute("muted",""); v.setAttribute("playsinline",""); v.setAttribute("webkit-playsinline","");
-      if (id) v.poster = "https://i.ytimg.com/vi/" + id + "/hqdefault.jpg";
-      v.addEventListener("click", function(){ v.paused ? v.play() : v.pause(); });
-      fig.querySelector(".pv-frame").appendChild(v);
-      var tryPlay = function(){ var pr = v.play(); if (pr && pr.catch) pr.catch(function(){}); };
-      tryPlay(); document.addEventListener("touchstart", tryPlay, { once: true, passive: true });
-      return;
-    }
-    var touch = window.matchMedia && matchMedia("(hover: none)").matches;
-    if (touch && !explique) fig.classList.add("tap");
-    var f = document.createElement("iframe");
-    /* La vidéo d'explication a une voix off : elle démarre en muet (règle des navigateurs)
-       et garde les commandes pour que le visiteur active le son. */
-    f.src = "https://www.youtube-nocookie.com/embed/" + id + "?autoplay=1&mute=1" +
-      (explique ? "&controls=1" : "&loop=1&playlist=" + id + "&controls=" + (touch ? 1 : 0)) +
-      "&playsinline=1&rel=0&modestbranding=1&iv_load_policy=3" + (explique ? "" : "&disablekb=1");
-    f.title = explique ? "Le Pack November expliqué" : "Résultat réel"; f.allow = "autoplay; encrypted-media; picture-in-picture";
-    f.setAttribute("frameborder","0");
-    fig.querySelector(".pv-frame").appendChild(f);
-  });
   document.querySelectorAll("[data-bg]").forEach(function(sec){
     var src = PD[sec.getAttribute("data-bg")]; if (src) sec.style.setProperty("--bg", "url('" + src + "')");
   });
-  (function(){
-    var boxes = document.querySelectorAll(".js-countdown"), end = OF.fin ? new Date(OF.fin).getTime() : NaN;
-    if (!boxes.length) return;
-    if (isNaN(end)) { boxes.forEach(function(b){ b.remove(); }); return; }
+  /* Comptes à rebours : data-fin sur chaque bloc ; retirés une fois la date passée */
+  document.querySelectorAll(".js-countdown").forEach(function(b){
+    var end = Date.parse(b.getAttribute("data-fin") || (CAMP && CAMP.au) || "");
+    if (isNaN(end) || end <= NOW) { b.remove(); return; }
+    var decal = NOW - Date.now();      // aperçu à une autre date
     var pad = function(n){ return (n < 10 ? "0" : "") + n; };
     function tick(){
-      var d = end - Date.now();
-      if (d <= 0) { boxes.forEach(function(b){ b.remove(); }); clearInterval(t); return; }
+      var d = end - (Date.now() + decal);
+      if (d <= 0) { b.remove(); clearInterval(t); return; }
       var j = Math.floor(d / 864e5), h = Math.floor(d / 36e5) % 24, m = Math.floor(d / 6e4) % 60, sec = Math.floor(d / 1e3) % 60;
-      boxes.forEach(function(b){
-        b.querySelector(".js-cd-j").textContent = pad(j); b.querySelector(".js-cd-h").textContent = pad(h);
-        b.querySelector(".js-cd-m").textContent = pad(m); b.querySelector(".js-cd-s").textContent = pad(sec);
-      });
+      b.querySelector(".js-cd-j").textContent = pad(j); b.querySelector(".js-cd-h").textContent = pad(h);
+      b.querySelector(".js-cd-m").textContent = pad(m); b.querySelector(".js-cd-s").textContent = pad(sec);
     }
     var t = setInterval(tick, 1000); tick();
-  })();
+  });
   if (CONFIG.garantie && CONFIG.garantie.active) {
     document.querySelectorAll(".js-garantie-titre").forEach(function(e){ e.textContent = CONFIG.garantie.titre; });
     document.querySelectorAll(".js-garantie-texte").forEach(function(e){ e.textContent = CONFIG.garantie.texte; });
@@ -590,9 +658,10 @@ var CONFIG = {
       var n = document.getElementById("etat-normal"); if (n) n.checked = true;
     }
     /* Chaque option ne s'affiche que si la formule la rend possible */
-    var dispo = 0;
+    var dispo = 0, comprises = {};
+    CONFIG.options.forEach(function(o){ if (state.options[o.id] && o.inclut) o.inclut.forEach(function(x){ comprises[x] = true; }); });
     CONFIG.options.forEach(function(o){
-      var ok = o.besoin === "interieur" ? !!f.interieur : !!f.exterieur;
+      var ok = (!o.besoin ? true : (o.besoin === "interieur" ? !!f.interieur : !!f.exterieur)) && !comprises[o.id];
       var el = optSet && optSet.querySelector('.choice[data-id="' + o.id + '"]');
       if (el) el.hidden = !ok;
       if (ok) dispo++;
@@ -619,7 +688,7 @@ var CONFIG = {
       return "<li><span>"+esc(l[0])+"</span><span>"+v+"</span></li>";
     }).join("");
     document.querySelectorAll(".js-cfg-total").forEach(function(el){ tween(el, devis ? null : total); });
-    var recap = "- Signature " + f.label + "\n- Taille : " + (t ? t.label : "") + "\n" +
+    var recap = "- Signature " + f.label + "\n" + (t ? "- Taille : " + t.label + "\n" : "") +
       lines.filter(function(l){ return l[0].indexOf("Taille :") !== 0; }).map(function(l){ return "- " + l[0]; }).join("\n") +
       "\nTotal estimé : " + (devis ? "sur devis" : eur(total));
     var msg = "Bonjour, je voudrais réserver :\n" + recap;
@@ -627,7 +696,9 @@ var CONFIG = {
     document.querySelectorAll(".js-cfg-book").forEach(function(btn){ btn.href = href; btn.textContent = btn.classList.contains("short") ? (devis ? "Devis" : "Réserver") : label; });
   }
   if (cfg) {
-    build("formule", CONFIG.formules); build("taille", CONFIG.taille); build("etat", CONFIG.etat); build("options", CONFIG.options, true); build("zone", CONFIG.zone);
+    build("formule", CONFIG.formules); build("etat", CONFIG.etat); build("options", CONFIG.options, true); build("zone", CONFIG.zone);
+    if (CONFIG.taille && CONFIG.taille.length) build("taille", CONFIG.taille);
+    else { var ts = document.getElementById("cfgTaille"); if (ts) ts.remove(); state.taille = ""; }
     update();
     /* Mobile : barre de total collée en bas tant que le configurateur est à l'écran */
     var bar = document.getElementById("cfgBar"), zoneCfg = document.getElementById("composer"), sum = document.querySelector(".summary");
@@ -705,7 +776,7 @@ var CONFIG = {
     burger.setAttribute("aria-label", open ? "Fermer le menu" : "Ouvrir le menu");
   });
   /* Anciennes adresses en #/… (pubs, Calendly, partages) : redirection vers les vraies pages */
-  var OLD = {"/": "/", "/offres": "/offres/", "/services": "/offres/", "/pack-hiver": "/pack-november/", "/pack-ceramique": "/pack-november/", "/pack-november": "/pack-november/", "/signature": "/nettoyage-interieur-voiture/", "/tarifs": "/nettoyage-interieur-voiture/", "/polissage": "/polissage-voiture/", "/refresh": "/abonnement-entretien-voiture/", "/abonnements": "/abonnement-entretien-voiture/", "/qui-sommes-nous": "/qui-sommes-nous/"};
+  var OLD = {"/": "/", "/offres": "/offres/", "/services": "/offres/", "/pack-hiver": "/pack-hiver/", "/pack-ceramique": "/protection-ceramique-voiture/", "/pack-november": "/black-friday/", "/black-friday": "/black-friday/", "/signature": "/nettoyage-interieur-voiture/", "/tarifs": "/nettoyage-interieur-voiture/", "/polissage": "/polissage-voiture/", "/refresh": "/abonnement-entretien-voiture/", "/abonnements": "/abonnement-entretien-voiture/", "/qui-sommes-nous": "/qui-sommes-nous/"};
   function route(){
     var hash = location.hash || "";
     if (hash.indexOf("#/") === 0) {
@@ -721,10 +792,17 @@ var CONFIG = {
     document.body.classList.toggle("at-home", path === "/");
     /* Barre mobile : le bouton principal reprend l'appel à l'action de la page */
     var mb = document.querySelector(".mbar .btn-gold"), cur = document.querySelector(".page .js-main-cta");
+    /* Page avec son propre configurateur : « Réserver » y mène directement */
+    if (document.getElementById("composer") && document.getElementById("configurator")) {
+      document.querySelectorAll(".nav-r .btn-gold, .mpanel .btn-gold").forEach(function(a){ a.setAttribute("href", "#composer"); });
+      if (mb && !cur) mb.setAttribute("href", "#composer");
+    }
     if (mb && cur) {
       var href = cur.getAttribute("href");
-      mb.setAttribute("href", href); mb.textContent = "Réserver";
-      if (/^https?:/.test(href)) { mb.target = "_blank"; mb.rel = "noopener"; } else { mb.removeAttribute("target"); }
+      mb.setAttribute("href", href); mb.textContent = cur.getAttribute("data-mbar") || "Réserver";
+      if (cur.getAttribute("data-produit")) mb.setAttribute("data-produit", cur.getAttribute("data-produit"));
+      if (cur.getAttribute("data-stripe")) mb.setAttribute("data-stripe", "1");
+      if (cur.target === "_blank") { mb.target = "_blank"; mb.rel = "noopener"; } else { mb.removeAttribute("target"); }
     }
     if (window.__fitHero) window.__fitHero();
     top.classList.remove("open"); burger.setAttribute("aria-expanded","false"); document.documentElement.style.overflow = ""; if (burger.dataset.ico) burger.innerHTML = burger.dataset.ico;
@@ -735,25 +813,37 @@ var CONFIG = {
 })();
 
 
-/* Réservation Calendly dans une fenêtre, sans quitter le site */
+/* Réservation Calendly dans une fenêtre, sans quitter le site.
+   Le script Calendly ne se charge qu'au premier clic sur un bouton de réservation (page plus rapide). */
 (function(){
-  if (!CONFIG.calendly) return;
-  var l = document.createElement("link"); l.rel = "stylesheet";
-  l.href = "https://assets.calendly.com/assets/external/widget.css"; document.head.appendChild(l);
-  var s = document.createElement("script"); s.async = true;
-  s.src = "https://assets.calendly.com/assets/external/widget.js"; document.head.appendChild(s);
-
   var box = document.getElementById("calbox"), w = document.getElementById("calwidget");
-  var base = "https://calendly.com/gleamandgo";
+  if (!CONFIG.calendly || !box || !w) return;
+  var base = "https://calendly.com/gleamandgo", charge = null;
 
+  function chargeCalendly(){
+    if (charge) return charge;
+    charge = new Promise(function(ok, ko){
+      var l = document.createElement("link"); l.rel = "stylesheet";
+      l.href = "https://assets.calendly.com/assets/external/widget.css"; document.head.appendChild(l);
+      var s = document.createElement("script"); s.async = true;
+      s.src = "https://assets.calendly.com/assets/external/widget.js";
+      s.onload = function(){ ok(); }; s.onerror = function(){ charge = null; ko(); };
+      document.head.appendChild(s);
+    });
+    return charge;
+  }
   function open(url){
-    if (!window.Calendly) { window.open(url, "_blank"); return; }   // secours si le script Calendly n'a pas chargé
-    w.innerHTML = "";
-    url += (url.indexOf("?") > -1 ? "&" : "?") +
-      "hide_gdpr_banner=1&background_color=0e0e0e&text_color=f3f0ea&primary_color=c9a96a";
-    Calendly.initInlineWidget({ url: url, parentElement: w });
+    var pop = document.getElementById("pop"); if (pop) pop.classList.remove("on");
+    w.innerHTML = '<p class="cal-wait">Chargement du calendrier…</p>';
     box.classList.add("on"); document.body.style.overflow = "hidden";
-    if (window.fbq) fbq("track", "InitiateCheckout");
+    var accord = window.GG && GG.consentement && GG.consentement() === "oui";
+    url += (url.indexOf("?") > -1 ? "&" : "?") +
+      (accord ? "hide_gdpr_banner=1&" : "") + "background_color=0e0e0e&text_color=f3f0ea&primary_color=c9a96a";
+    chargeCalendly().then(function(){
+      w.innerHTML = "";
+      Calendly.initInlineWidget({ url: url, parentElement: w });
+    }, function(){ close(); window.open(url, "_blank"); });   // secours si Calendly ne répond pas
+    if (window.GG && GG.suivre) GG.suivre("ouverture-agenda", {});
   }
   function close(){ box.classList.remove("on"); document.body.style.overflow = ""; w.innerHTML = ""; }
 
@@ -761,7 +851,6 @@ var CONFIG = {
     var a = e.target.closest && e.target.closest("a[href]");
     if (!a || a.href.indexOf(base) !== 0) return;
     e.preventDefault();
-    var pop = document.getElementById("pop"); if (pop && pop.classList) pop.classList.remove("on");
     open(a.href);
   });
   document.getElementById("calclose").addEventListener("click", close);
@@ -770,6 +859,223 @@ var CONFIG = {
 
   window.addEventListener("message", function(e){
     if (e.origin !== "https://calendly.com" || !e.data || e.data.event !== "calendly.event_scheduled") return;
-    if (window.fbq) fbq("track", "Schedule", { value: 40, currency: "EUR" });
+    if (window.GG && GG.suivre) GG.suivre("rdv", {});
   });
+})();
+
+
+/* ======================================================================
+   Mesure : bannière cookies (consentement préalable), Consent Mode v2,
+   Pixel Meta, Google Analytics 4, Google Ads.
+   Rien n'est chargé tant que le visiteur n'a pas cliqué « Accepter ».
+   ====================================================================== */
+(function(){
+  var M = CONFIG.mesure || {}, GG = window.GG = window.GG || {};
+  var actif = !!(M.metaPixel || M.ga4 || M.googleAds);
+  var KEY = "gg_consent", DUREE = 182 * 864e5;            // on redemande après 6 mois
+  var charge = false, attente = [];
+
+  function lire(){
+    try { var c = JSON.parse(localStorage.getItem(KEY) || "null"); if (c && Date.now() - c.t < DUREE) return c.v; } catch (e) {}
+    return null;
+  }
+  function ecrire(v){ try { localStorage.setItem(KEY, JSON.stringify({ v: v, t: Date.now() })); } catch (e) {} }
+  GG.consentement = lire;
+
+  /* Consent Mode v2 : tout est refusé par défaut, avant toute balise Google */
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = window.gtag || function(){ dataLayer.push(arguments); };
+  gtag("consent", "default", { ad_storage:"denied", ad_user_data:"denied", ad_personalization:"denied", analytics_storage:"denied", wait_for_update: 500 });
+
+  function chargeOutils(){
+    if (charge || !actif) return;
+    charge = true;
+    gtag("consent", "update", { ad_storage:"granted", ad_user_data:"granted", ad_personalization:"granted", analytics_storage:"granted" });
+    var gid = M.ga4 || M.googleAds;
+    if (gid) {
+      var s = document.createElement("script"); s.async = true;
+      s.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(gid);
+      document.head.appendChild(s);
+      gtag("js", new Date());
+      if (M.ga4) gtag("config", M.ga4, { cookie_expires: 34128000 });   // 13 mois au plus
+      if (M.googleAds) gtag("config", M.googleAds);
+    }
+    if (M.metaPixel) {
+      /* Code de base du Pixel Meta */
+      !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+      n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+      document,'script','https://connect.facebook.net/en_US/fbevents.js');
+      fbq("init", M.metaPixel);
+      fbq("track", "PageView");
+    }
+    /* Mémorise la source de la visite (30 jours) pour la transmettre au paiement */
+    if (GG.utm && GG.utm.length && /utm_/.test(location.search)) {
+      try { localStorage.setItem("gg_utm", JSON.stringify({ q: GG.utm, t: Date.now() })); } catch (e) {}
+    }
+    attente.splice(0).forEach(function(a){ envoie(a[0], a[1]); });
+  }
+
+  function ads(label, extra){
+    if (!M.googleAds || !label) return;
+    var p = { send_to: M.googleAds + "/" + label };
+    for (var k in extra) p[k] = extra[k];
+    gtag("event", "conversion", p);
+  }
+  function envoie(nom, p){
+    var fb = window.fbq && M.metaPixel ? window.fbq : function(){};
+    var item = p.produit ? [{ item_id: p.produit, item_name: p.nom || p.produit, price: p.valeur || 0, quantity: 1 }] : [];
+    if (nom === "vue") {
+      fb("track", "ViewContent", { content_name: p.nom, content_category: p.categorie || "offre", content_ids: p.produit ? [p.produit] : undefined, content_type: p.produit ? "product" : undefined, value: p.valeur, currency: p.valeur ? "EUR" : undefined });
+      if (M.ga4) gtag("event", "view_item", { currency: "EUR", value: p.valeur || 0, items: item.length ? item : [{ item_name: p.nom }] });
+    } else if (nom === "contact") {
+      fb("track", "Contact", { content_name: p.methode });
+      if (M.ga4) gtag("event", "contact", { method: p.methode });
+      ads((M.adsLabels || {})[p.methode]);
+    } else if (nom === "paiement") {
+      fb("track", "InitiateCheckout", { value: p.valeur, currency: "EUR", content_ids: [p.produit], content_type: "product", num_items: 1 });
+      if (M.ga4) gtag("event", "begin_checkout", { currency: "EUR", value: p.valeur, items: item });
+    } else if (nom === "achat") {
+      fb("track", "Purchase", { value: p.valeur, currency: "EUR", content_ids: [p.produit], content_type: "product", num_items: 1 }, { eventID: p.id });
+      if (M.ga4) gtag("event", "purchase", { transaction_id: p.id, currency: "EUR", value: p.valeur, items: item });
+      ads((M.adsLabels || {}).achat, { value: p.valeur, currency: "EUR", transaction_id: p.id });
+    } else if (nom === "rdv") {
+      fb("track", "Schedule");
+      if (M.ga4) gtag("event", "generate_lead", { method: "calendly" });
+    } else if (nom === "ouverture-agenda") {
+      fb("trackCustom", "OuvertureAgenda");
+      if (M.ga4) gtag("event", "ouverture_agenda");
+    }
+  }
+  /* Un événement avant la réponse du visiteur attend ; refusé, il est oublié */
+  GG.suivre = function(nom, p){
+    if (!actif) return;
+    var c = lire();
+    if (c === "oui") { chargeOutils(); envoie(nom, p || {}); }
+    else if (c === null) attente.push([nom, p || {}]);
+  };
+
+  /* Bannière */
+  function banniere(){
+    var ck = document.getElementById("ck");
+    if (!ck) {
+      ck = document.createElement("div");
+      ck.className = "ck"; ck.id = "ck"; ck.setAttribute("role", "dialog"); ck.setAttribute("aria-label", "Cookies");
+      ck.innerHTML = '<p>Nous aimerions mesurer quelles publicités vous amènent ici (Google Analytics, Google Ads, Meta). ' +
+        'Ces cookies ne se chargent que si vous acceptez. <a href="/confidentialite/#cookies">En savoir plus</a></p>' +
+        '<div class="ck-b"><button type="button" class="btn btn-line" data-ck="non">Refuser</button>' +
+        '<button type="button" class="btn btn-line" data-ck="oui">Accepter</button></div>';
+      document.body.appendChild(ck);
+      ck.addEventListener("click", function(e){
+        var b = e.target.closest && e.target.closest("[data-ck]");
+        if (!b) return;
+        var v = b.getAttribute("data-ck");
+        ecrire(v); ck.hidden = true;
+        if (v === "oui") chargeOutils();
+        else { attente.length = 0; if (charge) location.reload(); }   // retrait du consentement : on recharge sans les outils
+      });
+    }
+    ck.hidden = false;
+  }
+  document.querySelectorAll(".js-cookies-reglages").forEach(function(b){
+    if (!actif) { b.remove(); return; }
+    b.addEventListener("click", banniere);
+  });
+  if (actif) {
+    var c = lire();
+    if (c === "oui") chargeOutils();
+    else if (c === null) banniere();
+  }
+
+  /* Clics : WhatsApp et téléphone (Contact), paiement Stripe (InitiateCheckout) */
+  document.addEventListener("click", function(e){
+    var a = e.target.closest && e.target.closest("a[href]");
+    if (!a) return;
+    var h = a.getAttribute("href") || "";
+    if (/^tel:/.test(h)) GG.suivre("contact", { methode: "telephone" });
+    else if (/wa\.me\/|api\.whatsapp\.com/.test(h)) GG.suivre("contact", { methode: "whatsapp" });
+    var cle = a.getAttribute("data-produit"), p = cle && CONFIG.produits && CONFIG.produits[cle];
+    if (p && /^https:\/\/(buy|checkout)\.stripe\.com\//.test(h)) GG.suivre("paiement", { produit: cle, nom: p.nom, valeur: p.prix });
+  }, true);
+
+  /* Pages d'offre : ViewContent */
+  var VUES = {
+    "/black-friday/": { nom: "Black Friday : cartes +25 %", categorie: "cartes" },
+    "/pack-hiver/": { nom: "Pack Hiver", produit: "pack-hiver", valeur: 200, categorie: "pack" },
+    "/nettoyage-interieur-voiture/": { nom: "Signature Intérieur", valeur: CONFIG.signature, categorie: "nettoyage" },
+    "/lavage-exterieur-voiture/": { nom: "Signature Extérieur", valeur: CONFIG.exterieur, categorie: "nettoyage" },
+    "/polissage-voiture/": { nom: "Polissage", valeur: CONFIG.polishOneStep, categorie: "polissage" },
+    "/protection-ceramique-voiture/": { nom: "Protection céramique", categorie: "ceramique" },
+    "/abonnement-entretien-voiture/": { nom: "Refresh", categorie: "abonnement" },
+    "/offres/": { nom: "Nos offres", categorie: "offres" }
+  };
+  if (VUES[GG.page]) GG.suivre("vue", VUES[GG.page]);
+})();
+
+
+/* Page merci : texte selon le produit acheté, et achat transmis une seule fois */
+(function(){
+  var box = document.getElementById("merci");
+  if (!box) return;
+  var q = {};
+  location.search.slice(1).split("&").forEach(function(kv){ var p = kv.split("="); if (p[0]) q[decodeURIComponent(p[0])] = decodeURIComponent((p[1] || "").replace(/\+/g, " ")); });
+  var cle = q.produit || "", P = (CONFIG.produits || {})[cle], type = P ? P.type : "";
+  document.querySelectorAll("[data-pour]").forEach(function(el){
+    var pour = el.getAttribute("data-pour").split(" ");
+    el.hidden = !(pour.indexOf(type) > -1 || pour.indexOf(cle) > -1 || (pour.indexOf("autre") > -1 && !P));
+  });
+  box.querySelectorAll(".js-merci-produit").forEach(function(e){ e.textContent = P ? P.nom : ""; });
+  if (!P) return;
+  var id = q.session_id && q.session_id.indexOf("{") < 0 ? q.session_id : "";
+  var cleVue = "gg_achat_" + (id || cle + "_" + new Date().toISOString().slice(0, 10));
+  var deja = false;
+  try { deja = !!localStorage.getItem(cleVue); } catch (e) {}
+  if (deja) return;
+  try { localStorage.setItem(cleVue, "1"); } catch (e) {}
+  if (window.GG && GG.suivre) GG.suivre("achat", { produit: cle, nom: P.nom, valeur: P.prix, id: id || ("gg-" + cle + "-" + Date.now()) });
+})();
+
+
+/* Rétractation en ligne : le formulaire est envoyé par email (FormSubmit) ; sinon email ou WhatsApp pré-remplis */
+(function(){
+  var f = document.getElementById("retractForm");
+  if (!f) return;
+  var ok = document.getElementById("retractOk"), err = document.getElementById("retractErr");
+  function texte(){
+    var d = new FormData(f), get = function(k){ return (d.get(k) || "").toString().trim(); };
+    return "Je vous notifie par la présente ma rétractation du contrat suivant :\n" +
+      "Commande : " + get("commande") + "\n" +
+      "Payée le : " + get("date") + "\n" +
+      (get("numero") ? "N° de carte ou de paiement : " + get("numero") + "\n" : "") +
+      "Nom : " + get("nom") + "\n" +
+      "Email : " + get("email") + "\n" +
+      (get("tel") ? "Téléphone : " + get("tel") + "\n" : "") +
+      (get("message") ? "Message : " + get("message") + "\n" : "") +
+      "Date de la demande : " + new Date().toLocaleString("fr-BE");
+  }
+  function secours(){
+    var t = texte();
+    var m = document.getElementById("retractMail"), w = document.getElementById("retractWa");
+    if (m) m.href = "mailto:" + CONFIG.email + "?subject=" + encodeURIComponent("Rétractation") + "&body=" + encodeURIComponent(t);
+    if (w) w.href = "https://wa.me/" + CONFIG.whatsapp + "?text=" + encodeURIComponent("Rétractation\n" + t);
+    var r = document.getElementById("retractRecap"); if (r) r.textContent = t;
+  }
+  f.addEventListener("input", secours);
+  f.addEventListener("submit", function(e){
+    e.preventDefault();
+    if (!f.reportValidity()) return;
+    secours();
+    var btn = f.querySelector("button[type=submit]"); btn.disabled = true; btn.textContent = "Envoi…";
+    var d = new FormData(f);
+    d.append("_subject", "Rétractation : " + (d.get("commande") || ""));
+    d.append("_template", "box");
+    d.append("_captcha", "false");
+    d.append("_autoresponse", "Nous avons bien reçu votre demande de rétractation. Nous vous remboursons dans les 14 jours, par le moyen de paiement utilisé. Gleam & Go, " + CONFIG.email + ", 0478 48 83 34.\n\n" + texte());
+    fetch("https://formsubmit.co/ajax/" + encodeURIComponent(CONFIG.email), { method: "POST", headers: { "Accept": "application/json" }, body: d })
+      .then(function(r){ return r.json().catch(function(){ return {}; }).then(function(j){ if (!r.ok || j.success === "false" || j.success === false) throw new Error("envoi"); }); })
+      .then(function(){ f.hidden = true; ok.hidden = false; ok.focus && ok.focus(); })
+      .catch(function(){ err.hidden = false; btn.disabled = false; btn.textContent = "Confirmer ma rétractation"; });
+  });
+  secours();
 })();

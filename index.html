@@ -25,6 +25,7 @@
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "AutoWash", "@id": "https://gleamandgo.be/#business", "name": "Gleam & Go", "description": "Detailing automobile à domicile à Bruxelles : nettoyage intérieur et extérieur, polissage, protection céramique et abonnement d'entretien. On apporte l'eau, le client fournit une prise.", "url": "https://gleamandgo.be/", "telephone": "+32478488334", "priceRange": "€€", "image": "https://gleamandgo.be/img/hero.jpg", "logo": "https://gleamandgo.be/img/logo-gg.png", "address": {"@type": "PostalAddress", "addressLocality": "Etterbeek", "postalCode": "1040", "addressRegion": "Bruxelles-Capitale", "addressCountry": "BE"}, "areaServed": [{"@type": "City", "name": "Bruxelles"}, {"@type": "City", "name": "Uccle"}, {"@type": "City", "name": "Ixelles"}, {"@type": "City", "name": "Etterbeek"}, {"@type": "City", "name": "Woluwe-Saint-Lambert"}, {"@type": "City", "name": "Woluwe-Saint-Pierre"}, {"@type": "City", "name": "Auderghem"}, {"@type": "City", "name": "Watermael-Boitsfort"}, {"@type": "City", "name": "Forest"}, {"@type": "City", "name": "Saint-Gilles"}, {"@type": "City", "name": "Schaerbeek"}, {"@type": "City", "name": "Evere"}, {"@type": "City", "name": "Anderlecht"}, {"@type": "City", "name": "Jette"}, {"@type": "City", "name": "Waterloo"}, {"@type": "City", "name": "Rhode-Saint-Genèse"}, {"@type": "City", "name": "Zaventem"}, {"@type": "City", "name": "Wavre"}, {"@type": "City", "name": "Nivelles"}], "openingHoursSpecification": [{"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"], "opens": "09:00", "closes": "21:00"}], "sameAs": ["https://www.instagram.com/gleamandgo_be/"]}]}</script>
 </head>
 <body class="at-home">
+<a class="bandeau" id="bandeau" href="/black-friday/"><span class="js-bandeau-texte"><b>Black Friday</b>&nbsp;: +25&nbsp;% offerts sur nos cartes, jusqu'au 30/11 à 23&nbsp;h&nbsp;59</span><span class="go" aria-hidden="true">→</span></a>
 
 <header class="top" id="top">
   <div class="wrap">
@@ -32,7 +33,7 @@
       <nav class="nav-l" aria-label="Navigation principale">
         <a class="lnk" href="/" data-nav="/">Accueil</a>
         <a class="lnk" href="/offres/" data-nav="/offres/">Nos offres</a>
-        <a class="lnk" href="/pack-november/" data-nav="/pack-november/" style="color:var(--gold-2)">Pack November</a>
+        <a class="lnk js-camp-menu" href="/black-friday/" data-nav="/black-friday/" style="color:var(--gold-2)">Black Friday</a>
       </nav>
       <span aria-hidden="true" class="spacer-m"></span>
       <a class="logo" href="/" aria-label="Gleam & Go, accueil">
@@ -42,8 +43,8 @@
       </a>
       <div class="nav-r">
         <a class="lnk" href="/qui-sommes-nous/" data-nav="/qui-sommes-nous/">Qui sommes-nous</a>
-        <a class="tel js-tel" href="#" aria-label="Appeler le 0478 48 83 34"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z" fill="currentColor"/></svg><span>0478 48 83 34</span></a>
-        <a class="btn btn-gold" href="/offres/">Réserver</a>
+        <a class="tel js-tel" href="tel:+32478488334" aria-label="Appeler le 0478 48 83 34"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z" fill="currentColor"/></svg><span>0478 48 83 34</span></a>
+        <a class="btn btn-gold" href="/nettoyage-interieur-voiture/#composer">Réserver</a>
       </div>
       <button class="burger" id="burger" aria-expanded="false" aria-controls="mpanel" aria-label="Ouvrir le menu">
         <svg width="24" height="24" viewBox="0 0 24 24"><path d="M3 7h18M3 12h18M3 17h18" stroke="currentColor" stroke-width="1.6"/></svg>
@@ -52,15 +53,16 @@
     <nav class="mpanel" id="mpanel" aria-label="Menu mobile">
       <a class="lnk" href="/">Accueil</a>
       <a class="lnk" href="/offres/">Nos offres</a>
-      <a class="lnk" href="/pack-november/" style="color:var(--gold-2)">Pack November</a>
+      <a class="lnk js-camp-menu js-camp-seul" href="/black-friday/" style="color:var(--gold-2)">Black Friday</a>
+      <a class="lnk" href="/pack-hiver/">Pack Hiver</a>
       <a class="lnk" href="/nettoyage-interieur-voiture/">Signature Intérieur</a>
       <a class="lnk" href="/lavage-exterieur-voiture/">Signature Extérieur</a>
       <a class="lnk" href="/polissage-voiture/">Polissage</a>
       <a class="lnk" href="/protection-ceramique-voiture/">Protection céramique</a>
       <a class="lnk" href="/abonnement-entretien-voiture/">Refresh (abonnement)</a>
       <a class="lnk" href="/qui-sommes-nous/">Qui sommes-nous</a>
-      <a class="btn btn-gold" href="/offres/">Réserver</a>
-      <a class="btn btn-line js-tel" href="#" style="margin-top:10px">Appeler le 0478 48 83 34</a>
+      <a class="btn btn-gold" href="/nettoyage-interieur-voiture/#composer">Réserver</a>
+      <a class="btn btn-line js-tel" href="tel:+32478488334" style="margin-top:10px">Appeler le 0478 48 83 34</a>
     </nav>
   </div>
 </header>
@@ -117,9 +119,9 @@
       <p class="sub">Qualité atelier, devant chez vous. On apporte l'eau, vous fournissez une prise.</p>
       <div class="hero-ctas">
         <a class="btn btn-gold" href="/nettoyage-interieur-voiture/#composer">Composer mon nettoyage</a>
-        <a class="btn btn-glass js-tel" href="#"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z" fill="currentColor"/></svg> 0478 48 83 34</a>
+        <a class="btn btn-glass js-tel" href="tel:+32478488334"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z" fill="currentColor"/></svg> 0478 48 83 34</a>
       </div>
-      <p class="callline">Appelez-nous sans hésiter, 7j/7 de 9 h à 21 h, ou <a class="wa js-wa" href="#" target="_blank" rel="noopener">écrivez-nous sur WhatsApp</a>.</p>
+      <p class="callline">Appelez-nous sans hésiter, 7j/7 de 9&nbsp;h à 21&nbsp;h, ou <a class="wa js-wa" href="https://wa.me/32478488334?text=Bonjour%20Gleam%20%26%20Go%2C%20je%20voudrais%20un%20cr%C3%A9neau" target="_blank" rel="noopener">écrivez-nous sur WhatsApp</a>.</p>
     </div>
   </section>
 
@@ -129,7 +131,7 @@
         <li><b class="js-clients">+ de 100</b><span>clients satisfaits</span></li>
         <li><b class="js-rating">5,0 ★</b><span class="js-count2">sur Google</span></li>
         <li><b>Produits pro</b><span>Koch Chemie, Rupes</span></li>
-        <li><b>7j/7</b><span>de 9 h à 21 h</span></li>
+        <li><b>7j/7</b><span>de 9&nbsp;h à 21&nbsp;h</span></li>
       </ul>
     </div>
   </div>
@@ -139,53 +141,60 @@
       <h2 class="t">Nos prestations</h2>
       <p class="lead">On nettoie, on corrige, on protège, puis on entretient.</p>
       <div class="rows">
-        <a class="row" href="/pack-november/">
-          <figure class="ph r43" data-photo="pop"></figure>
-          <h3>Pack November</h3>
-          <p>Polissage et céramique 3 ans, en une journée. L'offre de la saison, jusqu'au <span class="js-offre-fin">22 novembre</span>.</p>
-          <span class="pr"><b class="js-offre-prix">399 €</b></span>
+        <a class="row" href="/black-friday/" data-jusqua="2026-11-30T23:59:59+01:00">
+          <figure class="ph r43" data-photo="off-pack"></figure>
+          <h3>Black Friday&nbsp;: +25&nbsp;% sur nos cartes</h3>
+          <p>Vous payez 100, 200 ou 400&nbsp;€, vous recevez 125, 250 ou 500&nbsp;€ de prestations. Pour vous ou à offrir, jusqu'au 30 novembre.</p>
+          <span class="pr">dès <b>100&nbsp;€</b></span>
+          <span class="go" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.4" fill="none"/></svg></span>
+        </a>
+        <a class="row" href="/pack-hiver/">
+          <figure class="ph r43" data-photo="gal-8"></figure>
+          <h3>Pack Hiver</h3>
+          <p>Intérieur et extérieur complets, Kit Hiver offert, déplacement offert jusqu'à 15&nbsp;km. Prestations jusqu'au 31 janvier.</p>
+          <span class="pr"><b>200&nbsp;€</b> tout compris</span>
           <span class="go" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.4" fill="none"/></svg></span>
         </a>
         <a class="row" href="/nettoyage-interieur-voiture/">
           <figure class="ph r43" data-photo="svc-signature"></figure>
           <h3>Signature Intérieur</h3>
           <p>Le detailing complet de l'habitacle, shampooing des sièges et tapis compris.</p>
-          <span class="pr">dès <b class="js-p-signature">149 €</b></span>
+          <span class="pr">dès <b class="js-p-signature">149&nbsp;€</b></span>
           <span class="go" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.4" fill="none"/></svg></span>
         </a>
         <a class="row" href="/lavage-exterieur-voiture/">
           <figure class="ph r43" data-photo="gal-5"></figure>
           <h3>Signature Extérieur</h3>
           <p>Lavage à la main, jantes, vitres et protection hydrophobe. Seul ou avec l'intérieur.</p>
-          <span class="pr">dès <b class="js-p-exterieur">69 €</b></span>
+          <span class="pr">dès <b class="js-p-exterieur">69&nbsp;€</b></span>
           <span class="go" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.4" fill="none"/></svg></span>
         </a>
         <a class="row" href="/nettoyage-interieur-voiture/?f=complet#composer">
           <figure class="ph r43" data-photo="gal-1"></figure>
           <h3>Prestige</h3>
           <p>Intérieur et extérieur complets, en une seule visite. La voiture entière remise à niveau.</p>
-          <span class="pr"><b class="js-p-complet">200 €</b></span>
+          <span class="pr"><b class="js-p-complet">200&nbsp;€</b></span>
           <span class="go" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.4" fill="none"/></svg></span>
         </a>
         <a class="row" href="/polissage-voiture/">
           <figure class="ph r43" data-photo="svc-polish"></figure>
           <h3>Polissage</h3>
           <p>Correction de peinture en une ou plusieurs étapes. Rayures légères, voile, micro-rayures.</p>
-          <span class="pr">dès <b class="js-p-polish">300 €</b></span>
+          <span class="pr">dès <b class="js-p-polish">300&nbsp;€</b></span>
           <span class="go" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.4" fill="none"/></svg></span>
         </a>
         <a class="row" href="/protection-ceramique-voiture/">
           <figure class="ph r43" data-photo="gal-2"></figure>
           <h3>Protection céramique</h3>
-          <p>Un revêtement dur sur le vernis : l'eau perle, la saleté accroche moins. 3 ou 5 ans.</p>
-          <span class="pr">3 ou 5 ans</span>
+          <p>Un revêtement dur sur le vernis&nbsp;: l'eau perle, la saleté accroche moins. 3 ou 5&nbsp;ans.</p>
+          <span class="pr">3 ou 5&nbsp;ans</span>
           <span class="go" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.4" fill="none"/></svg></span>
         </a>
         <a class="row" href="/abonnement-entretien-voiture/">
           <figure class="ph r43" data-photo="svc-refresh"></figure>
           <h3>Refresh</h3>
-          <p>Après un Signature : l'entretien à rythme fixe qui garde la voiture à ce niveau.</p>
-          <span class="pr">dès <b class="js-p-refresh">79 €</b> / passage</span>
+          <p>Après un Signature&nbsp;: l'entretien à rythme fixe qui garde la voiture à ce niveau.</p>
+          <span class="pr">dès <b class="js-p-refresh">79&nbsp;€</b> / passage</span>
           <span class="go" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.4" fill="none"/></svg></span>
         </a>
       </div>
@@ -214,9 +223,9 @@
       <h2 class="t">Comment ça se passe</h2>
       <p class="lead">Vous n'avez pas besoin d'être présent pendant le nettoyage.</p>
       <ol class="steps">
-        <li><h3>Vous composez votre nettoyage</h3><p>Intérieur, extérieur ou les deux, état, zone : le prix s'affiche en direct.</p></li>
+        <li><h3>Vous composez votre nettoyage</h3><p>Intérieur, extérieur ou les deux, état, zone&nbsp;: le prix s'affiche en direct.</p></li>
         <li><h3>On vient chez vous</h3><p>Nous apportons l'eau, les produits et 25 m de rallonge. Il nous faut seulement une prise.</p></li>
-        <li><h3>Vous retrouvez votre voiture</h3><p>Paiement à la fin, facture sur demande. 7 jours sur 7, de 9 h à 21 h.</p></li>
+        <li><h3>Vous retrouvez votre voiture</h3><p>Paiement à la fin, facture sur demande. 7&nbsp;jours sur 7, de 9&nbsp;h à 21&nbsp;h.</p></li>
       </ol>
     </div>
   </section>
@@ -224,8 +233,9 @@
   <section class="sec">
     <div class="wrap">
       <h2 class="t">Ce qu'en disent nos clients</h2>
-      <p class="score"><b>5,0</b><span class="stars" aria-hidden="true">★★★★★</span><span class="js-count">sur Google</span><a class="js-reviews" href="#" target="_blank" rel="noopener">Lire tous les avis</a></p>
+      <p class="score"><b>5,0</b><span class="stars" aria-hidden="true">★★★★★</span><span class="js-count">sur Google</span><a class="js-reviews" href="https://share.google/uj7ejIzY9wQKRMeIa" target="_blank" rel="noopener">Lire tous les avis</a></p>
       <div class="reviews" id="reviews"></div>
+      <p class="fine-note">Avis recopiés tels quels depuis notre fiche Google, avec leur mois de publication.</p>
     </div>
   </section>
 
@@ -234,7 +244,7 @@
       <h2 class="t">Nos dernières vidéos</h2>
       <p class="lead">Le travail en cours, publié au quotidien sur Instagram.</p>
       <div class="reels" id="reels"></div>
-      <p style="margin:34px 0 0"><a class="iglink js-ig" href="#" target="_blank" rel="noopener">
+      <p style="margin:34px 0 0"><a class="iglink js-ig" href="https://www.instagram.com/gleamandgo_be/" target="_blank" rel="noopener">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.6"/><circle cx="17.5" cy="6.5" r="1.1" fill="currentColor"/></svg>
         <span style="display:flex;flex-direction:column"><b class="js-ig-handle"></b><span>Voir toutes nos vidéos</span></span>
       </a></p>
@@ -244,17 +254,26 @@
   <section class="sec" id="faq">
     <div class="wrap">
       <h2 class="t">Questions fréquentes</h2>
-      <p class="lead">Une autre question ? Appelez-nous, 7j/7 de 9 h à 21 h.</p>
+      <p class="lead">Une autre question&nbsp;? Appelez-nous, 7j/7 de 9&nbsp;h à 21&nbsp;h.</p>
+      <h3 class="faq-h">En hiver</h3>
       <div class="faq">
-        <details><summary>De quoi avez-vous besoin sur place ?</summary><p>Uniquement d'une prise électrique. Nous apportons l'eau, les produits et 25 mètres de rallonge. Pas de prise accessible ? Nous pouvons récupérer votre véhicule et vous le ramener propre, contre dépôt d'une pièce d'identité.</p></details>
-        <details><summary>Dois-je être présent pendant le nettoyage ?</summary><p>Non. Il suffit de nous laisser accès à la voiture et à la prise.</p></details>
-        <details><summary>Quand pouvez-vous venir ?</summary><p>Tous les jours, week-end compris, de 9 h à 21 h. Choisissez votre créneau en ligne ou appelez-nous au <a class="js-tel" href="#">0478 48 83 34</a>.</p></details>
-        <details><summary>Où intervenez-vous ?</summary><p>Dans les 19 communes de Bruxelles et alentours. Au-delà, un supplément de déplacement s'affiche dans le configurateur avant de réserver.</p></details>
-        <details><summary>Quelle est la différence entre le Signature et le Refresh ?</summary><p>Le Signature remet la voiture à niveau : Intérieur (habitacle complet, shampooing des sièges compris), Extérieur, ou les deux. Le Refresh est l'entretien régulier qui suit, en abonnement, dès 79 € par passage.</p></details>
-        <details><summary>Quels produits utilisez-vous ?</summary><p>Uniquement des produits et du matériel professionnels : Koch Chemie pour le nettoyage et la protection hydrophobe PW, polisseuses Rupes pour la correction de peinture, nettoyage vapeur et injecteur-extracteur pour les tissus.</p></details>
-        <details><summary>Le prix dépend-il de la taille de la voiture ?</summary><p>Citadine, berline et break : même prix. SUV et monospace : 30 € de plus, pour la surface en plus. L'état de la voiture, les options et la distance le font aussi varier, et tout s'affiche dans le configurateur avant de réserver.</p></details>
-        <details><summary>Le prix affiché est-il définitif ?</summary><p>Oui, si l'état de la voiture correspond à votre sélection. S'il diffère, on vous prévient avant de commencer.</p></details>
-        <details><summary>Puis-je recevoir une facture ?</summary><p>Oui, sur simple demande.</p></details>
+        <details><summary>Vous travaillez quand il gèle&nbsp;?</summary><p>Oui pour l'intérieur. Pour l'extérieur, méthode sans rinçage entre 0 et 4 °C, et jamais d'eau au sol par temps de gel.</p></details>
+        <details><summary>Et s'il pleut&nbsp;?</summary><p>On travaille à l'abri&nbsp;: votre garage, votre carport, votre parking, notre tonnelle ou notre local couvert.</p></details>
+        <details><summary>Vous venez quand il fait noir&nbsp;?</summary><p>Oui pour l'intérieur, jusqu'à 21&nbsp;h, avec notre éclairage.</p></details>
+        <details><summary>Je n'ai pas de garage.</summary><p>On fait l'intérieur devant chez vous et on peut emmener la voiture à notre local pour l'extérieur.</p></details>
+        <details><summary>Mes sièges seront mouillés&nbsp;?</summary><p>À peine humides quand on part. Roulez 30 minutes avec le chauffage et la clim&nbsp;: ils sèchent complètement.</p></details>
+      </div>
+      <h3 class="faq-h">Toute l'année</h3>
+      <div class="faq">
+        <details><summary>De quoi avez-vous besoin sur place&nbsp;?</summary><p>Uniquement d'une prise électrique. Nous apportons l'eau, les produits et 25 mètres de rallonge. Pas de prise accessible&nbsp;? Nous pouvons récupérer votre véhicule et vous le ramener propre, contre dépôt d'une pièce d'identité.</p></details>
+        <details><summary>Dois-je être présent pendant le nettoyage&nbsp;?</summary><p>Non. Il suffit de nous laisser accès à la voiture et à la prise.</p></details>
+        <details><summary>Quand pouvez-vous venir&nbsp;?</summary><p>Tous les jours, week-end compris, de 9&nbsp;h à 21&nbsp;h. Choisissez votre créneau en ligne ou appelez-nous au <a class="js-tel" href="tel:+32478488334">0478 48 83 34</a>.</p></details>
+        <details><summary>Où intervenez-vous&nbsp;?</summary><p>Dans les 19 communes de Bruxelles et alentours. Au-delà, un supplément de déplacement s'affiche dans le configurateur avant de réserver.</p></details>
+        <details><summary>Quelle est la différence entre le Signature et le Refresh&nbsp;?</summary><p>Le Signature remet la voiture à niveau&nbsp;: Intérieur (habitacle complet, shampooing des sièges compris), Extérieur, ou les deux. Le Refresh est l'entretien régulier qui suit, en abonnement, dès 79&nbsp;€ par passage.</p></details>
+        <details><summary>Quels produits utilisez-vous&nbsp;?</summary><p>Uniquement des produits et du matériel professionnels&nbsp;: Koch Chemie pour le nettoyage et la protection hydrophobe PW, polisseuses Rupes pour la correction de peinture, nettoyage vapeur et injecteur-extracteur pour les tissus.</p></details>
+        <details><summary>Le prix dépend-il de la taille de la voiture&nbsp;?</summary><p>Non&nbsp;: même prix pour toutes les voitures, de la citadine au SUV. L'état de l'habitacle, les options et la distance le font varier, et tout s'affiche dans le configurateur avant de réserver.</p></details>
+        <details><summary>Le prix affiché est-il définitif&nbsp;?</summary><p>Oui, si l'état de la voiture correspond à votre sélection. S'il diffère, on vous prévient avant de commencer.</p></details>
+        <details><summary>Puis-je recevoir une facture&nbsp;?</summary><p>Oui, sur simple demande.</p></details>
       </div>
     </div>
   </section>
@@ -262,11 +281,11 @@
   <section class="sec" id="contact">
     <div class="wrap">
       <h2 class="t">Réservez comme vous préférez</h2>
-      <p class="lead">N'hésitez pas à nous appeler : on répond 7j/7, de 9 h à 21 h.</p>
+      <p class="lead">N'hésitez pas à nous appeler&nbsp;: on répond 7j/7, de 9&nbsp;h à 21&nbsp;h.</p>
       <div class="contact">
-        <a class="js-tel" href="#"><b>Appeler</b><span>0478 48 83 34</span><em>7j/7, 9 h – 21 h</em></a>
-        <a class="js-wa" href="#" target="_blank" rel="noopener"><b>WhatsApp</b><span>Une photo de la voiture, un devis rapide</span><em>Réponse dans la journée</em></a>
-        <a class="js-cal" href="#" target="_blank" rel="noopener"><b>Réserver en ligne</b><span>Choisissez votre créneau</span><em>En moins d'une minute</em></a>
+        <a class="js-tel" href="tel:+32478488334"><b>Appeler</b><span>0478 48 83 34</span><em>7j/7, 9&nbsp;h – 21&nbsp;h</em></a>
+        <a class="js-wa" href="https://wa.me/32478488334?text=Bonjour%20Gleam%20%26%20Go%2C%20je%20voudrais%20un%20cr%C3%A9neau" target="_blank" rel="noopener"><b>WhatsApp</b><span>Une photo de la voiture, un devis rapide</span><em>Réponse dans la journée</em></a>
+        <a class="js-cal" href="https://calendly.com/gleamandgo" target="_blank" rel="noopener"><b>Réserver en ligne</b><span>Choisissez votre créneau</span><em>En moins d'une minute</em></a>
       </div>
     </div>
   </section>
@@ -275,7 +294,7 @@
     <div class="wrap">
       <h2>Votre voiture mérite mieux qu'un rouleau.</h2>
       <p>Composez votre Signature en trente secondes, prix affiché avant de réserver.</p>
-      <div class="ctas"><a class="btn btn-gold" href="/nettoyage-interieur-voiture/#composer">Composer mon nettoyage</a><a class="btn btn-line js-tel" href="#">Appeler le 0478 48 83 34</a><a class="btn btn-line js-wa" href="#" target="_blank" rel="noopener">WhatsApp</a></div>
+      <div class="ctas"><a class="btn btn-gold" href="/nettoyage-interieur-voiture/#composer">Composer mon nettoyage</a><a class="btn btn-line js-tel" href="tel:+32478488334">Appeler le 0478 48 83 34</a><a class="btn btn-line js-wa" href="https://wa.me/32478488334?text=Bonjour%20Gleam%20%26%20Go%2C%20je%20voudrais%20un%20cr%C3%A9neau" target="_blank" rel="noopener">WhatsApp</a></div>
     </div>
   </section>
 </div>
@@ -284,34 +303,35 @@
 
 <footer>
   <div class="wrap">
-    <div><strong style="color:var(--white)">Gleam &amp; Go</strong>, detailing automobile à domicile, Bruxelles.<br><a class="js-tel" href="#" style="margin:0">0478 48 83 34</a>, 7j/7 de 9 h à 21 h<br>N° d'entreprise (BCE) : BE 1031.632.216</div>
+    <div><strong style="color:var(--white)">Gleam &amp; Go</strong>, detailing automobile à domicile, Bruxelles.<br><a class="js-tel" href="tel:+32478488334" style="margin:0">0478 48 83 34</a>, 7j/7 de 9&nbsp;h à 21&nbsp;h<br><a class="js-email" href="mailto:matheoduray@gmail.com" style="margin:0">matheoduray@gmail.com</a><br>N° d'entreprise (BCE)&nbsp;: BE 1031.632.216</div>
     <div>
-      <a href="/offres/">Nos offres</a><a href="/pack-november/">Pack November</a><a href="/nettoyage-interieur-voiture/">Signature Intérieur</a><a href="/lavage-exterieur-voiture/">Signature Extérieur</a><a href="/polissage-voiture/">Polissage</a><a href="/protection-ceramique-voiture/">Protection céramique</a><a href="/abonnement-entretien-voiture/">Refresh</a><a href="/qui-sommes-nous/">Qui sommes-nous</a><a href="/#faq">FAQ</a>
-      <a href="https://www.instagram.com/gleamandgo_be/" target="_blank" rel="noopener">Instagram</a><a class="js-reviews" href="#" target="_blank" rel="noopener">Avis Google</a>
+      <a href="/offres/">Nos offres</a><a href="/black-friday/" class="js-camp-menu js-camp-seul">Black Friday</a><a href="/pack-hiver/">Pack Hiver</a><a href="/nettoyage-interieur-voiture/">Signature Intérieur</a><a href="/lavage-exterieur-voiture/">Signature Extérieur</a><a href="/polissage-voiture/">Polissage</a><a href="/protection-ceramique-voiture/">Protection céramique</a><a href="/abonnement-entretien-voiture/">Refresh</a><a href="/qui-sommes-nous/">Qui sommes-nous</a><a href="/#faq">FAQ</a>
+      <a href="https://www.instagram.com/gleamandgo_be/" target="_blank" rel="noopener">Instagram</a><a class="js-reviews" href="https://share.google/uj7ejIzY9wQKRMeIa" target="_blank" rel="noopener">Avis Google</a>
+    </div>
+    <div class="legal">
+      <a href="/mentions-legales/">Mentions légales</a><a href="/cgv/">CGV</a><a href="/confidentialite/">Confidentialité</a><a href="/retractation/">Me rétracter</a><button type="button" class="js-cookies-reglages">Gérer les cookies</button>
     </div>
   </div>
 </footer>
 
 <div class="pop" id="pop" role="dialog" aria-modal="true" aria-labelledby="popTitle">
   <div class="pop-card">
-    <button class="pop-close" id="popClose" aria-label="Fermer">&times;</button>
+    <button class="pop-close" id="popClose" type="button" aria-label="Fermer">&times;</button>
     <div class="pop-media" id="popMedia"></div>
     <div class="pop-body">
     <p class="kicker" id="popKicker"></p>
     <h2 id="popTitle"></h2>
-    <p class="pop-price"><b id="popPrice"></b><span>tout compris</span></p>
     <ul id="popList"></ul>
-    <p class="pop-fin"><b class="js-hiver-valeur">499 €</b> en prestations séparées · offre jusqu'au <b class="js-offre-fin">22 novembre</b></p>
-    <a class="btn btn-gold" id="popCta" href="#" target="_blank" rel="noopener">Réserver ma date</a>
-    <button class="later" id="popLater">Plus tard</button>
+    <p class="pop-fin" id="popNote"></p>
+    <a class="btn btn-gold" id="popCta" href="/black-friday/">Voir les cartes</a>
+    <button class="later" id="popLater" type="button">Non merci</button>
     </div>
   </div>
 </div>
 
 <div class="mbar">
-  <a class="btn btn-gold" href="/offres/">Réserver</a>
-  <a class="btn btn-line js-tel" href="#"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z" fill="currentColor"/></svg> Appeler</a>
-  <a class="btn btn-line js-wa" href="#" target="_blank" rel="noopener">WhatsApp</a>
+  <a class="btn btn-line js-wa" href="https://wa.me/32478488334?text=Bonjour%20Gleam%20%26%20Go%2C%20je%20voudrais%20un%20cr%C3%A9neau" target="_blank" rel="noopener">WhatsApp</a>
+  <a class="btn btn-gold" href="/nettoyage-interieur-voiture/#composer">Réserver</a>
 </div>
 
 
